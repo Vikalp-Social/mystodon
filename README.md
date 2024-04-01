@@ -14,13 +14,11 @@ All requests to the Mastodon API require authentication using OAuth 2.0. Clients
 - **Description**: Retrieves the public timeline, which includes public posts from users on the Mastodon instance.
 - **Authentication**: Not required.
 
-### User Timelines
-- **Endpoint**: `/api/v1/timelines/{user_id}`
-- **Method**: GET
-- **Description**: Retrieves the timeline of the specified user.
-- **Parameters**:
-  - `user_id` (required): ID of the user whose timeline to retrieve.
-- **Authentication**: Required.
+### Home Timeline
+- **Endpoint:** `/api/v1/timelines/home`
+- **Method:** GET
+- **Description:** Retrieves the home timeline for the authenticated user, including posts from users they follow.
+- **Authentication:** Required.
 
 ### Post a Status
 - **Endpoint**: `/api/v1/statuses`
@@ -45,18 +43,6 @@ All requests to the Mastodon API require authentication using OAuth 2.0. Clients
 - **Parameters**:
   - `account_id` (required): ID of the user whose profile to retrieve.
 - **Authentication**: Required.
-
-## Error Handling
-- The Mastodon API uses standard HTTP status codes to indicate the success or failure of a request.
-- Error responses may include additional information in the response body.
-
-## Rate Limiting
-- Requests to the Mastodon API may be subject to rate limiting to prevent abuse.
-- Clients should respect rate limit headers provided in API responses.
-
-## Versioning
-- The current version of the Mastodon API is `v1`.
-- Endpoints may be updated or added in future API versions.
 
 ## Example
 ```python
