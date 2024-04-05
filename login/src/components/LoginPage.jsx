@@ -1,15 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import axios from "axios";
+import { UserContext} from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 let id = "";
 let secret = "";
 
 function LoginPage() {
+    const {setCurrentUser} = useContext(UserContext);
     const [auth, setAuth] = useState(false);
     const [authcode, setAuthCode] = useState("");
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [user_instance, setInstance] = useState("");
+    let navigate = useNavigate();
 
     async function handleSubmit(event){
         event.preventDefault();
@@ -37,8 +41,6 @@ function LoginPage() {
     async function handleAuth(event){
         event.preventDefault();
 
-        //console.log(user_instance);
-
         const authorize = await axios.post(`https://${user_instance}/oauth/token`, {
             client_id: id,
             client_secret: secret,
@@ -48,7 +50,6 @@ function LoginPage() {
             scope: "read write push",
         });
 
-        //console.log(authorize.data);
         let token = authorize.data.access_token;
 
         const verify = await axios.get(`https://${user_instance}/api/v1/accounts/verify_credentials`, {
@@ -56,16 +57,24 @@ function LoginPage() {
                 Authorization: `Bearer ${token}`,
             }
         });
+        console.log(verify.data);
 
-        // console.log(verify.data);
+        const user = {
+            name,
+            instance: user_instance,
+            id: verify.data.id,
+            token,
+        }
+        setCurrentUser(user);
 
         if(verify.data.username === name){
-            const response = await axios.post("http://localhost:3000/api/v1/timelines/home", {token});
-
-            // setData(response.data);
-            console.log(response.data);
+            navigate("/home");
         }
     }
+
+    // useEffect(() => {
+    //     console.log(currentUser);
+    // }, [currentUser]);
 
     return(
         <div>
