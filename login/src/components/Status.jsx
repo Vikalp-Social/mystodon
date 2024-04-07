@@ -20,7 +20,13 @@ function Status(props) {
             </div>
             <div className="statusCenter">
                 <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
-                <img className="statusImg" src={props.img} alt="" />
+                {props.src.type === "gifv" || props.src.type === "video" ? 
+                <video controls preload className="statusMedia">
+                    <source src={props.src.url} type="video/mp4"/>
+                </video>
+                :
+                <img className="statusMedia" src={props.src.url} alt="" />
+                }
             </div>
         </div>
     );

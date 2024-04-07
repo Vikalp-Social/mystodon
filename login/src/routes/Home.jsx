@@ -37,7 +37,7 @@ function Home(){
                             instance={currentUser.instance} 
                             fullname={status.account.acct} 
                             body={status.content} 
-                            img={status.media_attachments.length ? status.media_attachments[0].url : ""}
+                            src={status.media_attachments.length ? status.media_attachments[0] : ""}
                         />
                     })}
                 </div>
