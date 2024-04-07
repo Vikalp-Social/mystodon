@@ -22,16 +22,16 @@ app.use(bodyParser.json());
 // });
 
 //middleware to get logged in user id
-app.use(async (req, res, next) => {
-    try {
-        const get_id = await axios.get(`https://${instance}/api/v1/accounts/lookup?acct=${acc_name}`);
-        id = get_id.data.id;
-        //console.log(id);
-        next();
-    } catch (error) {
-        console.log(error);
-    }
-})
+// app.use(async (req, res, next) => {
+//     try {
+//         const get_id = await axios.get(`https://${instance}/api/v1/accounts/lookup?acct=${name}`);
+//         id = get_id.data.id;
+//         //console.log(id);
+//         next();
+//     } catch (error) {
+//         console.log(error);
+//     }
+// })
 
 //fetch user account data
 app.get("/api/v1/account", async (req, res) => {
@@ -68,11 +68,12 @@ app.get("/api/v1/statuses", async (req, res) => {
 });
 
 //fetch home timeline 
-app.get("/api/v1/timelines/home", async (req, res) => {
+app.post("/api/v1/timelines/home", async (req, res) => {
+    //console.log(req.body);
     try {
-        const response = await axios.get(`https://${instance}/api/v1/timelines/home`, {
+        const response = await axios.get(`https://${req.body.instance}/api/v1/timelines/home?limit=30`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${req.body.token}`
         }});
         res.status(200).json({
             status: "Success",
@@ -107,19 +108,3 @@ app.get("/api/v1/timelines/public", async (req, res) => {
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
-
-function resolve(username){
-    
-    // console.log(acc_name);
-    // console.log(instance);
-}
-//resolve("dharunth@mastodon.social");
-
-/* NOTES
-1. way to know which user is logged on to load respective timeline based on username '@name@instance'
-2. get timeline without using bearer token which requires user to create new app and share the token
-*/
-
-//step 1 - make it dynamic
-//step 2 - login page - redirect to mastodon(refer to soapbox/vikalp)
-//step 3 - make a new post/edit post

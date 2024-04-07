@@ -3,19 +3,80 @@
 }
 
 .homelayout {
-  display: inline-flex;
-  flex-direction: row;
   margin: 0;
-  width: 100vw;
+}
+.outer-container{
+  display: flex;
+  width: 80%;
+  justify-content: center;
+
 }
 
 .sidebar{
-  width: 10%;
+  width: 25%;
   background-color: #f0f0f0;
+  position: fixed;
 }
 
-.feed {
+.feed{
   width: 50%;
+  margin-left: 25%;
+  position: relative;
+  overflow: auto;
+  z-index: 1;
+}
+
+.status{
+  padding: 10px;
+  margin-bottom: 20px;
   background-color: aqua;
-  height: 100vh;
+}
+
+.statusTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statusTopLeft {
+  display: flex;
+  align-items: center;
+}
+
+.statusProfileImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.statusUsername {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 10px;
+}
+
+.statusCenter{
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.statusImg{
+  margin-top: 20px;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
