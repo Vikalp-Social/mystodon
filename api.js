@@ -34,15 +34,17 @@ app.use(bodyParser.json());
 // })
 
 //fetch user account data
-app.get("/api/v1/account", async (req, res) => {
+app.get("/api/v1/accounts/:id", async (req, res) => {
     try {
-        const response = await axios.get(`https://${instance}/api/v1/accounts/${id}`);
+        const account = await axios.get(`https://${req.body.instance}/api/v1/accounts/${req.params.id}`);
+        const statuses = await axios.get(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/statuses`);
         res.status(200).json({
             status: "Success",
-            count: response.data.count,
-            data: {
-                account: response.data,
-            }
+            account: account.data,
+            user_statuses: {
+                count: statuses.data.length,
+                list: statuses.data,
+            },
         });
         //console.log(response.data);
     } catch (error) {

@@ -1,19 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 
 function Status(props) {
     const sanitizedHtml = DOMPurify.sanitize(props.body);
+    let navigate = useNavigate();
 
-    function handleClick() {
-        console.log(props.id);
+    function handleUserClick(){
+        navigate(`/profile/${props.user_id}`)
     }
 
     return(
-        <div className="status" onClick={handleClick}>
+        <div className="status">
             <div className="statusTop">
                 <div className="statusTopLeft">
-                    <img className="statusProfileImg" src={props.prof} alt="profile picture" />
+                    <img className="statusProfileImg" src={props.prof} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername">{props.name}</span>
+                        <span className="statusUsername" onClick={handleUserClick}>{props.name}</span>
                         <span className="userInstance">{props.name === props.fullname ?`${props.name}@${props.instance}` : props.fullname}</span>
                     </div>
                 </div>

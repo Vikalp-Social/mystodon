@@ -3,9 +3,10 @@ import axios from "axios";
 import { UserContext} from "../context/UserContext";
 import Status from "../components/Status";
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 function Home(){
-    const {currentUser, setCurrentUser} = useContext(UserContext);
+    const {currentUser} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
 
     useEffect(() => {
@@ -26,21 +27,22 @@ function Home(){
     return (
         <>
             <Navbar />
-                <div className="sidebar">SIDEBAR</div>
-                <div className="feed container">
-                    {timeline.map(status => {
-                        return <Status 
-                            key={status.id}
-                            id={status.id}
-                            prof={status.account.avatar}
-                            name={status.account.username}
-                            instance={currentUser.instance} 
-                            fullname={status.account.acct} 
-                            body={status.content} 
-                            src={status.media_attachments.length ? status.media_attachments[0] : ""}
-                        />
-                    })}
-                </div>
+            <Sidebar />
+            <div className="feed container">
+                {timeline.map(status => {
+                    return <Status 
+                        key={status.id}
+                        id={status.id}
+                        user_id={status.account.id}
+                        prof={status.account.avatar}
+                        name={status.account.username}
+                        instance={currentUser.instance} 
+                        fullname={status.account.acct} 
+                        body={status.content} 
+                        src={status.media_attachments.length ? status.media_attachments[0] : ""}
+                    />
+                })}
+            </div>
         </>
         
     );
