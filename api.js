@@ -94,6 +94,20 @@ app.put("/api/v1/statuses/:id", async (req, res) => {
     }
 });
 
+//delete a status
+app.post("/api/v1/statuses/:id", async (req, res) => {
+    try {
+        const response = await axios.delete(`https://${req.body.instance}/api/v1/statuses/${req.params.id}`, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {
     //console.log(req.body);

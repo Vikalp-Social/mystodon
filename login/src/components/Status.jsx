@@ -41,7 +41,17 @@ function Status(props) {
         } catch (error) {
             console.log(error);
         }
-        console.log("submitted");
+    }
+
+    async function handleDelete() {
+        try {
+            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.id}`, {
+                instance: currentUser.instance,
+                token: currentUser.token,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -55,7 +65,11 @@ function Status(props) {
                     </div>
                 </div>
                 <div className="postTopRight">
-                    {props.isUserProfile && <button type="button" class="btn btn-outline-secondary" onClick={handleEdit}>Edit</button>}
+                    {props.isUserProfile && 
+                    <div>
+                    <button type="button" class="btn btn-outline-secondary" onClick={handleEdit}>Edit</button>
+                    <button type="button" class="btn btn-outline-danger" onClick={handleDelete}>Delete</button>
+                    </div>}
                 </div>
             </div>
             <div className="statusCenter">
