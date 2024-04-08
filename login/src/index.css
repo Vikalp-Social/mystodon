@@ -14,8 +14,16 @@
 
 .sidebar{
   width: 25%;
-  background-color: #f0f0f0;
+  background-color: aliceblue;
   position: fixed;
+  padding: 10px;
+}
+
+.sidebar img{
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .feed{

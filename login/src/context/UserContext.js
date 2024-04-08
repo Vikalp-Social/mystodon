@@ -9,6 +9,7 @@ export function UserContextProvider({children}){
         instance: "",
         id: "",
         token: "",
+        avatar: "",
     });
 
     return (

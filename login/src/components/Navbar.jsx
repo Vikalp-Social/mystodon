@@ -31,8 +31,9 @@ function Navbar() {
                             </ul>
                             </li>
                         </ul>
+
                         <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                            <button className="btn btn-primary">Button</button>
+                            {/* <img className="profileImg" src="" alt="profile" /> */}
                         </div>
                     </div>
                 </div>

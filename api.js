@@ -34,14 +34,14 @@ app.use(bodyParser.json());
 // })
 
 //fetch user account data
-app.get("/api/v1/accounts/:id", async (req, res) => {
+app.post("/api/v1/accounts/:id", async (req, res) => {
     try {
         const account = await axios.get(`https://${req.body.instance}/api/v1/accounts/${req.params.id}`);
         const statuses = await axios.get(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/statuses`);
         res.status(200).json({
             status: "Success",
             account: account.data,
-            user_statuses: {
+            statuses: {
                 count: statuses.data.length,
                 list: statuses.data,
             },
@@ -50,24 +50,33 @@ app.get("/api/v1/accounts/:id", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-})
+});
 
-//fetch user statuses
-app.get("/api/v1/statuses", async (req, res) => {
+app.post("/api/v1/accounts/edit", async (req, res) => {
+    console.log(req.body);
+    const response = await axios.patch(`https://${req.body.instance}/api/v1/accounts/update_credentials`, {
+        display_name: req.body.display_name,
+        note: req.body.note,
+    }, 
+    {
+        headers: {
+            Authorization: `Bearer ${req.body.token}`
+        }
+    });
+});
+
+app.post("/api/v1/statuses", async (req, res) => {
     try {
-        const response = await axios.get(`https://${instance}/api/v1/accounts/${id}/statuses`);
-        res.status(200).json({
-            status: "Success",
-            count: response.data.count,
-            data: {
-                statuses: response.data,
-            }
+        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {status: req.body.message}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
         });
-        //console.log(response.data);
+        res.status(200).json(response.data);
     } catch (error) {
         console.log(error);
     }
-});
+})
 
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {
@@ -77,23 +86,6 @@ app.post("/api/v1/timelines/home", async (req, res) => {
             headers: {
                 Authorization: `Bearer ${req.body.token}`
         }});
-        res.status(200).json({
-            status: "Success",
-            count: response.data.count,
-            data: {
-                timeline: response.data,
-            }
-        });
-        //console.log(response.data);
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-//fetch public timeline from instance
-app.get("/api/v1/timelines/public", async (req, res) => {
-    try {
-        const response = await axios.get(`https://${instance}/api/v1/timelines/public`);
         res.status(200).json({
             status: "Success",
             count: response.data.count,

@@ -12,17 +12,16 @@ function Home(){
     useEffect(() => {
         async function fetchTimeline() {
             try {
-                console.log(currentUser);
+                //console.log(currentUser);
                 const response = await axios.post("http://localhost:3000/api/v1/timelines/home", currentUser);
-                console.log(response.data.data.timeline);
+                //console.log(response.data.data.timeline);
                 setTimeline(response.data.data.timeline)
             } catch (error) {
                 console.log(error);
             }
         }
         fetchTimeline();
-    }, [])
-
+    }, [timeline])
 
     return (
         <>

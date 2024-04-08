@@ -64,6 +64,7 @@ function LoginPage() {
             instance: user_instance,
             id: verify.data.id,
             token,
+            avatar: verify.data.avatar,
         }
         setCurrentUser(user);
 

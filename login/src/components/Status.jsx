@@ -19,6 +19,9 @@ function Status(props) {
                         <span className="userInstance">{props.name === props.fullname ?`${props.name}@${props.instance}` : props.fullname}</span>
                     </div>
                 </div>
+                <div className="postTopRight">
+                    <button type="button" class="btn btn-outline-secondary">Edit</button>
+                </div>
             </div>
             <div className="statusCenter">
                 <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
