@@ -17,8 +17,6 @@ function EditProfile(props){
                 display_name: displayName,
                 note, 
             });
-            console.log("success");
-            props.close()
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +51,7 @@ function EditProfile(props){
                 <Button variant="secondary" onClick={props.close}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" onClick={handleSubmit} onMouseUp={props.close}>
                     Save Changes
                 </Button>
             </form>

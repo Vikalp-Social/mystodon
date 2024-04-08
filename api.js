@@ -54,16 +54,20 @@ app.post("/api/v1/accounts/:id", async (req, res) => {
 
 //edit user profile
 app.put("/api/v1/accounts", async (req, res) => {
-    console.log(req.body);
-    const response = await axios.patch(`https://${req.body.instance}/api/v1/accounts/update_credentials`, {
-        display_name: req.body.display_name,
-        note: req.body.note,
-    }, 
-    {
-        headers: {
-            Authorization: `Bearer ${req.body.token}`
-        }
-    });
+    //console.log(req.body);
+    try {
+        const response = await axios.patch(`https://${req.body.instance}/api/v1/accounts/update_credentials`, {
+            display_name: req.body.display_name,
+            note: req.body.note,
+        }, 
+        {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 //post a status
