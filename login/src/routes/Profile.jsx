@@ -8,7 +8,6 @@ import Sidebar from "../components/Sidebar";
 import Status from "../components/Status";
 import EditProfile from "../components/EditProfile";
 
-
 function Profile(props){
     const {id} = useParams();
     const {currentUser} = useContext(UserContext);
@@ -77,6 +76,7 @@ function Profile(props){
                         fullname={status.account.acct} 
                         body={status.content} 
                         src={status.media_attachments.length ? status.media_attachments[0] : ""}
+                        isUserProfile={id === currentUser.id}
                     />
                 })}
             </div>

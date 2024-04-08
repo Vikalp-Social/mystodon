@@ -8,11 +8,10 @@ function EditProfile(props){
     const {currentUser} = useContext(UserContext);
     const [displayName, setDisplayName] = useState(props.display_name);
     const [note, setNote] = useState(props.note);
-    const [avatar, setAvatar] = useState(props.avatar);
 
     async function handleSubmit() {
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/accounts/edit", {
+            const response = await axios.put("http://localhost:3000/api/v1/accounts", {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 display_name: displayName,
@@ -23,14 +22,7 @@ function EditProfile(props){
         } catch (error) {
             console.log(error);
         }
-        ;
     }
-
-    // const handleAvatarChange = (event) => {
-    //     const file = event.target.files[0];
-    //     console.log(file);
-    //     setAvatar(file);
-    //   };
 
     return(
         <Modal show={props.show} onHide={props.close}>
@@ -58,16 +50,6 @@ function EditProfile(props){
                     onChange={(e) => setNote(e.target.value)}
                     />
                 </div>
-                {/* <div className="mb-3">
-                    <label htmlFor="avatar" className="form-label">Avatar:</label>
-                    <input
-                    type="file"
-                    className="form-control"
-                    id="avatar"
-                    accept="image/*"
-                    onChange={handleAvatarChange}
-                    />
-                </div> */}
                 <Button variant="secondary" onClick={props.close}>
                     Close
                 </Button>

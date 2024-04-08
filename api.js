@@ -52,7 +52,8 @@ app.post("/api/v1/accounts/:id", async (req, res) => {
     }
 });
 
-app.post("/api/v1/accounts/edit", async (req, res) => {
+//edit user profile
+app.put("/api/v1/accounts", async (req, res) => {
     console.log(req.body);
     const response = await axios.patch(`https://${req.body.instance}/api/v1/accounts/update_credentials`, {
         display_name: req.body.display_name,
@@ -65,6 +66,7 @@ app.post("/api/v1/accounts/edit", async (req, res) => {
     });
 });
 
+//post a status
 app.post("/api/v1/statuses", async (req, res) => {
     try {
         const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {status: req.body.message}, {
@@ -76,7 +78,21 @@ app.post("/api/v1/statuses", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-})
+});
+
+//edit a status
+app.put("/api/v1/statuses/:id", async (req, res) => {
+    try {
+        const response = await axios.put(`https://${req.body.instance}/api/v1/statuses/${req.params.id}`, {status: req.body.text}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {
