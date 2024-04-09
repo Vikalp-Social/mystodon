@@ -11,9 +11,10 @@ export function UserContextProvider({children}){
         token: "",
         avatar: "",
     });
+    const [isLoggedIn, setLoggedIn] = useState(false);
 
     return (
-        <UserContext.Provider value={{currentUser, setCurrentUser}}>
+        <UserContext.Provider value={{currentUser, setCurrentUser, isLoggedIn, setLoggedIn}}>
             {children}
         </UserContext.Provider>
       )

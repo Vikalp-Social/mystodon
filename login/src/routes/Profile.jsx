@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
@@ -10,7 +10,7 @@ import EditProfile from "../components/EditProfile";
 
 function Profile(props){
     const {id} = useParams();
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, isLoggedIn} = useContext(UserContext);
     const [user, setUser] = useState({
         account: {
             avatar: "",
@@ -24,8 +24,13 @@ function Profile(props){
     });
     const [show, setShow] = useState(false)
     const sanitizedHtml = DOMPurify.sanitize(user.account.note);
+    let navigate = useNavigate();
 
     useEffect(() => {
+        if(!isLoggedIn){
+            navigate("/");
+        }
+
         async function fetchUserProfile(){
             try {
                 const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
@@ -55,7 +60,7 @@ function Profile(props){
                         </div>
                     </div>
                     <div className="postTopRight">
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleShow}>Edit Profile</button>
+                        {currentUser.id === id && <button type="button" class="btn btn-outline-secondary" onClick={handleShow}>Edit Profile</button>}
                     </div>
                 </div>
                 <div className="profileCenter">

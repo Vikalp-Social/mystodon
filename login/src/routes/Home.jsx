@@ -1,4 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext} from "../context/UserContext";
 import Status from "../components/Status";
@@ -6,10 +7,15 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
 function Home(){
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, isLoggedIn} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
+    let navigate = useNavigate();
 
     useEffect(() => {
+        if(!isLoggedIn){
+            navigate("/");
+        }
+
         async function fetchTimeline() {
             try {
                 //console.log(currentUser);

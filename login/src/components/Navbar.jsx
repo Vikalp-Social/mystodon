@@ -1,4 +1,26 @@
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 function Navbar() {
+    const {setLoggedIn} = useContext(UserContext);
+    const [search, setSearch] = useState("");
+    let navigate = useNavigate();
+
+    function handleSubmit(event){
+        event.preventDefault();
+        navigate(`/search/${search}`);
+    }
+
+    function handleLogOut() {
+        setLoggedIn(false);
+        navigate("/");
+    }
+
+    function goHome() {
+        navigate("/home");
+    }
+
     return(
         <nav className="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
             <div className="container">
@@ -8,32 +30,21 @@ function Navbar() {
                     </button>
 
                     <div className="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <form className="d-flex" role="search" onSubmit={handleSubmit}>
+                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
+                                value={search} 
+                                onChange={(e) => setSearch(e.target.value)}    
+                            />
                             <button className="btn btn-outline-light" type="submit">Search</button>
                         </form>
                         <ul className="navbar-nav col-lg-6 justify-content-lg-center">
-                            <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item">
-                            <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-                            </li>
-                            <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                            <li className="nav-item" onClick={goHome}>
+                            <a className="nav-link active" aria-current="page">MYSTODON</a>
                             </li>
                         </ul>
 
                         <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                            {/* <img className="profileImg" src="" alt="profile" /> */}
+                            <button className="btn btn-outline-danger" onClick={handleLogOut}>Log Out</button>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ let id = "";
 let secret = "";
 
 function LoginPage() {
-    const {setCurrentUser} = useContext(UserContext);
+    const {setCurrentUser, isLoggedIn, setLoggedIn} = useContext(UserContext);
     const [auth, setAuth] = useState(false);
     const [authcode, setAuthCode] = useState("");
     const [username, setUsername] = useState("");
@@ -57,7 +57,7 @@ function LoginPage() {
                 Authorization: `Bearer ${token}`,
             }
         });
-        console.log(verify.data);
+        //console.log(verify.data);
 
         const user = {
             name,
@@ -67,15 +67,12 @@ function LoginPage() {
             avatar: verify.data.avatar,
         }
         setCurrentUser(user);
+        setLoggedIn(true);
 
         if(verify.data.username === name){
             navigate("/home");
         }
     }
-
-    // useEffect(() => {
-    //     console.log(currentUser);
-    // }, [currentUser]);
 
     return(
         <div>

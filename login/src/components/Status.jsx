@@ -91,7 +91,7 @@ function Status(props) {
                 }
 
                 {props.src.type === "gifv" || props.src.type === "video" ? 
-                <video controls preload className="statusMedia">
+                <video controls preload="true" className="statusMedia">
                     <source src={props.src.url} type="video/mp4"/>
                 </video>
                 :

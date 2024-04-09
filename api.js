@@ -112,6 +112,20 @@ app.post("/api/v1/statuses/:id", async (req, res) => {
     }
 });
 
+app.post("/api/v1/search", async (req, res) => {
+    try {
+        const response = await axios.get(`https://${req.body.instance}/api/v2/search`, {
+            params: {q: req.body.q, type: "accounts"},
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {
     //console.log(req.body);

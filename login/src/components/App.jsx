@@ -18,7 +18,7 @@ function App() {
                       <Route exact path="/home" Component={Home} />
                       <Route exact path="/status/:id" Component={Status} />
                       <Route exact path="/profile/:id" Component={Profile} />
-                      <Route exact path="/search" Component={Search} />
+                      <Route exact path="/search/:q" Component={Search} />
                   </Routes>
               </Router>
       </UserContextProvider>
