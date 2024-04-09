@@ -7,31 +7,9 @@ import axios from "axios";
 const app = express();
 const port = process.env.PORT || 3000
 const token = process.env.TOKEN
-var instance = "mastodon.social";
-var acc_name = "dharunth";
-var id = '';
 
 app.use(cors());
 app.use(bodyParser.json());
-
-//can have a useEffect to send the username of the logged in user to resolve their 
-// app.use((req, res, next) => {
-//     const username = req.body.username
-//     const [acc_name, instance] = username.split("@");
-//     next();
-// });
-
-//middleware to get logged in user id
-// app.use(async (req, res, next) => {
-//     try {
-//         const get_id = await axios.get(`https://${instance}/api/v1/accounts/lookup?acct=${name}`);
-//         id = get_id.data.id;
-//         //console.log(id);
-//         next();
-//     } catch (error) {
-//         console.log(error);
-//     }
-// })
 
 //fetch user account data
 app.post("/api/v1/accounts/:id", async (req, res) => {
@@ -69,6 +47,49 @@ app.put("/api/v1/accounts", async (req, res) => {
         console.log(error);
     }
 });
+
+//search for users
+app.post("/api/v1/search", async (req, res) => {
+    try {
+        const response = await axios.get(`https://${req.body.instance}/api/v2/search`, {
+            params: {q: req.body.q, type: "accounts"},
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// //follow a user
+// app.post("/api/v1/accounts/:id/follow", async (req, res) => {
+//     try {
+//         const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/follow`, {
+//             headers: {
+//                 Authorization: `Bearer ${req.body.token}`,
+//             },
+//         });
+//         res.status(200).json(response.data);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
+
+// //unfollow a user
+// app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
+//     try {
+//         const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/unfollow`, {
+//             headers: {
+//                 Authorization: `Bearer ${req.body.token}`,
+//             },
+//         });
+//         res.status(200).json(response.data);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
 
 //post a status
 app.post("/api/v1/statuses", async (req, res) => {
@@ -111,20 +132,6 @@ app.post("/api/v1/statuses/:id", async (req, res) => {
         console.log(error);
     }
 });
-
-app.post("/api/v1/search", async (req, res) => {
-    try {
-        const response = await axios.get(`https://${req.body.instance}/api/v2/search`, {
-            params: {q: req.body.q, type: "accounts"},
-            headers: {
-                Authorization: `Bearer ${req.body.token}`,
-            },
-        });
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.log(error);
-    }
-})
 
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {
