@@ -12,34 +12,51 @@ function SearchCard(props) {
         navigate(`/profile/${props.user_id}`)
     }
 
-    // async function handleFollow(){
-    //     try {
-    //         const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/follow`, {
-    //             instance: currentUser.instance,
-    //             token: currentUser.token,
-    //         });
-    //         setFollowing(true);
-    //         console.log(response.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    useEffect(() => {
+        checkRelation();
+    }, [])
 
-    // async function handleUnfollow(){
-    //     try {
-    //         const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/unfollow`, {
-    //             instance: currentUser.instance,
-    //             token: currentUser.token,
-    //         });
-    //         setFollowing(false);
-    //         console.log(response.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    async function checkRelation(){
+        try {
+            const response = await axios.get(`https://${currentUser.instance}/api/v1/accounts/relationships`, {
+                params: {"id[]" : props.user_id},
+                headers: {
+                    Authorization: `Bearer ${currentUser.token}`,
+                },
+            });
+            setFollowing(response.data[0].following);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleFollow(){
+        try {
+            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/follow`, {
+                instance: currentUser.instance,
+                token: currentUser.token,
+            });
+            setFollowing(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleUnfollow(){
+        try {
+            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/unfollow`, {
+                instance: currentUser.instance,
+                token: currentUser.token,
+            });
+            setFollowing(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return(
-        <div className="status" >
+        <div className="status" onClick={checkRelation}>
             <div className="statusTop">
                 <div className="statusTopLeft">
                     <img className="statusProfileImg" src={props.prof} alt="profile" />
@@ -51,9 +68,9 @@ function SearchCard(props) {
                 <div className="postTopRight">
                     <div>
                     {isFollowing ?
-                        <button type="button" class="btn btn-outline-danger" >Unfollow</button>
+                        <button type="button" className="btn btn-outline-danger" onClick={handleUnfollow}>Unfollow</button>
                     :
-                        <button type="button" class="btn btn-outline-secondary">Follow</button>
+                        <button type="button" className="btn btn-outline-secondary" onClick={handleFollow}>Follow</button>
                     }
                     </div>
                 </div>

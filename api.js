@@ -63,33 +63,33 @@ app.post("/api/v1/search", async (req, res) => {
     }
 });
 
-// //follow a user
-// app.post("/api/v1/accounts/:id/follow", async (req, res) => {
-//     try {
-//         const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/follow`, {
-//             headers: {
-//                 Authorization: `Bearer ${req.body.token}`,
-//             },
-//         });
-//         res.status(200).json(response.data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+//follow a user
+app.post("/api/v1/accounts/:id/follow", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/follow`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-// //unfollow a user
-// app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
-//     try {
-//         const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/unfollow`, {
-//             headers: {
-//                 Authorization: `Bearer ${req.body.token}`,
-//             },
-//         });
-//         res.status(200).json(response.data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+//unfollow a user
+app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/unfollow`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 //post a status
 app.post("/api/v1/statuses", async (req, res) => {
