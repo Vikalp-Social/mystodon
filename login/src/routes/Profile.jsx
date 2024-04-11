@@ -74,14 +74,10 @@ function Profile(props){
                 {user.statuses.list.map(status => {
                     return <Status 
                         key={status.id}
-                        id={status.id}
-                        user_id={status.account.id}
-                        prof={status.account.avatar}
-                        name={status.account.username}
-                        instance={currentUser.instance} 
-                        fullname={status.account.acct} 
-                        body={status.content} 
-                        src={status.media_attachments.length ? status.media_attachments : ""}
+                        instance={currentUser.instance}
+                        reblogged={status.reblog ? true : false}
+                        post={status.reblog? status.reblog : status}
+                        postedBy={status.account}
                         isUserProfile={id === currentUser.id}
                     />
                 })}

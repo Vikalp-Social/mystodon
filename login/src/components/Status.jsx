@@ -7,7 +7,7 @@ import MediaDisplay from "./MediaDisplay";
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
-    const sanitizedHtml = DOMPurify.sanitize(props.body);
+    const sanitizedHtml = DOMPurify.sanitize(props.post.content);
     const [isEditing, setEditing] = useState(false);
     const [text, setText] = useState(sanitizedHtml);
     let navigate = useNavigate();
@@ -18,8 +18,8 @@ function Status(props) {
         setText(newString);
     }, []);
 
-    function handleUserClick(){
-        navigate(`/profile/${props.user_id}`)
+    function handleUserClick(id){
+        navigate(`/profile/${id}`)
     }
 
     function handleEdit(){
@@ -34,7 +34,7 @@ function Status(props) {
         event.preventDefault();
         setEditing(false);
         try {
-            const response = await axios.put(`http://localhost:3000/api/v1/statuses/${props.id}`, {
+            const response = await axios.put(`http://localhost:3000/api/v1/statuses/${props.post.id}`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 text,
@@ -46,7 +46,7 @@ function Status(props) {
 
     async function handleDelete() {
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.id}`, {
+            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -57,12 +57,13 @@ function Status(props) {
 
     return(
         <div className="status">
+            {props.reblogged && <span className="statusUsername" onClick={() => handleUserClick(props.postedBy.id)}>Reblogged by: {props.postedBy.username}</span>}
             <div className="statusTop">
                 <div className="statusTopLeft">
-                    <img className="statusProfileImg" src={props.prof} alt="profile" />
+                    <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername" onClick={handleUserClick}>{props.name}</span>
-                        <span className="userInstance">{props.name === props.fullname ?`${props.name}@${props.instance}` : props.fullname}</span>
+                        <span className="statusUsername" onClick={() => handleUserClick(props.post.account.id)}>{props.post.account.username}</span>
+                        <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                     </div>
                 </div>
                 <div className="postTopRight">
@@ -90,8 +91,7 @@ function Status(props) {
                 :
                 <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                 }
-
-                {props.src === "" ? "" : <MediaDisplay mediaList={ props.src}/>}
+                {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : ""}
             </div>
         </div>
     );
