@@ -68,6 +68,7 @@ function Profile(props){
                 </div>
             </div>
             <EditProfile show={show} close={handleClose} display_name={user.account.display_name} note={user.account.note} />
+            
             <div className="feed container">
                 <div style={{textAlign: "center"}}>POSTS</div>
                 {user.statuses.list.map(status => {
@@ -80,7 +81,7 @@ function Profile(props){
                         instance={currentUser.instance} 
                         fullname={status.account.acct} 
                         body={status.content} 
-                        src={status.media_attachments.length ? status.media_attachments[0] : ""}
+                        src={status.media_attachments.length ? status.media_attachments : ""}
                         isUserProfile={id === currentUser.id}
                     />
                 })}
