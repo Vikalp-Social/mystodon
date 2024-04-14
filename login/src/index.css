@@ -143,3 +143,25 @@
   max-height: 500px;
   object-fit: contain;
 }
+
+.search-options{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.search-options div {
+  width: 50%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: blue;
+}
+
+.search-options div:hover {
+  background-color: darkblue;
+}
+
+.search-options .active-option {
+  background-color: aqua;
+}

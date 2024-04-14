@@ -4,13 +4,15 @@ import axios  from "axios";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import SearchCard from "../components/SearchCard";
+import Status from "../components/Status";
 import { UserContext } from "../context/UserContext";
 
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {q} = useParams();
+    const [viewStatus, setStatus] = useState(true);
     const [accounts, setAccounts] = useState([]);
-    const [ids, setIds] = useState([]);
+    const [statuses, setStatuses] = useState([]);
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -19,25 +21,14 @@ function Search(){
         }
         async function fetchData() {
             try {
-                const response1 = await axios.post(`http://localhost:3000/api/v1/search`, {
+                const response = await axios.post(`http://localhost:3000/api/v1/search`, {
                     q,
                     token: currentUser.token,
                     instance: currentUser.instance,
                 });
                 //console.log(response.data);
-                setAccounts(response1.data.accounts);
-                // response1.data.accounts.forEach((account) => {
-                //     setIds((prev) => [...prev, account.id]);
-                // });
-                // //console.log(ids);
-                
-                // const response2 = await axios.get(`https://${currentUser.instance}/api/v1/accounts/relationships`, {
-                //     params: {"id[]" : ids},
-                //     headers: {
-                //         Authorization: `Bearer ${currentUser.token}`,
-                //     },
-                // });
-                // console.log(response2.data);
+                setAccounts(response.data.accounts);
+                setStatuses(response.data.statuses);
 
             } catch (error) {
                 console.log(error);
@@ -46,35 +37,37 @@ function Search(){
         fetchData();
     }, []);
 
-    // async function checkRelation(id){
-    //     try {
-    //         const response = await axios.get(`https://${currentUser.instance}/api/v1/accounts/relationships`, {
-    //             params: {"id[]" : id},
-    //             headers: {
-    //                 Authorization: `Bearer ${currentUser.token}`,
-    //             },
-    //         });
-    //         //console.log(response.data);
-    //         let data = response.data;
-    //         return data[0].following === true;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
     return (
         <>
             <Navbar />
             <Sidebar />
             <div className="feed container" style={{marginBottom: "5px"}}>
-                {accounts.map((account, index) => {
-                    return <SearchCard 
-                        user_id={account.id}
-                        prof={account.avatar}
-                        username={account.display_name}
-                        fullname={account.acct}
-                    />
-                })}
+                <div className="search-options">
+                    <div onClick={() => setStatus(false)} className={viewStatus ? "" : "active-option"}>Accounts</div>
+                    <div onClick={() => setStatus(true)} className={viewStatus ? "active-option" : ""}>Statuses</div>
+                </div>
+                {viewStatus ? 
+                    statuses.map((status) => {
+                        return <Status 
+                            key={status.id}
+                            instance={currentUser.instance}
+                            reblogged={status.reblog ? true : false}
+                            post={status.reblog? status.reblog : status}
+                            postedBy={status.account}
+                            isUserProfile={false}
+                        />
+                    })
+                :
+                    accounts.map((account) => {
+                        return <SearchCard 
+                            key={account.id}
+                            user_id={account.id}
+                            prof={account.avatar}
+                            username={account.display_name}
+                            fullname={account.acct}
+                        />
+                    })
+                }
             </div>
         </>
     );

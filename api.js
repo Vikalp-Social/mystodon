@@ -48,11 +48,11 @@ app.put("/api/v1/accounts", async (req, res) => {
     }
 });
 
-//search for users
+//search 
 app.post("/api/v1/search", async (req, res) => {
     try {
         const response = await axios.get(`https://${req.body.instance}/api/v2/search`, {
-            params: {q: req.body.q, type: "accounts"},
+            params: {q: req.body.q},
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
@@ -94,7 +94,9 @@ app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
 //post a status
 app.post("/api/v1/statuses", async (req, res) => {
     try {
-        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {status: req.body.message}, {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {
+            status: req.body.message,
+        }, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
