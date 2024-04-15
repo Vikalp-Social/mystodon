@@ -86,6 +86,17 @@
   object-fit: contain;
 }
 
+.statusBottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statusBottomLeft{
+  display: flex;
+  align-items: center;   
+}
+
 .container-fluid {
   display: flex;
   flex-direction: row;

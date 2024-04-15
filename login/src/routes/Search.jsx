@@ -10,7 +10,7 @@ import { UserContext } from "../context/UserContext";
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {q} = useParams();
-    const [viewStatus, setStatus] = useState(true);
+    const [viewStatus, setStatus] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [statuses, setStatuses] = useState([]);
     let navigate = useNavigate()

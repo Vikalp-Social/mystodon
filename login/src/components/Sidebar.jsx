@@ -49,6 +49,7 @@ function Sidebar() {
                 message,
                 instance: currentUser.instance,
                 token: currentUser.token,
+                reply_id: "",
             });
             setMessage("");
         } catch (error) {

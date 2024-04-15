@@ -96,6 +96,7 @@ app.post("/api/v1/statuses", async (req, res) => {
     try {
         const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {
             status: req.body.message,
+            in_reply_to_id: req.body.reply_id,
         }, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
