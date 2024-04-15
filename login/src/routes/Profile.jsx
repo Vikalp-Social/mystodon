@@ -76,7 +76,7 @@ function Profile(props){
                         key={status.id}
                         instance={currentUser.instance}
                         reblogged={status.reblog ? true : false}
-                        post={status.reblog? status.reblog : status}
+                        post={status.reblog ? status.reblog : status}
                         postedBy={status.account}
                         isUserProfile={id === currentUser.id}
                     />

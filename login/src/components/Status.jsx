@@ -16,39 +16,50 @@ function Status(props) {
         const regex = /(<([^>]+)>)/gi;
         const newString = text.replace(regex, " ");
         setText(newString);
-    }, []);
+    }, [text, props]);
 
-    function handleUserClick(id){
+    function handleClick(){
+        navigate(`/status/${props.post.id}`);
+    }
+
+    function handleUserClick(event, id){
+        event.stopPropagation();
         navigate(`/profile/${id}`)
     }
 
-    function handleEdit(){
+    function handleEdit(event){
+        event.stopPropagation();
         setEditing(true);
     }
 
-    function handleBlur(){
+    function handleBlur(event){
+        event.stopPropagation();
         setEditing(false);
     }
 
     async function handleSubmit(event){
         event.preventDefault();
+        event.stopPropagation();
         setEditing(false);
         try {
-            const response = await axios.put(`http://localhost:3000/api/v1/statuses/${props.post.id}`, {
-                instance: currentUser.instance,
-                token: currentUser.token,
-                text,
+            const response = await axios.put(`https://${currentUser.instance}/api/v1/statuses/${props.post.id}`, {status: text}, {
+                headers: {
+                    Authorization: `Bearer ${currentUser.token}`,
+                },
             });
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function handleDelete() {
+    async function handleDelete(event) {
+        event.preventDefault();
+        event.stopPropagation();
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}`, {
-                instance: currentUser.instance,
-                token: currentUser.token,
+            const response = await axios.delete(`https://${currentUser.instance}/api/v1/statuses/${props.post.id}`, {
+                headers: {
+                    Authorization: `Bearer ${currentUser.token}`,
+                },
             });
         } catch (error) {
             console.log(error);
@@ -56,13 +67,13 @@ function Status(props) {
     }
 
     return(
-        <div className="status">
-            {props.reblogged && <span className="statusUsername" onClick={() => handleUserClick(props.postedBy.id)}>Reblogged by: {props.postedBy.username}</span>}
+        <div className="status" onClick={handleClick}>
+            {props.reblogged && <span className="statusUsername" onClick={(event) => handleUserClick(event, props.postedBy.id)}>Reblogged by: {props.postedBy.username}</span>}
             <div className="statusTop">
                 <div className="statusTopLeft">
                     <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername" onClick={() => handleUserClick(props.post.account.id)}>{props.post.account.username}</span>
+                        <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}>{props.post.account.username}</span>
                         <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                     </div>
                 </div>
@@ -76,7 +87,7 @@ function Status(props) {
             </div>
             <div className="statusCenter">
                 {isEditing ? 
-                    <form onSubmit={handleSubmit}>
+                    <form >
                         <input
                             type="text"
                             className="form-control"
@@ -86,7 +97,7 @@ function Status(props) {
                             onBlur={handleBlur}
                             autoFocus
                             />
-                        <button type="submit" className="btn btn-primary" onMouseDown={(e) => e.preventDefault()}>Save Changes</button> 
+                        <button type="submit" className="btn btn-primary" onMouseDown={(e) => handleSubmit(e)}>Save Changes</button> 
                     </form>
                 :
                 <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>

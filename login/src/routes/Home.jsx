@@ -27,7 +27,7 @@ function Home(){
             }
         }
         fetchTimeline();
-    }, [timeline])
+    }, []);
 
     return (
         <>

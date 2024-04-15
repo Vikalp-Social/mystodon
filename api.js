@@ -107,29 +107,23 @@ app.post("/api/v1/statuses", async (req, res) => {
     }
 });
 
-//edit a status
-app.put("/api/v1/statuses/:id", async (req, res) => {
-    try {
-        const response = await axios.put(`https://${req.body.instance}/api/v1/statuses/${req.params.id}`, {status: req.body.text}, {
-            headers: {
-                Authorization: `Bearer ${req.body.token}`,
-            },
-        });
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-//delete a status
+//fetch a status
 app.post("/api/v1/statuses/:id", async (req, res) => {
     try {
-        const response = await axios.delete(`https://${req.body.instance}/api/v1/statuses/${req.params.id}`, {
+        const status = await axios.get(`https://${req.body.instance}/api/v1/statuses/${req.params.id}`, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
         });
-        res.status(200).json(response.data);
+        const replies = await axios.get(`https://${req.body.instance}/api/v1/statuses/${req.params.id}/context`, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json({
+            status: status.data,
+            replies: replies.data.descendants,
+        });
     } catch (error) {
         console.log(error);
     }
