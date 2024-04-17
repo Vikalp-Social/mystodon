@@ -12,6 +12,8 @@ function Status(props) {
     const [isReplying, setReplying] = useState(false);
     const [text, setText] = useState(sanitizedHtml);
     const [replyText, setReplyText] = useState(`@${props.post.account.acct} `);
+    const [isFavourite, setFavourite] = useState(props.post.favourited);
+    const [isBoosted, setBoosted] = useState(props.post.reblogged);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -39,11 +41,6 @@ function Status(props) {
         setEditing(false);
     }
 
-    function handleBlur(event){
-        event.stopPropagation();
-        setReplying(false);
-    }
-
     async function handleSubmit(event){
         event.preventDefault();
         event.stopPropagation();
@@ -68,6 +65,7 @@ function Status(props) {
                     Authorization: `Bearer ${currentUser.token}`,
                 },
             });
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -76,13 +74,35 @@ function Status(props) {
     async function handleFavourite(event){
         event.preventDefault();
         event.stopPropagation();
-        console.log("Favourited");
+        try {
+            let prefix = props.post.favourited ? "un" : "";
+            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}/favourite`, {
+                instance: currentUser.instance,
+                token: currentUser.token,
+                prefix: prefix,
+            });
+            //console.log(response.data);
+            setFavourite(prev => !prev);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async function handleBoost(event){  
         event.preventDefault();
         event.stopPropagation();
-        console.log("Boosted");
+        try {
+            let prefix = props.post.reblogged ? "un" : "";
+            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}/boost`, {
+                instance: currentUser.instance,
+                token: currentUser.token,
+                prefix: prefix,
+            });
+            console.log(response.data);
+            setBoosted(prev => !prev);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async function handleReply(event){
@@ -96,6 +116,7 @@ function Status(props) {
                 reply_id: props.post.id,
             });
             setReplying(false);
+            navigate(`/status/${props.post.id}`);
         } catch (error) {
             console.log(error);
         }
@@ -115,7 +136,7 @@ function Status(props) {
                         </div>
                     </div>
                     <div className="postTopRight">
-                        {props.isUserProfile && 
+                        {props.isUserProfile && !props.reblogged &&
                         <div>
                         <button type="button" class="btn btn-outline-secondary" onClick={handleEdit}>Edit</button>
                         <button type="button" class="btn btn-outline-danger" onClick={handleDelete}>Delete</button>
@@ -141,8 +162,8 @@ function Status(props) {
                 </div>
                 <div className="statusBottom">
                     <div className="statusBottomLeft">
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleFavourite}>Favourite</button>
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleBoost}>Boost</button>
+                        <button type="button" class="btn btn-outline-secondary" onClick={handleFavourite}>{isFavourite ? "Unfavourite" : "Favourite"}</button>
+                        <button type="button" class="btn btn-outline-secondary" onClick={handleBoost}>{isBoosted ? "Unboost" : "Boost"}</button>
                         <button type="button" class="btn btn-outline-secondary" onClick={(e) => {
                             e.stopPropagation() 
                             setReplying(true)

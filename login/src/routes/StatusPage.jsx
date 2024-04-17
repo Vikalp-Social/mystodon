@@ -9,6 +9,7 @@ import { UserContext } from '../context/UserContext';
 function StatusPage(props) {
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const { id } = useParams();
+    const [replies, setReplies] = useState([]);
     const [status, setStatus] = useState({
         id: "",
         reblog: {
@@ -31,7 +32,6 @@ function StatusPage(props) {
         content: "",
         media_attachments: [],
     });
-    const [replies, setReplies] = useState([]);
     let navigate = useNavigate();
 
     useEffect(() => {

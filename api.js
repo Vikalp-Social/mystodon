@@ -108,6 +108,34 @@ app.post("/api/v1/statuses", async (req, res) => {
     }
 });
 
+//favorite or unfavourite a status
+app.post("/api/v1/statuses/:id/favourite", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses/${req.params.id}/${req.body.prefix}favourite`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//boost or unboost a status
+app.post("/api/v1/statuses/:id/boost", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses/${req.params.id}/${req.body.prefix}reblog`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 //fetch a status
 app.post("/api/v1/statuses/:id", async (req, res) => {
     try {
