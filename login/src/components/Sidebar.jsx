@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
@@ -9,6 +9,10 @@ function Sidebar() {
     const {currentUser} = useContext(UserContext);
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(ids);   
+    });
 
     function handleUserClick(){
         navigate(`/profile/${currentUser.id}`);
@@ -21,29 +25,32 @@ function Sidebar() {
         //refer to https://stackoverflow.com/questions/75331088/how-to-use-the-mastodon-api-to-post-a-status-update-with-an-image
 
         // console.log(event.target.media.files);
-        // const files = Array.from(event.target.media.files);
-        // try {
-        //     files.map(async (file) => {
-        //         const response = await axios.post(`https://${currentUser.instance}/api/v2/media`, {
-        //             file,
-        //         }, {
-        //             headers: {
-        //                 Authorization: `Bearer ${currentUser.token}`,
-        //                 "Content-Type": "multipart/form-data",
-        //             }
-        //         });
-        //         setIds( (prev) => [...prev, response.data.id]);
-        //     });
-            
-        //     const response = await axios.post("http://localhost:3000/api/v1/statuses", {
-        //         message,
-        //         instance: currentUser.instance,
-        //         token: currentUser.token,
-        //     });
-        //     setMessage("");
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        const files = Array.from(event.target.media.files);
+        try {
+            files.map(async (file) => {
+                const response = await axios.post(`https://${currentUser.instance}/api/v2/media`, {
+                    file,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${currentUser.token}`,
+                        "Content-Type": "multipart/form-data",
+                    }
+                });
+                //console.log(response.data);
+                setIds((prev) => [...prev, response.data.id]);
+            });
+
+            //should wait till all media files are uploaded before posting the status
+            const response = await axios.post("http://localhost:3000/api/v1/statuses", {
+                message,
+                instance: currentUser.instance,
+                token: currentUser.token,
+                media_ids: ids,
+            });
+            setMessage("");
+        } catch (error) {
+            console.log(error)
+        }
         try {
             const response = await axios.post("http://localhost:3000/api/v1/statuses", {
                 message,

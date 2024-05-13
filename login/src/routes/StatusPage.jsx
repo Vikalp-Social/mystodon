@@ -57,7 +57,7 @@ function StatusPage(props) {
     }, []);
 
     return (
-        <>
+        <div className='main'>
             <Navbar />
             <Sidebar />
             <div className="feed container">
@@ -81,7 +81,7 @@ function StatusPage(props) {
                     />
                 }) : <p>No replies yet</p>}
             </div>
-        </>
+        </div>
     );
 }
 

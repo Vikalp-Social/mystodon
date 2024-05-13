@@ -5,6 +5,7 @@ import { UserContext} from "../context/UserContext";
 import Status from "../components/Status";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -30,9 +31,10 @@ function Home(){
     }, []);
 
     return (
-        <>
+        <div className="main">
             <Navbar />
             <Sidebar />
+            <ThemeSwitcher />
             <div className="feed container">
                 {timeline.map(status => {
                     return <Status 
@@ -45,8 +47,7 @@ function Home(){
                     />
                 })}
             </div>
-        </>
-        
+        </div>
     );
 }
 

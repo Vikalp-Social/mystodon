@@ -4,7 +4,10 @@ import Navbar from "../components/Navbar";
 
 function Login(){
     return(
-        <LoginPage /> 
+        <div className="main">
+            <LoginPage />
+        </div>
+         
     );
 }
 

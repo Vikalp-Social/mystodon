@@ -4,6 +4,9 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import MediaDisplay from "./MediaDisplay";
+import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat } from "react-icons/fa6";
+import { MdOutlineModeEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
@@ -135,13 +138,11 @@ function Status(props) {
                             <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                         </div>
                     </div>
-                    <div className="postTopRight">
-                        {props.isUserProfile && !props.reblogged &&
-                        <div>
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleEdit}>Edit</button>
-                        <button type="button" class="btn btn-outline-danger" onClick={handleDelete}>Delete</button>
-                        </div>}
-                    </div>
+                    {props.isUserProfile && !props.reblogged &&
+                    <div className="statusTopRight">
+                        <div onClick={handleEdit}><MdOutlineModeEdit style={{color: "grey"}}/></div>
+                        <div onClick={handleDelete}><MdDeleteOutline style={{color: "rgb(127,29,29)"}}/></div>
+                    </div>}
                 </div>
                 <div className="statusCenter">
                     {isEditing ? 
@@ -162,12 +163,9 @@ function Status(props) {
                 </div>
                 <div className="statusBottom">
                     <div className="statusBottomLeft">
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleFavourite}>{isFavourite ? "Unfavourite" : "Favourite"}</button>
-                        <button type="button" class="btn btn-outline-secondary" onClick={handleBoost}>{isBoosted ? "Unboost" : "Boost"}</button>
-                        <button type="button" class="btn btn-outline-secondary" onClick={(e) => {
-                            e.stopPropagation() 
-                            setReplying(true)
-                        }}>Reply</button>
+                        <div onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> </div>
+                        <div onClick={handleBoost}><FaRepeat style={{color: isBoosted ? "green" : ""}} /></div>
+                        <div onClick={handleFavourite}>{isFavourite ? <FaHeart /> : <FaRegHeart />}</div>
                     </div>
                 </div>
             </div>

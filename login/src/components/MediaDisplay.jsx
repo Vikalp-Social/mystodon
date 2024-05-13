@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function MediaDisplay(props){
     return (
-            <Carousel controls={props.mediaList.length > 1} indicators={props.mediaList.length > 1}>
+            <Carousel controls={props.mediaList.length > 1} indicators={props.mediaList.length > 1} onClick={(e) => e.stopPropagation()}>
                 {props.mediaList.map((media) => {
                     return(
                         <Carousel.Item>

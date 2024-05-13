@@ -93,19 +93,21 @@ app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
 
 //post a status
 app.post("/api/v1/statuses", async (req, res) => {
-    try {
-        const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {
-            status: req.body.message,
-            in_reply_to_id: req.body.reply_id,
-        }, {
-            headers: {
-                Authorization: `Bearer ${req.body.token}`,
-            },
-        });
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.log(error);
-    }
+    console.log(req.body)
+    // try {
+    //     const response = await axios.post(`https://${req.body.instance}/api/v1/statuses`, {
+    //         status: req.body.message,
+    //         media_ids: req.body.media_ids,
+    //         in_reply_to_id: req.body.reply_id,
+    //     }, {
+    //         headers: {
+    //             Authorization: `Bearer ${req.body.token}`,
+    //         },
+    //     });
+    //     res.status(200).json(response.data);
+    // } catch (error) {
+    //     console.log(error);
+    // }
 });
 
 //favorite or unfavourite a status

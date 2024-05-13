@@ -22,7 +22,7 @@ function Navbar() {
     }
 
     return(
-        <nav className="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <nav className="navbar sticky-top navbar-expand-lg border-bottom border-body" data-bs-theme="dark">
             <div className="container">
                 <div className="container-fluid">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">

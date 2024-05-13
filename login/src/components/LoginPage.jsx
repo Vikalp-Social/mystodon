@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import axios from "axios";
 import { UserContext} from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,12 @@ function LoginPage() {
     const [name, setName] = useState("");
     const [user_instance, setInstance] = useState("");
     let navigate = useNavigate();
+
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate("/home");
+        }
+    }, [isLoggedIn, navigate]);
 
     async function handleSubmit(event){
         event.preventDefault();

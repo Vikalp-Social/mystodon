@@ -47,29 +47,29 @@ function Profile(props){
     const handleShow = () => setShow(true);
 
     return (
-        <>
+        <div className="main">
             <Navbar />
             <Sidebar />
-            <div className="profile">
-                <div className="profileTop">
-                    <div className="profileTopLeft">
-                        <img className="profileImg" src={user.account.avatar} alt="profile" />
-                        <div className="user">
-                            <span className="profileUsername" >{user.account.username}</span>
-                            <span className="userInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
+            <div className="feed container">
+                <div className="profile">
+                    <div className="profileTop">
+                        <div className="profileTopLeft">
+                            <img className="profileImg" src={user.account.avatar} alt="profile" />
+                            <div className="user">
+                                <span className="profileUsername" >{user.account.username}</span>
+                                <span className="userInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
+                            </div>
+                        </div>
+                        <div className="postTopRight">
+                            {currentUser.id === id && <button type="button" className="btn btn-outline-secondary" onClick={handleShow}>Edit Profile</button>}
                         </div>
                     </div>
-                    <div className="postTopRight">
-                        {currentUser.id === id && <button type="button" class="btn btn-outline-secondary" onClick={handleShow}>Edit Profile</button>}
+                    <div className="profileCenter">
+                        <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     </div>
                 </div>
-                <div className="profileCenter">
-                    <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
-                </div>
-            </div>
-            <EditProfile show={show} close={handleClose} display_name={user.account.display_name} note={user.account.note} />
+                <EditProfile show={show} close={handleClose} display_name={user.account.display_name} note={user.account.note} />
             
-            <div className="feed container">
                 <div style={{textAlign: "center"}}>POSTS</div>
                 {user.statuses.list.map(status => {
                     return <Status 
@@ -83,7 +83,7 @@ function Profile(props){
                 })}
             </div>
             
-        </>
+        </div>
     );
 }
 

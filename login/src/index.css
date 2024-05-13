@@ -1,10 +1,30 @@
-.body{
+button{
+  background-color: rgb(16,179,209);
+}
+
+body{
   margin: 0;
+}
+
+.root{
+  background-color: rgb(35,44,49);
+}
+
+.main{
+  background-color: rgb(35,44,49);
+  color: white;
+}
+
+.main input{
+  background-color: rgb(35,44,49);
+  border: none;
+  color: white;
 }
 
 .homelayout {
   margin: 0;
 }
+
 .outer-container{
   display: flex;
   width: 80%;
@@ -12,9 +32,16 @@
 
 }
 
+.navbar{
+  background-color: rgb(1,25,41);
+}
+
 .sidebar{
+  margin-left: 5%;
+  margin-top: 20px;
   width: 25%;
-  background-color: aliceblue;
+  background-color: rgb(1,25,41);
+  border-radius: 1.5%;
   position: fixed;
   padding: 10px;
 }
@@ -26,18 +53,32 @@
   object-fit: cover;
 }
 
+.sidebar textarea{
+  background-color: rgb(35,44,49);
+  border: none;
+}
+
 .feed{
-  width: 50%;
-  margin-left: 25%;
+  width: 40%;
+  margin-left: 30%;
   position: relative;
   overflow: auto;
+  overscroll-behavior: contain;
   z-index: 1;
+}
+
+.theme{
+  width: 25%;
+  margin-left: 75%;
+  position: fixed;
+  padding: 10px;
 }
 
 .status{
   padding: 10px;
-  margin-bottom: 20px;
-  background-color: aqua;
+  margin: 20px 0;
+  background-color: rgb(1,25,41);
+  border-radius: 1.5%;
 }
 
 .statusTop {
@@ -49,6 +90,20 @@
 .statusTopLeft {
   display: flex;
   align-items: center;
+  width: 80%;
+}
+
+.statusTopRight{
+  display: flex;
+  width: 20%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.statusTopRight > div{
+  display: inline;
+  font-size: 25px;
+  margin-right: 20px;
 }
 
 .statusProfileImg {
@@ -97,6 +152,11 @@
   align-items: center;   
 }
 
+.statusBottomLeft > div{
+  font-size: 20px;
+  margin-right: 20px;
+}
+
 .container-fluid {
   display: flex;
   flex-direction: row;
@@ -104,11 +164,11 @@
 }
 
 .profile{
+  background-color: rgb(1,25,41);
+  color: white;
+  border-radius: 1.5%;
   padding: 20px;
-  margin-bottom: 20px;
-  background-color: aqua;
-  width: 50%;
-  margin-left: 25%;
+  margin: 20px 0;
   position: relative;
   overflow: auto;
   z-index: 1;
@@ -170,7 +230,7 @@
 }
 
 .search-options div:hover {
-  background-color: darkblue;
+  background-color: aquamarine;
 }
 
 .search-options .active-option {

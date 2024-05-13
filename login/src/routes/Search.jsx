@@ -38,7 +38,7 @@ function Search(){
     }, []);
 
     return (
-        <>
+        <div className="main">
             <Navbar />
             <Sidebar />
             <div className="feed container" style={{marginBottom: "5px"}}>
@@ -69,7 +69,7 @@ function Search(){
                     })
                 }
             </div>
-        </>
+        </div>
     );
 }
 
