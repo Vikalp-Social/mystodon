@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import SearchCard from "../components/SearchCard";
 import Status from "../components/Status";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 import { UserContext } from "../context/UserContext";
 
 function Search(){
@@ -41,7 +42,8 @@ function Search(){
         <div className="main">
             <Navbar />
             <Sidebar />
-            <div className="feed container" style={{marginBottom: "5px"}}>
+            <ThemeSwitcher />
+            <div className="feed container" >
                 <div className="search-options">
                     <div onClick={() => setStatus(false)} className={viewStatus ? "" : "active-option"}>Accounts</div>
                     <div onClick={() => setStatus(true)} className={viewStatus ? "active-option" : ""}>Statuses</div>

@@ -81,22 +81,52 @@ function LoginPage() {
     }
 
     return(
-        <div>
-        {auth? 
-            <form action="" onSubmit={handleAuth}>
-                <label htmlFor="code">Authorization Code</label>
-                <input value={authcode} onChange={(event) => setAuthCode(event.target.value)} id="code" type="text" className="form-control" />
-                <button type="submit">submit</button>
-            </form>
-            :
-            <form action="" onSubmit={handleSubmit}>
-                <label htmlFor="name">Name</label>
-                <input value={username} onChange={(event) => setUsername(event.target.value)} id="name" placeholder="Name" type="text" className="form-control" />
-                <button type="submit">submit</button>
-            </form>
-            }
+        // <div>
+        // {auth? 
+        //     <form action="" onSubmit={handleAuth}>
+        //         <label htmlFor="code">Authorization Code</label>
+        //         <input value={authcode} onChange={(event) => setAuthCode(event.target.value)} id="code" type="text" className="form-control" />
+        //         <button type="submit">submit</button>
+        //     </form>
+        //     :
+        //     <form action="" onSubmit={handleSubmit}>
+        //         <label htmlFor="name">Name</label>
+        //         <input value={username} onChange={(event) => setUsername(event.target.value)} id="name" placeholder="Name" type="text" className="form-control" />
+        //         <button type="submit">submit</button>
+        //     </form>
+        //     }
 
+        // </div>
+
+        <div className="login">
+            <div>
+                {!auth ?
+                    <form action="" onSubmit={handleSubmit}>
+                        <div className="login-form">
+                            <div><label htmlFor="name">Enter your Mastodon/Pleroma Instance URL below</label></div>
+                            <div><input value={username} onChange={(event) => setUsername(event.target.value)} id="name" placeholder="example.com" type="text" className="form-control" /></div>
+                            <div><button className="my-button"type="submit">Log In</button></div>
+                        </div>
+                    </form>
+                :
+                    <form action="" onSubmit={handleAuth}>
+                        <div className="login-form">
+                            <div><label htmlFor="code">Enter the Authorization Code below</label></div>
+                            <div><input value={authcode} onChange={(event) => setAuthCode(event.target.value)} id="code" type="text" className="form-control" /></div>
+                            <div><button type="submit">Submit</button></div>
+                        </div>
+                    </form>
+                }
+                <div>
+                    <ul className="list-disc">
+                        <li className="text-xl">Vikalp is just a frontend</li>
+                        <li className="text-xl">Everything runs in your browser</li>
+                        <li className="text-xl">We do not store any information about you</li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
     );
 }
 

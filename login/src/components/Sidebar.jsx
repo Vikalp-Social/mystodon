@@ -66,7 +66,7 @@ function Sidebar() {
 
     return (
         <div className="sidebar">
-            <div className="profileTop">
+            <div className="profileTop" onClick={handleUserClick}>
                 <div className="profileTopLeft">
                     <img className="statusProfileImg" src={currentUser.avatar} alt="profile" />
                     <div className="user">
@@ -86,7 +86,7 @@ function Sidebar() {
                         <label htmlFor="media" className="form-label">Upload Images/Videos</label>
                         <input type="file" id="media" className="form-control" accept="image/*, video/*" multiple />
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="my-button">Submit</button>
                 </form>
             </div>
         </div>

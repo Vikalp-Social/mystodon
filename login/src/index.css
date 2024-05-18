@@ -1,24 +1,106 @@
+:root {
+  --hue: 100;
+  --body_background: rgb(230,243,251);
+  --status_background: var(--hue) 0% 100%;
+  --text_color: black;
+  --button_color: var(--hue) 66.8% 57.5%;
+}
+
+[data-theme="dark"]{
+  --body_background: rgb(35,44,49);
+  --status_background: var(--hue) 95.2% 8.2%;
+  --text_color: white;
+  --button_color: var(--hue) 66.8% 57.5%;
+}
+
+* {
+  transition: all 0.3s ease-in-out;
+}
+
 button{
   background-color: rgb(16,179,209);
 }
 
 body{
   margin: 0;
+  background-color: var(--body_background);
 }
 
 .root{
-  background-color: rgb(35,44,49);
+  background-color: var(--body_background);
 }
 
 .main{
-  background-color: rgb(35,44,49);
-  color: white;
+  background-color: var(--body_background);
+  color: var(--text_color);
 }
 
 .main input{
-  background-color: rgb(35,44,49);
+  background-color: var(--body_background);
   border: none;
-  color: white;
+  color: var(--text_color);
+}
+
+.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0 10%;
+}
+
+.login > div{
+  background-color: hsl(var(--status_background));
+  padding: 40px 20px;
+  border-radius: 1.5%;
+  height: 50%;
+  width: 60%;
+}
+
+.login ul{
+  font-size: 20px;
+}
+
+.login-form{
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.login-form input{
+  border-radius: 4%;
+}
+
+.login-form input::placeholder{
+  color: grey;
+}
+
+.my-button{
+  background-color: hsl(var(--button_color));
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--text_color);
+}
+
+.my-button:hover {
+  filter: brightness(85%);
+}
+
+.login-form .my-button{
+  background-color: hsl(var(--button_color));
+  border: none;
+  border-radius: 16px;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--text_color);
+  float: right;
+  margin: 10px 0 20px 0;
+}
+
+.login-form button:hover{
+  background-color: rgb(4,130,216);
 }
 
 .homelayout {
@@ -33,17 +115,23 @@ body{
 }
 
 .navbar{
-  background-color: rgb(1,25,41);
+  background-color: hsl(var(--status_background));
+  color: var(--text_color)
+}
+
+.navbar li{
+  color: var(--text_color);
 }
 
 .sidebar{
   margin-left: 5%;
   margin-top: 20px;
   width: 25%;
-  background-color: rgb(1,25,41);
+  background-color: hsl(var(--status_background));
   border-radius: 1.5%;
   position: fixed;
   padding: 10px;
+  /* box-shadow: 8px 8px 8px #888888; */
 }
 
 .sidebar img{
@@ -54,7 +142,8 @@ body{
 }
 
 .sidebar textarea{
-  background-color: rgb(35,44,49);
+  background-color: var(--body_background);
+  color: var(--text_color);
   border: none;
 }
 
@@ -69,16 +158,21 @@ body{
 
 .theme{
   width: 25%;
-  margin-left: 75%;
+  margin-left: 70%;
   position: fixed;
   padding: 10px;
+}
+
+.theme input{
+
 }
 
 .status{
   padding: 10px;
   margin: 20px 0;
-  background-color: rgb(1,25,41);
+  background-color: hsl(var(--status_background));
   border-radius: 1.5%;
+  /* box-shadow: 8px 8px 8px #888888; */
 }
 
 .statusTop {
@@ -164,7 +258,7 @@ body{
 }
 
 .profile{
-  background-color: rgb(1,25,41);
+  background-color: hsl(var(--status_background));
   color: white;
   border-radius: 1.5%;
   padding: 20px;
@@ -198,6 +292,7 @@ body{
   font-weight: 500;
   margin: 0 10px;
 }
+
 .profileUsername:hover {
   text-decoration: underline;
 }
@@ -219,20 +314,23 @@ body{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px 0 10px 0;
 }
 
 .search-options div {
   width: 50%;
   padding: 10px;
   cursor: pointer;
-  background-color: blue;
+  background-color: hsl(var(--status_background));
+  border-bottom: 5px solid hsl(var(--status_background));
+  color: grey;
 }
 
 .search-options div:hover {
-  background-color: aquamarine;
+  color: var(--text_color);
 }
 
 .search-options .active-option {
-  background-color: aqua;
+  color: var(--text_color);
+  border-bottom: 5px solid rgb(16,179,209);
 }

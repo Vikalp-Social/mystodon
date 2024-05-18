@@ -65,12 +65,12 @@ function SearchCard(props) {
                         <span className="userInstance">{props.fullname}</span>
                     </div>
                 </div>
-                <div className="postTopRight">
+                <div>
                     <div>
                     {isFollowing ?
-                        <button type="button" className="btn btn-outline-danger" onClick={handleUnfollow}>Unfollow</button>
+                        <button type="button" className="my-button"  onClick={handleUnfollow}>Unfollow</button>
                     :
-                        <button type="button" className="btn btn-outline-secondary" onClick={handleFollow}>Follow</button>
+                        <button type="button" className="my-button" onClick={handleFollow}>Follow</button>
                     }
                     </div>
                 </div>
