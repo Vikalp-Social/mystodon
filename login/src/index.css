@@ -1,16 +1,31 @@
 :root {
-  --hue: 100;
-  --body_background: rgb(230,243,251);
-  --status_background: var(--hue) 0% 100%;
-  --text_color: black;
+  --hue: 204;
+/*light mode*/
+  --body-light: rgb(230,243,251);
+  --status-light: var(--hue) 0% 100%;
+  --text-light: black;
+  --shadow-light: 3px 3px 8px #888888;
+/*dark mode*/
+  --body-dark: rgb(35,44,49);
+  --status-dark: var(--hue) 95.2% 8.2%;
+  --text-dark: white;
+  --shadow-dark: none;
+
   --button_color: var(--hue) 66.8% 57.5%;
 }
 
 [data-theme="dark"]{
-  --body_background: rgb(35,44,49);
-  --status_background: var(--hue) 95.2% 8.2%;
-  --text_color: white;
-  --button_color: var(--hue) 66.8% 57.5%;
+  --body_background: var(--body-dark);
+  --status_background: var(--status-dark);
+  --text_color: var(--text-dark);
+  --box_shadow: var(--shadow-dark);
+}
+
+[data-theme="light"]{
+  --body_background: var(--body-light);
+  --status_background: var(--status-light);
+  --text_color: var(--text-light);
+  --box_shadow: var(--shadow-light)
 }
 
 * {
@@ -131,7 +146,7 @@ body{
   border-radius: 1.5%;
   position: fixed;
   padding: 10px;
-  /* box-shadow: 8px 8px 8px #888888; */
+  box-shadow: var(--box_shadow);
 }
 
 .sidebar img{
@@ -163,8 +178,34 @@ body{
   padding: 10px;
 }
 
-.theme input{
+.color-picker:focus {
+  outline: none;
+}
 
+.color-picker{
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  height: 8px;
+  width: 100%;
+  box-shadow: 0 0 0.8em none; 
+  border-radius: 100vmax;
+  background: linear-gradient(to right,
+      hsl(0, 50%, 50%),
+      hsl(25, 50%, 50%),
+      hsl(50, 50%, 50%),
+      hsl(75, 50%, 50%),
+      hsl(100, 50%, 50%),
+      hsl(125, 50%, 50%),
+      hsl(150, 50%, 50%),
+      hsl(175, 50%, 50%),
+      hsl(200, 50%, 50%),
+      hsl(225, 50%, 50%),
+      hsl(250, 50%, 50%),
+      hsl(275, 50%, 50%),
+      hsl(300, 50%, 50%),
+      hsl(325, 50%, 50%),
+      hsl(350, 50%, 50%));
 }
 
 .status{
@@ -172,7 +213,7 @@ body{
   margin: 20px 0;
   background-color: hsl(var(--status_background));
   border-radius: 1.5%;
-  /* box-shadow: 8px 8px 8px #888888; */
+  box-shadow: var(--box_shadow);
 }
 
 .statusTop {

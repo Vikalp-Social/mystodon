@@ -28,7 +28,7 @@ function Home(){
             }
         }
         fetchTimeline();
-    }, []);
+    }, [timeline]);
 
     return (
         <div className="main">

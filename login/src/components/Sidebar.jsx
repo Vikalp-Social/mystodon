@@ -4,14 +4,14 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
 function Sidebar() {
-    const [ids, setIds] = useState([]);
+    ///const [ids, setIds] = useState([]);
 
     const {currentUser} = useContext(UserContext);
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
 
     useEffect(() => {
-        console.log(ids);   
+        //console.log(ids);   
     });
 
     function handleUserClick(){
@@ -27,42 +27,44 @@ function Sidebar() {
         // console.log(event.target.media.files);
         const files = Array.from(event.target.media.files);
         try {
-            files.map(async (file) => {
-                const response = await axios.post(`https://${currentUser.instance}/api/v2/media`, {
+            const uploadPromises = files.map(file => 
+                axios.post(`https://${currentUser.instance}/api/v2/media`, {
                     file,
                 }, {
                     headers: {
                         Authorization: `Bearer ${currentUser.token}`,
                         "Content-Type": "multipart/form-data",
                     }
-                });
-                //console.log(response.data);
-                setIds((prev) => [...prev, response.data.id]);
-            });
+                })
+            );
 
-            //should wait till all media files are uploaded before posting the status
-            const response = await axios.post("http://localhost:3000/api/v1/statuses", {
-                message,
-                instance: currentUser.instance,
-                token: currentUser.token,
-                media_ids: ids,
-            });
-            setMessage("");
+            const responses = await Promise.all(uploadPromises);
+            const newIds = responses.map(response => response.data.id);
+            postStatus(newIds);
+
         } catch (error) {
             console.log(error)
         }
+        
+    }
+
+    async function postStatus(ids){
+        console.log(ids);
         try {
             const response = await axios.post("http://localhost:3000/api/v1/statuses", {
                 message,
                 instance: currentUser.instance,
                 token: currentUser.token,
                 reply_id: "",
+                media_ids: ids,
             });
             setMessage("");
         } catch (error) {
             console.log(error);
         }
     }
+
+
 
     return (
         <div className="sidebar">

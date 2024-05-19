@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Status from "../components/Status";
 import EditProfile from "../components/EditProfile";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 function Profile(props){
     const {id} = useParams();
@@ -50,6 +51,7 @@ function Profile(props){
         <div className="main">
             <Navbar />
             <Sidebar />
+            <ThemeSwitcher />
             <div className="feed container">
                 <div className="profile">
                     <div className="profileTop">

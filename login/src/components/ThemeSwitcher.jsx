@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import useLocalStorage from '../hooks/useLocalStorage';
 
 function ThemeSwitcher() {
 	const selectedTheme = localStorage.getItem("selectedTheme")
@@ -21,16 +20,27 @@ function ThemeSwitcher() {
 
 	if(selectedTheme === "dark") {
 		setDarkMode();
+	} else if(selectedTheme === "light") {
+		setLightMode();
 	}
 
   return (
     <>
 		<div className='theme sidebar'>
 			ThemeSwitcher
-			<button className='btn btn-tertiary' onClick={setLightMode}>Light</button>
-			<button className='btn btn-secondary' onClick={setDarkMode}>Dark</button>
+			{/* <button className='btn btn-primary' onClick={setLightMode}>Light</button>
+			<button className='btn btn-secondary' onClick={setDarkMode}>Dark</button> */}
+			<div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				Theme
+			</button>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" onClick={setLightMode}>Light</a></li>
+				<li><a class="dropdown-item" onClick={setDarkMode}>Dark</a></li>
+			</ul>
+			</div>
 			<div>
-				<input type="range" min="0" max="360" value={color} onChange={(e) => setColor(e.target.value)}/>
+				<input className='color-picker' type="range" min="0" max="360" value={color} onChange={(e) => setColor(e.target.value)}/>
 			</div>
 		</div>
     </>
