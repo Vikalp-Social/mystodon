@@ -4,15 +4,9 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
 function Sidebar() {
-    ///const [ids, setIds] = useState([]);
-
     const {currentUser} = useContext(UserContext);
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
-
-    useEffect(() => {
-        //console.log(ids);   
-    });
 
     function handleUserClick(){
         navigate(`/profile/${currentUser.id}`);
@@ -20,10 +14,6 @@ function Sidebar() {
 
     async function handleSubmit(event){
         event.preventDefault();
-        //problem with using images and videos in a status: the media file doesnt get 'processed' for some time, and the id shown may not be the correct one
-        //wait for a set time before posting the status (30 mins??)
-        //refer to https://stackoverflow.com/questions/75331088/how-to-use-the-mastodon-api-to-post-a-status-update-with-an-image
-
         // console.log(event.target.media.files);
         const files = Array.from(event.target.media.files);
         try {
@@ -40,12 +30,11 @@ function Sidebar() {
 
             const responses = await Promise.all(uploadPromises);
             const newIds = responses.map(response => response.data.id);
-            postStatus(newIds);
+            setTimeout(() => postStatus(newIds), 5000)
 
         } catch (error) {
             console.log(error)
         }
-        
     }
 
     async function postStatus(ids){
@@ -63,8 +52,6 @@ function Sidebar() {
             console.log(error);
         }
     }
-
-
 
     return (
         <div className="sidebar">
@@ -94,5 +81,5 @@ function Sidebar() {
         </div>
     );
 }
-//{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}
+
 export default Sidebar;

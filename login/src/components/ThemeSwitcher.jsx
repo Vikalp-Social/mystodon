@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 function ThemeSwitcher() {
 	const selectedTheme = localStorage.getItem("selectedTheme")
-	const [color, setColor] = useState(204)
+	const [color, setColor] = useLocalStorage("--hue", 204)
 
 	useEffect(() => {
 		document.documentElement.style.setProperty('--hue', color);
 	}, [color])
 
 	function setDarkMode() {
-		document.querySelector("body").setAttribute("data-theme", "dark")
+		document.querySelector("body").setAttribute("color-scheme", "dark")
 		localStorage.setItem("selectedTheme", "dark");
 	}
 
 	function setLightMode() {
-		document.querySelector("body").setAttribute("data-theme", "light")
+		document.querySelector("body").setAttribute("color-scheme", "light")
 		localStorage.setItem("selectedTheme", "light");
 	}
 

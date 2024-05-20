@@ -1,12 +1,12 @@
 :root {
   --hue: 204;
 /*light mode*/
-  --body-light: rgb(230,243,251);
+  --body-light: var(--hue) 72.4% 94.3% ;
   --status-light: var(--hue) 0% 100%;
   --text-light: black;
   --shadow-light: 3px 3px 8px #888888;
 /*dark mode*/
-  --body-dark: rgb(35,44,49);
+  --body-dark: var(--hue) 16.7% 16.5% ;
   --status-dark: var(--hue) 95.2% 8.2%;
   --text-dark: white;
   --shadow-dark: none;
@@ -14,18 +14,40 @@
   --button_color: var(--hue) 66.8% 57.5%;
 }
 
-[data-theme="dark"]{
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body_background: var(--body-dark);
+    --status_background: var(--status-dark);
+    --text_color: var(--text-dark);
+    --box_shadow: var(--shadow-dark);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --body_background: var(--body-light);
+    --status_background: var(--status-light);
+    --text_color: var(--text-light);
+    --box_shadow: var(--shadow-light);
+    color-scheme: light;
+  }
+}
+
+[color-scheme="dark"]{
   --body_background: var(--body-dark);
   --status_background: var(--status-dark);
   --text_color: var(--text-dark);
   --box_shadow: var(--shadow-dark);
+  color-scheme: "dark";
 }
 
-[data-theme="light"]{
+[color-scheme="light"]{
   --body_background: var(--body-light);
   --status_background: var(--status-light);
   --text_color: var(--text-light);
-  --box_shadow: var(--shadow-light)
+  --box_shadow: var(--shadow-light);
+  color-scheme: "light";
 }
 
 * {
@@ -38,20 +60,20 @@ button{
 
 body{
   margin: 0;
-  background-color: var(--body_background);
+  background-color: hsl(var(--body_background));
 }
 
 .root{
-  background-color: var(--body_background);
+  background-color: hsl(var(--body_background));
 }
 
 .main{
-  background-color: var(--body_background);
+  background-color: hsl(var(--body_background));
   color: var(--text_color);
 }
 
 .main input{
-  background-color: var(--body_background);
+  background-color: hsl(var(--body_background));
   border: none;
   color: var(--text_color);
 }
@@ -65,7 +87,7 @@ body{
 }
 
 .login > div{
-  background-color: hsl(var(--status_background));
+  background-color: hsl(204, 95.2%, 8.2%);
   padding: 40px 20px;
   border-radius: 1.5%;
   height: 50%;
@@ -104,7 +126,7 @@ body{
 }
 
 .login-form .my-button{
-  background-color: hsl(var(--button_color));
+  background-color: hsl(207, 66.8%, 57.5%);
   border: none;
   border-radius: 16px;
   padding: 10px;
@@ -157,7 +179,7 @@ body{
 }
 
 .sidebar textarea{
-  background-color: var(--body_background);
+  background-color: hsl(var(--body_background));
   color: var(--text_color);
   border: none;
 }

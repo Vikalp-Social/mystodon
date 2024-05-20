@@ -11,6 +11,23 @@ const token = process.env.TOKEN
 app.use(cors());
 app.use(bodyParser.json());
 
+app.post("/api/v1/auth", async(req, res) => {
+    console.log(req.body);
+    try {
+        const response = await axios.post(`https://${req.body.user_instance}/oauth/token`, {
+            client_id: req.body.id,
+            client_secret: req.body.secret,
+            redirect_uri: "http://localhost:3001/auth",
+            grant_type: "authorization_code",
+            code: req.body.code,
+            scope: "read write push",
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 //fetch user account data
 app.post("/api/v1/accounts/:id", async (req, res) => {
     try {

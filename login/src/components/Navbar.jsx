@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function Navbar() {
-    const {setLoggedIn} = useContext(UserContext);
+    const {setLoggedIn, setCurrentUser} = useContext(UserContext);
     const [search, setSearch] = useState("");
     let navigate = useNavigate();
 
@@ -14,6 +14,8 @@ function Navbar() {
 
     function handleLogOut() {
         setLoggedIn(false);
+        localStorage.removeItem("current_user");
+        localStorage.removeItem("--hue");
         navigate("/");
     }
 
@@ -25,10 +27,6 @@ function Navbar() {
         <nav className="navbar sticky-top navbar-expand-lg border-bottom border-body">
             <div className="container">
                 <div className="container-fluid">
-                    {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                    </button> */}
-
                     <div className="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
                         <form className="d-flex" role="search" onSubmit={handleSubmit}>
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
