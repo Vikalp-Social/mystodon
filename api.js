@@ -7,9 +7,28 @@ import axios from "axios";
 const app = express();
 const port = process.env.PORT || 3000
 const token = process.env.TOKEN
+const ref = new Date(1/1/1970);
 
 app.use(cors());
 app.use(bodyParser.json());
+
+function score(date, likes, boosts){
+    const d = new Date(date);
+    const t = Math.floor(Math.abs(ref - d) / 1000);
+    const x = likes + 2 * boosts;
+    const y = x > 0 ? 1 : 0;
+    const z = x >= 1 ? x : 1;
+    return Math.log10(z) + (y * t / 45000);
+}
+
+function formatData(data){
+    const statuses = data.map(status => {
+        const s = status.reblog ? status.reblog : status;
+        return {...status, score: score(s.created_at, s.favourites_count, s.reblogs_count)}
+        
+    });
+    return statuses.sort((a, b) => b.score - a.score);
+}
 
 app.post("/api/v1/auth", async(req, res) => {
     console.log(req.body);
@@ -74,7 +93,10 @@ app.post("/api/v1/search", async (req, res) => {
                 Authorization: `Bearer ${req.body.token}`,
             },
         });
-        res.status(200).json(response.data);
+        res.status(200).json({
+            accounts: response.data.accounts,
+            statuses: formatData(response.data.statuses),
+        });
     } catch (error) {
         console.log(error);
     }
@@ -185,13 +207,8 @@ app.post("/api/v1/timelines/home", async (req, res) => {
             headers: {
                 Authorization: `Bearer ${req.body.token}`
         }});
-        res.status(200).json({
-            status: "Success",
-            count: response.data.count,
-            data: {
-                timeline: response.data,
-            }
-        });
+        res.json(formatData(response.data))
+        //res.status(200).json(response.data);
         //console.log(response.data);
     } catch (error) {
         console.log(error);

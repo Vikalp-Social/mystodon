@@ -22,13 +22,13 @@ function Home(){
                 //console.log(currentUser);
                 const response = await axios.post("http://localhost:3000/api/v1/timelines/home", currentUser);
                 //console.log(response.data.data.timeline);
-                setTimeline(response.data.data.timeline)
+                setTimeline(response.data)
             } catch (error) {
                 console.log(error);
             }
         }
         fetchTimeline();
-    }, [timeline]);
+    }, []);
 
     return (
         <div className="main">
