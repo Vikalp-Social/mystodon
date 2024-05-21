@@ -12,7 +12,7 @@ Instance = website/domain
 All requests to the Mastodon API require authentication using OAuth 2.0. Clients must obtain an access token by completing the OAuth 2.0 authentication flow.
 
 ## How to run
-Follow the steps below to run the application after cloning/pulling into your local device. \
+Follow the steps below to run the application after cloning/pulling into your local device. (React - v18.2.0)
 
 1) `npm i`
 2) `nodemon api.js`
