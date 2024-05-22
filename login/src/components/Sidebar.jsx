@@ -58,7 +58,7 @@ function Sidebar() {
         <div className="sidebar">
             <div className="profileTop" onClick={handleUserClick}>
                 <div className="profileTopLeft">
-                    <img className="statusProfileImg" src={currentUser.avatar} alt="profile" />
+                    <img className="profileImg" src={currentUser.avatar} alt="profile" />
                     <div className="user">
                         <span className="statusUsername" onClick={handleUserClick}>{currentUser.name}</span>
                         <span className="userInstance">{`${currentUser.name}@${currentUser.instance}`}</span>
@@ -66,12 +66,12 @@ function Sidebar() {
                 </div>
             </div>
 
-            <div className="container mt-4">
+            <div className="profileCenter">
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="message" className="form-label">Post a Status</label>
                         <textarea className="form-control" id="message" rows="3" maxLength={500} value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
-                        {500 - message.length}
+                        Remaining Characters: {500 - message.length}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="media" className="form-label">Upload Images/Videos</label>

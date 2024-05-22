@@ -59,12 +59,13 @@ button{
 }
 
 body{
-  margin: 0;
+  margin: 0 0 20px 0;
   background-color: hsl(var(--body_background));
 }
 
 .root{
   background-color: hsl(var(--body_background));
+  margin: 0;
 }
 
 .main{
@@ -92,13 +93,6 @@ body{
 
 .homelayout {
   margin: 0;
-}
-
-.outer-container{
-  display: flex;
-  width: 80%;
-  justify-content: center;
-
 }
 
 .feed{

@@ -23,9 +23,9 @@ function EditProfile(props){
     }
 
     return(
-        <Modal show={props.show} onHide={props.close}>
+        <Modal show={props.show} onHide={props.close} style={{backgroundColor: "var(--status_background)"}}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Edit Profile</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <form onSubmit={handleSubmit} className="container mt-4">

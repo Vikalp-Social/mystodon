@@ -4,7 +4,7 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import MediaDisplay from "./MediaDisplay";
-import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat } from "react-icons/fa6";
+import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
 import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
 import "../styles/status.css";
 
@@ -130,8 +130,20 @@ function Status(props) {
         }
     }
 
+    function handleShare(event){
+        event.preventDefault();
+        event.stopPropagation();
+        navigator.clipboard.writeText(props.post.uri);
+    }
+
     function formatData(data){
-        return data > 1000 ? `${(data/1000).toFixed(1)}k` : data;
+        let message = data;
+        if(data > 1000){
+            message = `${(data/1000).toFixed(2)}k`;
+            data = data/1000;
+            if(data > 100) message = `${Math.round(data)}k`;
+        }
+        return message; 
     }
 
     return(
@@ -182,6 +194,7 @@ function Status(props) {
                         <div title="Like" onClick={handleFavourite}> {isFavourite ? <FaHeart /> : <FaRegHeart />} 
                             <span className="stats">{formatData(props.post.favourites_count)}</span>
                         </div>
+                        <div title="Share" onClick={handleShare}> <FaShare/> </div>
                     </div>
                 </div>
             </div>

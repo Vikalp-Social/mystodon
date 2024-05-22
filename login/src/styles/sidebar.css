@@ -5,7 +5,6 @@
     background-color: hsl(var(--status_background));
     border-radius: 1.5%;
     position: fixed;
-    padding: 20px;
     box-shadow: var(--box_shadow);
 }
   
