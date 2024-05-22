@@ -73,13 +73,14 @@ function StatusPage(props) {
                 />
                 <h2>Replies</h2>
                 {replies.length ? replies.map(reply => {
-                    return <Status 
+                    return <Status
                         key={reply.id}
                         instance={currentUser.instance}
                         reblogged={reply.reblog ? true : false}
                         post={reply.reblog? reply.reblog : reply}
                         postedBy={reply.account}
                         isUserProfile={false}
+                        reply={true}
                     />
                 }) : <p>No replies yet</p>}
             </div>

@@ -5,8 +5,8 @@ import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import MediaDisplay from "./MediaDisplay";
 import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat } from "react-icons/fa6";
-import { MdOutlineModeEdit } from "react-icons/md";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
+import "../styles/status.css";
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
@@ -26,7 +26,9 @@ function Status(props) {
     }, [text, props]);
 
     function handleClick(){
-        navigate(`/status/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
+        if(!props.reply){
+            navigate(`/status/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
+        }
     }
 
     function handleUserClick(event, id){
@@ -85,7 +87,10 @@ function Status(props) {
                 prefix: prefix,
             });
             //console.log(response.data);
-            setFavourite(prev => !prev);
+            setFavourite(prev => {
+                props.post.favourites_count = !prev ? props.post.favourites_count + 1 : props.post.favourites_count - 1;
+                return !prev;
+            });
         } catch (error) {
             console.log(error);
         }
@@ -123,18 +128,23 @@ function Status(props) {
         } catch (error) {
             console.log(error);
         }
-        
+    }
+
+    function formatData(data){
+        return data > 1000 ? `${(data/1000).toFixed(1)}k` : data;
     }
 
     return(
         <>
-            <div className="status" onClick={handleClick}>
-                {props.reblogged && <span className="statusUsername" onClick={(event) => handleUserClick(event, props.postedBy.id)}>Reblogged by: {props.postedBy.username}</span>}
+            <div className={props.reply ? "reply" : "status"} onClick={handleClick} >
+                {props.reblogged && <div className="statusRepost" onClick={(event) => handleUserClick(event, props.postedBy.id)}>
+                    <MdOutlineRepeat style={{color: "green", fontSize: "20px"}}/> <span><strong>{props.postedBy.display_name}</strong></span> reposted
+                </div>}
                 <div className="statusTop">
                     <div className="statusTopLeft">
                         <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
                         <div className="user">
-                            <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}>{props.post.account.username}</span>
+                            <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}>{props.post.account.display_name}</span>
                             <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                         </div>
                     </div>
@@ -163,9 +173,15 @@ function Status(props) {
                 </div>
                 <div className="statusBottom">
                     <div className="statusBottomLeft">
-                        <div onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> </div>
-                        <div onClick={handleBoost}><FaRepeat style={{color: isBoosted ? "green" : ""}} /></div>
-                        <div onClick={handleFavourite}>{isFavourite ? <FaHeart /> : <FaRegHeart />}</div>
+                        <div title="Reply" onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> 
+                            <span className="stats">{formatData(props.post.replies_count)}</span> 
+                        </div>
+                        <div title="Repost" onClick={handleBoost}><FaRepeat style={{color: isBoosted ? "green" : ""}} /> 
+                            <span className="stats">{formatData(props.post.reblogs_count)}</span>
+                        </div>
+                        <div title="Like" onClick={handleFavourite}> {isFavourite ? <FaHeart /> : <FaRegHeart />} 
+                            <span className="stats">{formatData(props.post.favourites_count)}</span>
+                        </div>
                     </div>
                 </div>
             </div>

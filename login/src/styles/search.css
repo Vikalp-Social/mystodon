@@ -1,0 +1,24 @@
+.search-options{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0 10px 0;
+}
+  
+.search-options div {
+    width: 50%;
+    padding: 10px;
+    cursor: pointer;
+    background-color: hsl(var(--status_background));
+    border-bottom: 5px solid hsl(var(--status_background));
+    color: grey;
+}
+
+.search-options div:hover {
+    color: var(--text_color);
+}
+
+.search-options .active-option {
+    color: var(--text_color);
+    border-bottom: 5px solid rgb(16,179,209);
+}

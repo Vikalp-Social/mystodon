@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
+import '../styles/theme-switcher.css'
 
 function ThemeSwitcher() {
 	const selectedTheme = localStorage.getItem("selectedTheme")
@@ -27,7 +28,7 @@ function ThemeSwitcher() {
 
   return (
     <>
-		<div className='theme sidebar'>
+		<div className='theme'>
 			ThemeSwitcher
 			{/* <button className='btn btn-primary' onClick={setLightMode}>Light</button>
 			<button className='btn btn-secondary' onClick={setDarkMode}>Dark</button> */}

@@ -1,0 +1,13 @@
+.navbar{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    box-shadow: var(--box_shadow);
+}
+  
+.navbar li{
+    color: var(--text_color);
+}
+  
+.navbar li:hover{
+    cursor: pointer;
+}

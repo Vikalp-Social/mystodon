@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import Status from "../components/Status";
 import EditProfile from "../components/EditProfile";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import "../styles/profile.css";
 
 function Profile(props){
     const {id} = useParams();

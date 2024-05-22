@@ -1,0 +1,40 @@
+.theme{
+    width: 25%;
+    margin-left: 70%;
+    position: fixed;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+}
+  
+.color-picker:focus {
+    outline: none;
+}
+  
+.color-picker{
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    height: 8px;
+    width: 100%;
+    box-shadow: 0 0 0.8em none; 
+    border-radius: 100vmax;
+    background: linear-gradient(to right,
+        hsl(0, 50%, 50%),
+        hsl(25, 50%, 50%),
+        hsl(50, 50%, 50%),
+        hsl(75, 50%, 50%),
+        hsl(100, 50%, 50%),
+        hsl(125, 50%, 50%),
+        hsl(150, 50%, 50%),
+        hsl(175, 50%, 50%),
+        hsl(200, 50%, 50%),
+        hsl(225, 50%, 50%),
+        hsl(250, 50%, 50%),
+        hsl(275, 50%, 50%),
+        hsl(300, 50%, 50%),
+        hsl(325, 50%, 50%),
+        hsl(350, 50%, 50%));
+}

@@ -7,6 +7,7 @@ import SearchCard from "../components/SearchCard";
 import Status from "../components/Status";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import { UserContext } from "../context/UserContext";
+import "../styles/search.css";
 
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);

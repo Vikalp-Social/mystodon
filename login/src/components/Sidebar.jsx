@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import "../styles/sidebar.css";
 
 function Sidebar() {
     const {currentUser} = useContext(UserContext);
@@ -69,7 +70,8 @@ function Sidebar() {
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="message" className="form-label">Post a Status</label>
-                        <textarea className="form-control" id="message" rows="3" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
+                        <textarea className="form-control" id="message" rows="3" maxLength={500} value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
+                        {500 - message.length}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="media" className="form-label">Upload Images/Videos</label>

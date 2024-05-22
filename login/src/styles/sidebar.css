@@ -1,0 +1,23 @@
+.sidebar{
+    margin-left: 5%;
+    margin-top: 20px;
+    width: 25%;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    position: fixed;
+    padding: 20px;
+    box-shadow: var(--box_shadow);
+}
+  
+.sidebar img{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+  
+.sidebar textarea{
+    background-color: hsl(var(--body_background));
+    color: var(--text_color);
+    border: none;
+}
