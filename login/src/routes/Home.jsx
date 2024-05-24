@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 
+// Default values shown  
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
@@ -31,23 +32,25 @@ function Home(){
     }, []);
 
     return (
-        <div className="main">
-            <Navbar />
-            <Sidebar />
-            <ThemeSwitcher />
-            <div className="feed container">
-                {timeline.map(status => {
-                    return <Status 
-                        key={status.id}
-                        instance={currentUser.instance}
-                        reblogged={status.reblog ? true : false}
-                        post={status.reblog? status.reblog : status}
-                        postedBy={status.account}
-                        isUserProfile={false}
-                    />
-                })}
+        <>
+            <div className="main">
+                <Navbar />
+                <Sidebar />
+                <ThemeSwitcher />
+                <div className="feed container">
+                    {timeline.map(status => {
+                        return <Status 
+                            key={status.id}
+                            instance={currentUser.instance}
+                            reblogged={status.reblog ? true : false}
+                            post={status.reblog? status.reblog : status}
+                            postedBy={status.account}
+                            isUserProfile={false}
+                        />
+                    })}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

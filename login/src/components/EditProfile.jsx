@@ -1,13 +1,22 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
+import "../styles/profile.css";
 
 function EditProfile(props){
     const {currentUser} = useContext(UserContext);
     const [displayName, setDisplayName] = useState(props.display_name);
     const [note, setNote] = useState(props.note);
+
+    console.log(props);
+
+    useEffect(() => {
+        const regex = /(<([^>]+)>)/gi;
+        const newString = props.note.replace(regex, " ");
+        setNote(newString);
+    }, [note, props]);
 
     async function handleSubmit() {
         try {
@@ -23,7 +32,7 @@ function EditProfile(props){
     }
 
     return(
-        <Modal show={props.show} onHide={props.close} style={{backgroundColor: "var(--status_background)"}}>
+        <Modal show={props.show} onHide={props.close} contentClassName='editProfile'>
             <Modal.Header closeButton>
                 <Modal.Title>Edit Profile</Modal.Title>
             </Modal.Header>
@@ -35,7 +44,7 @@ function EditProfile(props){
                     type="text"
                     className="form-control"
                     id="displayName"
-                    value={displayName}
+                    value={displayName || props.display_name}
                     onChange={(e) => setDisplayName(e.target.value)}
                     />
                 </div>

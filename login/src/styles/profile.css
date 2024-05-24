@@ -68,3 +68,18 @@
 	max-height: 500px;
 	object-fit: contain;
 }
+
+.editProfile{
+	background-color: hsl(var(--status_background));
+	color: var(--text_color);
+}
+
+.editProfile input{
+	background-color: hsl(var(--body_background));
+	color: var(--text_color);
+}
+
+.editProfile textarea{
+	background-color: hsl(var(--body_background));
+	color: var(--text_color);
+}

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
-function SearchCard(props) {
+function SearchAccount(props) {
     const {currentUser} = useContext(UserContext);
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 
     function handleUserClick(){
-        navigate(`/profile/${props.user_id}`)
+        navigate(`/tags/${props.name}`)
     }
 
     useEffect(() => {
@@ -18,14 +18,12 @@ function SearchCard(props) {
 
     async function checkRelation(){
         try {
-            const response = await axios.get(`https://${currentUser.instance}/api/v1/accounts/relationships`, {
-                params: {"id[]" : props.user_id},
+            const response = await axios.get(`https://${currentUser.instance}/api/v1/tags/${props.name}`, {
                 headers: {
                     Authorization: `Bearer ${currentUser.token}`,
                 },
             });
-            setFollowing(response.data[0].following);
-            
+            setFollowing(response.data.following);
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +31,7 @@ function SearchCard(props) {
 
     async function handleFollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/follow`, {
+            const response = await axios.post(`http://localhost:3000/api/v1/tags/${props.name}/follow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -45,7 +43,7 @@ function SearchCard(props) {
 
     async function handleUnfollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/unfollow`, {
+            const response = await axios.post(`http://localhost:3000/api/v1/tags/${props.name}/unfollow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -56,13 +54,12 @@ function SearchCard(props) {
     }
 
     return(
-        <div className="status" onClick={checkRelation}>
+        <div className="search" onClick={checkRelation}>
             <div className="statusTop">
                 <div className="statusTopLeft">
-                    <img className="statusProfileImg" src={props.prof} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername" onClick={handleUserClick}>{props.username}</span>
-                        <span className="userInstance">{props.fullname}</span>
+                        <span className="statusUsername" onClick={handleUserClick}>#{props.name}</span>
+                        {props.talking > 0 && <span className="userInstance">{props.talking} {props.talking > 1  ? "people talking" : "person talking"} </span>}
                     </div>
                 </div>
                 <div>
@@ -79,4 +76,4 @@ function SearchCard(props) {
     );
 }
 
-export default SearchCard;
+export default SearchAccount;

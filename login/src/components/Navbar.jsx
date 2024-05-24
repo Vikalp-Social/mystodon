@@ -4,8 +4,9 @@ import { UserContext } from "../context/UserContext";
 import "../styles/navbar.css";
 
 function Navbar() {
-    const {setLoggedIn, setCurrentUser} = useContext(UserContext);
+    const {setLoggedIn, currentUser} = useContext(UserContext);
     const [search, setSearch] = useState("");
+    const [show, setShow] = useState(false);
     let navigate = useNavigate();
 
     function handleSubmit(event){
@@ -17,6 +18,7 @@ function Navbar() {
         setLoggedIn(false);
         localStorage.removeItem("current_user");
         localStorage.removeItem("--hue");
+        document.documentElement.style.setProperty("--hue", 204);
         navigate("/");
     }
 
@@ -41,10 +43,16 @@ function Navbar() {
                                 MYSTODON
                             </li>
                         </ul>
-
-                        <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                            <button className="btn btn-outline-danger" onClick={handleLogOut}>Log Out</button>
-                        </div>
+                    </div>
+                    <div className="dropdown" onClick={() => setShow(!show)}>
+                        <img className="statusProfileImg" src={currentUser.avatar} alt="profile" />
+                        {show && 
+                            <div class="dropdown-content">
+                                <div onClick={() => navigate(`/profile/${currentUser.id}`)}>Profile</div>
+                                <div>Theme</div>
+                                <div onClick={handleLogOut}>Logout</div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

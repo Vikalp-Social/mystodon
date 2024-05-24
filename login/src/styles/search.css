@@ -1,3 +1,11 @@
+.search{
+    padding: 20px;
+    margin: 20px 0;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+}
+
 .search-options{
     display: flex;
     justify-content: space-around;

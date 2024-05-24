@@ -47,6 +47,8 @@
 
   .userInstance{
     margin: 0 10px;
+    word-wrap: break-word;
+    width: 400px;
   }
   
   .user{

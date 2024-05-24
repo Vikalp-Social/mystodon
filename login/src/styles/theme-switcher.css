@@ -38,3 +38,26 @@
         hsl(325, 50%, 50%),
         hsl(350, 50%, 50%));
 }
+
+.rgb-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rgb-form label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rgb-form input {
+    width: 50px;
+}
+
+.rgb-color-display {
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+}

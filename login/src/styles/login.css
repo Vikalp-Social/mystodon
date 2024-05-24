@@ -4,6 +4,7 @@
     align-items: center;
     height: 100vh;
     padding: 0 10%;
+    background-color: hsl();
 }
 
 .login > div{

@@ -96,6 +96,7 @@ app.post("/api/v1/search", async (req, res) => {
         res.status(200).json({
             accounts: response.data.accounts,
             statuses: formatData(response.data.statuses),
+            hashtags: response.data.hashtags,
         });
     } catch (error) {
         console.log(error);
@@ -116,10 +117,38 @@ app.post("/api/v1/accounts/:id/follow", async (req, res) => {
     }
 });
 
+//follow a tag
+app.post("/api/v1/tags/:name/follow", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/tags/${req.params.name}/follow`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 //unfollow a user
 app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
     try {
         const response = await axios.post(`https://${req.body.instance}/api/v1/accounts/${req.params.id}/unfollow`, {}, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//unfollow a tag
+app.post("/api/v1/tags/:name/unfollow", async (req, res) => {
+    try {
+        const response = await axios.post(`https://${req.body.instance}/api/v1/tags/${req.params.name}/unfollow`, {}, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
@@ -198,6 +227,20 @@ app.post("/api/v1/statuses/:id", async (req, res) => {
         console.log(error);
     }
 });
+
+//fetch tag timeline
+app.post("/api/v1/timelines/tag/:name", async (req, res) => {
+    try {
+        const response = await axios.get(`https://${req.body.instance}/api/v1/timelines/tag/${req.params.name}?limit=30`, {
+            headers: {
+                Authorization: `Bearer ${req.body.token}`,
+            },
+        });
+        res.status(200).json(formatData(response.data));
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 //fetch home timeline 
 app.post("/api/v1/timelines/home", async (req, res) => {

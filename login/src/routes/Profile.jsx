@@ -34,18 +34,22 @@ function Profile(props){
             navigate("/");
         }
 
-        async function fetchUserProfile(){
-            try {
-                const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
-                //console.log(response.data);
-                setUser(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
         fetchUserProfile();
+    });
+
+    useEffect(() => {
         checkRelation();
     }, []);
+
+    async function fetchUserProfile(){
+        try {
+            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
+            //console.log(response.data);
+            setUser(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function checkRelation(){
         try {
@@ -114,7 +118,7 @@ function Profile(props){
                             <img className="profileImg" src={user.account.avatar} alt="profile" />
                             <div className="user">
                                 <span className="profileUsername" >{user.account.display_name}</span>
-                                <span className="userInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
+                                <span className="profileUserInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
                             </div>
                         </div>
                         <div className="profileTopRight">
