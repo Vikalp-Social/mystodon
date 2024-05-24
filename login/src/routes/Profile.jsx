@@ -25,7 +25,8 @@ function Profile(props){
         },
     });
     const [following, setFollowing] = useState(false);
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false);
     const sanitizedHtml = DOMPurify.sanitize(user.account.note);
     let navigate = useNavigate();
 
@@ -33,9 +34,8 @@ function Profile(props){
         if(!isLoggedIn){
             navigate("/");
         }
-
         fetchUserProfile();
-    });
+    }, [id]);
 
     useEffect(() => {
         checkRelation();
@@ -43,9 +43,11 @@ function Profile(props){
 
     async function fetchUserProfile(){
         try {
+            setLoading(true);
             const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
             //console.log(response.data);
             setUser(response.data);
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -109,6 +111,7 @@ function Profile(props){
             <Sidebar />
             <ThemeSwitcher />
             <div className="feed container">
+                {loading && <div className="loader"></div>}
                 <div className="profile">
                     <div >
                         {user.account.header !== "https://mastodon.social/headers/original/missing.png" && <img className="profileHeader" src={user.account.header} />}
@@ -116,10 +119,6 @@ function Profile(props){
                     <div className="profileTop">
                         <div className="profileTopLeft">
                             <img className="profileImg" src={user.account.avatar} alt="profile" />
-                            <div className="user">
-                                <span className="profileUsername" >{user.account.display_name}</span>
-                                <span className="profileUserInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
-                            </div>
                         </div>
                         <div className="profileTopRight">
                             {currentUser.id === id ? 
@@ -134,6 +133,10 @@ function Profile(props){
                                 </>
                             }
                         </div>
+                    </div>
+                    <div className="user">
+                        <span className="profileUsername" >{user.account.display_name}</span>
+                        <span className="profileUserInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
                     </div>
                     <div className="profileStats"><strong><span>{formatData(user.account.followers_count)}</span> Followers <span>{formatData(user.account.following_count)}</span> Following</strong></div>
                     <div className="profileCenter">

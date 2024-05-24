@@ -1,16 +1,19 @@
 .search{
     padding: 20px;
-    margin: 20px 0;
+    margin-bottom: 10px;
     background-color: hsl(var(--status_background));
     border-radius: 1.5%;
     box-shadow: var(--box_shadow);
+    width: 100%;
 }
 
 .search-options{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 20px 0 10px 0;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: var(--text);
 }
   
 .search-options div {

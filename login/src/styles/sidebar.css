@@ -6,11 +6,35 @@
     border-radius: 1.5%;
     position: fixed;
     box-shadow: var(--box_shadow);
+    padding: 20px;
+}
+
+.sidebarTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.sidebarTopLeft {
+	display: flex;
+	align-items: center;
+}
+
+.sidebarUser{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: var(--subheading);
+}
+
+.sidebarCenter{
+	display: flex;
+	flex-direction: column;
 }
   
 .sidebar img{
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
 }

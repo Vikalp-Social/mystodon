@@ -6,12 +6,11 @@ import "../styles/login.css";
 
 let id = "";
 let secret = "";
-let code = "";
 
 function LoginPage() {
     const {setCurrentUser, isLoggedIn, setLoggedIn} = useContext(UserContext);
     const [instance, setInstance] = useState("");
-    const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -49,6 +48,7 @@ function LoginPage() {
     }
 
     async function handleAuth(id, secret, code, user_instance){
+        setLoading(true);
         const authorize = await axios.post(`https://${user_instance}/oauth/token`, {
             client_id: id,
             client_secret: secret,
@@ -67,20 +67,22 @@ function LoginPage() {
         });
 
         const user = {
-            name: verify.data.username,
+            name: verify.data.display_name,
             instance: user_instance,
             id: verify.data.id,
             token,
             avatar: verify.data.avatar,
         }
         setCurrentUser(user);
-        setLoggedIn(true);
         localStorage.removeItem("id");
         localStorage.removeItem("secret");
+        setLoggedIn(true);
+        setLoading(false);
     }
 
     return(
-        <div className="login">
+        <>
+        {loading ? <div className="load-container"><div className="loader"></div></div> : <div className="login">
             <div>
                 <form action="" onSubmit={handleSubmit}>
                     <div className="login-form">
@@ -97,7 +99,8 @@ function LoginPage() {
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>}
+        </>
     );
 }
 

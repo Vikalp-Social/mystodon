@@ -77,14 +77,14 @@ function ThemeSwitcher() {
 				<input id='hexcode' type='text' value={hex} onChange={(e) => setHex(e.target.value)} size={7} maxLength={7}/>
 			</div>
 			<form className='rgb-form'>
-				<div className='col-3'>
-					<label for='red'>R: <input id='red' className='form-control' type='text' value={r} onChange={(e) => setR(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
+				<div className='col'>
+					<label for='red'>R: <input id='red' className='form-control' type='number' value={r} onChange={(e) => setR(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
 				</div>
-				<div className='col-3'>
-					<label for='green'>G: <input id='green' className='form-control col-1' type='text' value={g} onChange={(e) => setG(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
+				<div className='col'>
+					<label for='green'>G: <input id='green' className='form-control col-1' type='number' value={g} onChange={(e) => setG(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
 				</div>
-				<div className='col-3'>
-					<label for='blue'>B: <input id='blue' className='form-control' type='text' value={b} onChange={(e) => setB(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
+				<div className='col'>
+					<label for='blue'>B: <input id='blue' className='form-control' type='number' value={b} onChange={(e) => setB(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
 				</div>
 			</form>
 			<div>

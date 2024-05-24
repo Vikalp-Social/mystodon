@@ -12,15 +12,18 @@ function TagPage() {
     const {currentUser} = useContext(UserContext);
     const {name} = useParams();
     const [statuses, setStatuses] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function fetchData(){
             try {
+                setLoading(true);
                 const response = await axios.post(`http://localhost:3000/api/v1/timelines/tag/${name}`, {
                     token: currentUser.token,
                     instance: currentUser.instance,
                 });
                 setStatuses(response.data);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -36,6 +39,7 @@ function TagPage() {
                 <ThemeSwitcher />
                 <div className='feed container'>
                     <SearchTag name={name}/>
+                    {loading && <div className='loader'></div>}
                     {statuses.map((status) => {
                         return <Status 
                             key={status.id}

@@ -155,7 +155,7 @@ function Status(props) {
                 <div className="statusTop">
                     <div className="statusTopLeft">
                         <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
-                        <div className="user">
+                        <div className="statusUser">
                             <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}>{props.post.account.display_name}</span>
                             <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                         </div>
@@ -181,7 +181,7 @@ function Status(props) {
                     :
                     <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     }
-                    {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : ""}
+                    {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}
                 </div>
                 <div className="statusBottom">
                     <div className="statusBottomLeft">

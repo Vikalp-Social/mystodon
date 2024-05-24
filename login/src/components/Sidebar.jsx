@@ -56,17 +56,17 @@ function Sidebar() {
 
     return (
         <div className="sidebar">
-            <div className="profileTop" onClick={handleUserClick}>
-                <div className="profileTopLeft">
-                    <img className="profileImg" src={currentUser.avatar} alt="profile" />
-                    <div className="user">
+            <div className="sidebarTop">
+                <div className="sidebarTopLeft">
+                    <img src={currentUser.avatar} alt="profile" />
+                    <div className="sidebarUser">
                         <span className="statusUsername" onClick={handleUserClick}>{currentUser.name}</span>
                         <span className="userInstance">{`${currentUser.name}@${currentUser.instance}`}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="profileCenter">
+            <div className="sidebarCenter">
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="message" className="form-label">Post a Status</label>

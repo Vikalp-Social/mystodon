@@ -61,7 +61,7 @@ function SearchAccount(props) {
                     <img className="statusProfileImg" src={props.prof} alt="profile" />
                     <div className="user">
                         <span className="statusUsername" onClick={handleUserClick}>{props.username}</span>
-                        <span className="userInstance">{props.fullname}</span>
+                        <span className="userInstance">{props.fullname.length > 47 ? props.fullname.slice(0, 40) + '...' : props.fullname}</span>
                     </div>
                 </div>
                 <div>

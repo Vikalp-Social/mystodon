@@ -18,6 +18,7 @@ function Search(){
     const [accounts, setAccounts] = useState([]);
     const [statuses, setStatuses] = useState([]);
     const [hashtags, setHashtags] = useState([]);
+    const [loading, setLoading] = useState(false);
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -26,6 +27,7 @@ function Search(){
         }
         async function fetchData() {
             try {
+                setLoading(true);
                 const response = await axios.post(`http://localhost:3000/api/v1/search`, {
                     q,
                     token: currentUser.token,
@@ -35,13 +37,13 @@ function Search(){
                 setAccounts(response.data.accounts);
                 setStatuses(response.data.statuses);
                 setHashtags(response.data.hashtags);
-
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchData();
-    }, []);
+    }, [q]);
 
     return (
         <div className="main">
@@ -54,6 +56,7 @@ function Search(){
                     <div onClick={() => {setStatus(false);setAccount(true)}} className={viewAccount ? "active-option" : ""}>Accounts</div>
                     <div onClick={() => {setStatus(false);setAccount(false)}} className={!viewStatus && !viewAccount ? "active-option" : ""}>Hashtags</div>
                 </div>
+                {loading && <div className="loader"></div>}
                 {viewStatus ? 
                     statuses.map((status) => {
                         return <Status 
