@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "../styles/navbar.css";
@@ -45,7 +45,7 @@ function Navbar() {
                         </ul>
                     </div>
                     <div className="dropdown" onClick={() => setShow(!show)}>
-                        <img className="statusProfileImg" src={currentUser.avatar} alt="profile" />
+                        <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
                         {show && 
                             <div class="dropdown-content">
                                 <div onClick={() => navigate(`/profile/${currentUser.id}`)}>Profile</div>

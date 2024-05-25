@@ -14,6 +14,9 @@
     box-shadow: var(--box_shadow);
     width: 100%;
   }
+  .status:hover{
+    cursor: pointer;
+  }
   
   .statusTop {
     display: flex;
@@ -49,8 +52,8 @@
 
   .userInstance{
     margin: 0 10px;
-    word-wrap: break-word;
-    width: 400px;
+    /* word-wrap: break-word;
+    width: 400px; */
   }
   
   .statusUser{
@@ -66,6 +69,7 @@
   }
   .statusUsername:hover {
     text-decoration: underline;
+	cursor: pointer;
   }
   
   .statusRepost {
