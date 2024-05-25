@@ -56,7 +56,6 @@ function Search(){
                     <div onClick={() => {setStatus(false);setAccount(true)}} className={viewAccount ? "active-option" : ""}>Accounts</div>
                     <div onClick={() => {setStatus(false);setAccount(false)}} className={!viewStatus && !viewAccount ? "active-option" : ""}>Hashtags</div>
                 </div>
-                {loading && <div className="loader"></div>}
                 {viewStatus ? 
                     statuses.map((status) => {
                         return <Status 
@@ -89,6 +88,7 @@ function Search(){
                         })
                     )
                 }
+                {loading && <div className="loader"></div>}
             </div>
         </div>
     );

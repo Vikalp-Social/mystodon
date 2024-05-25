@@ -6,38 +6,38 @@ import Status from "../components/Status";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import ThemeSwitcher from "../components/ThemeSwitcher";
-import ClipLoader from "react-spinners/ClipLoader";
 
-const override = {
-    color: "var(--status_background)",
-}
-
-// Default values shown  
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [maxId, setMaxId] = useState("");
     let navigate = useNavigate();
 
     useEffect(() => {
         if(!isLoggedIn){
             navigate("/");
         }
+        fetchTimeline();
+    }, []);
 
-        async function fetchTimeline() {
+    window.addEventListener("scroll", function(event){
+        if(window.scrollY + window.innerHeight === document.documentElement.scrollHeight){
+            console.log("bottom");
+        }
+    });
+
+    async function fetchTimeline() {
             try {
-                //console.log(currentUser);
                 setLoading(true);
-                const response = await axios.post("http://localhost:3000/api/v1/timelines/home", currentUser);
-                //console.log(response.data.data.timeline);
-                setTimeline(response.data)
+                const response = await axios.post("http://localhost:3000/api/v1/timelines/home", {...currentUser, max_id: maxId});
+                setTimeline([...timeline, ...response.data.data])
+                setMaxId(response.data.max_id);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
             }
         }
-        fetchTimeline();
-    }, []);
 
     return (
         <>
@@ -46,7 +46,6 @@ function Home(){
                 <Sidebar />
                 <ThemeSwitcher />
                 <div className="feed container">
-                    {loading && <div className="load-container"><div className="loader"></div></div>}
                     {timeline.map(status => {
                         return <Status 
                             key={status.id}
@@ -57,6 +56,8 @@ function Home(){
                             isUserProfile={false}
                         />
                     })}
+                    {loading && <div className="load-container"><div className="loader"></div></div>}
+                    {!loading && <button className="load-button" onClick={fetchTimeline}>Load More</button>}
                 </div>
             </div>
         </>

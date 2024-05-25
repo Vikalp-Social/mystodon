@@ -95,7 +95,7 @@ app.post("/api/v1/search", async (req, res) => {
         });
         res.status(200).json({
             accounts: response.data.accounts,
-            statuses: formatData(response.data.statuses),
+            statuses: response.data.statuses,
             hashtags: response.data.hashtags,
         });
     } catch (error) {
@@ -235,8 +235,14 @@ app.post("/api/v1/timelines/tag/:name", async (req, res) => {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
+            params: {
+                max_id: req.body.max_id,
+            },
         });
-        res.status(200).json(formatData(response.data));
+        res.json({
+            data: formatData(response.data),
+            max_id: response.data[response.data.length - 1].id,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -249,10 +255,16 @@ app.post("/api/v1/timelines/home", async (req, res) => {
         const response = await axios.get(`https://${req.body.instance}/api/v1/timelines/home?limit=30`, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`
-        }});
-        res.json(formatData(response.data))
-        //res.status(200).json(response.data);
-        //console.log(response.data);
+            },
+            params: {
+                max_id: req.body.max_id,
+            },
+    });
+        res.json({
+            data: formatData(response.data),
+            max_id: response.data[response.data.length - 1].id,
+        })
+        //res.json(response.data);
     } catch (error) {
         console.log(error);
     }
