@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext} from "../context/UserContext";
@@ -6,12 +6,14 @@ import Status from "../components/Status";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
     const [maxId, setMaxId] = useState("");
+    useBottomScrollListener(fetchTimeline);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -20,12 +22,6 @@ function Home(){
         }
         fetchTimeline();
     }, []);
-
-    window.addEventListener("scroll", function(event){
-        if(window.scrollY + window.innerHeight === document.documentElement.scrollHeight){
-            console.log("bottom");
-        }
-    });
 
     async function fetchTimeline() {
             try {
@@ -58,6 +54,7 @@ function Home(){
                     })}
                     {loading && <div className="load-container"><div className="loader"></div></div>}
                     {!loading && <button className="load-button" onClick={fetchTimeline}>Load More</button>}
+                    
                 </div>
             </div>
         </>

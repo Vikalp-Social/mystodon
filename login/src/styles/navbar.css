@@ -2,6 +2,7 @@
     background-color: hsl(var(--status_background));
     color: var(--text_color);
     box-shadow: var(--box_shadow);
+    position: sticky;
 }
   
 .navbar li{

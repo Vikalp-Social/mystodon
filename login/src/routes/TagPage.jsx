@@ -7,6 +7,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher';
 import SearchTag from '../components/SearchTag';
 import Status from '../components/Status';
 import { UserContext } from '../context/UserContext';
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -14,6 +15,7 @@ function TagPage() {
     const [statuses, setStatuses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [maxId, setMaxId] = useState('');
+    useBottomScrollListener(fetchData);
     let navigate = useNavigate();
 
     useEffect(() => {
