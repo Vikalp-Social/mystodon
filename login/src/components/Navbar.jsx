@@ -11,7 +11,7 @@ function Navbar() {
 
     function handleSubmit(event){
         event.preventDefault();
-        navigate(`/search/${search}`);
+        navigate(`/search/${encodeURIComponent(search)}`);
     }
 
     function handleLogOut() {

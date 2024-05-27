@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import Headbar from "../components/Headbar";
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -42,6 +43,7 @@ function Home(){
                 <Sidebar />
                 <ThemeSwitcher />
                 <div className="feed container">
+                    <Headbar />
                     {timeline.map(status => {
                         return <Status 
                             key={status.id}

@@ -8,6 +8,7 @@ import SearchTag from '../components/SearchTag';
 import Status from '../components/Status';
 import { UserContext } from '../context/UserContext';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import Headbar from '../components/Headbar';
 
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -49,6 +50,7 @@ function TagPage() {
                 <Sidebar />
                 <ThemeSwitcher />
                 <div className='feed container'>
+                    <Headbar />
                     <SearchTag name={name}/>
                     {statuses.map((status) => {
                         return <Status 

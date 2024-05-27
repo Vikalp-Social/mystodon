@@ -20,12 +20,28 @@
 	justify-content: space-between;
 }
 
+.header-container{
+	position: relative;
+  	text-align: center;
+}
+
 .profileHeader{
 	width: calc(100% + 60px); /* twice the value of the parent's padding*/
     margin-left: -30px;
 	margin-top: -30px;
 	height: 200px;
 	object-fit: cover;
+}
+
+.followed-by{
+	position: absolute;
+	top: -20px;
+  	left: -20px;
+	background-color: rgb(193,194,194);
+	color: rgb(22,28,31);
+	font-size: var(--subheading);
+	padding: 2px;
+	border-radius: 8%;
 }
 
 .profileTopLeft {

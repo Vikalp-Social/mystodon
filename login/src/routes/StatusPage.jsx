@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { UserContext } from '../context/UserContext';
 import ThemeSwitcher from '../components/ThemeSwitcher';
+import Headbar from '../components/Headbar';
 
 function StatusPage(props) {
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -63,6 +64,7 @@ function StatusPage(props) {
             <Sidebar />
             <ThemeSwitcher />
             <div className="feed container">
+                <Headbar />
                 <Status 
                     key={status.id}
                     instance={currentUser.instance}

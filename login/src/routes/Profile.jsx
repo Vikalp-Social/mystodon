@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import Status from "../components/Status";
 import EditProfile from "../components/EditProfile";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import Headbar from "../components/Headbar";
 import "../styles/profile.css";
 
 function Profile(props){
@@ -25,6 +26,7 @@ function Profile(props){
         },
     });
     const [following, setFollowing] = useState(false);
+    const [followedBy, setFollowedBy] = useState(false);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const sanitizedHtml = DOMPurify.sanitize(user.account.note);
@@ -62,7 +64,7 @@ function Profile(props){
                 },
             });
             setFollowing(response.data[0].following);
-            
+            setFollowedBy(response.data[0].followed_by)
         } catch (error) {
             console.log(error);
         }
@@ -111,10 +113,12 @@ function Profile(props){
             <Sidebar />
             <ThemeSwitcher />
             <div className="feed container">
+                <Headbar />
                 {loading && <div className="loader"></div>}
                 <div className="profile">
-                    <div >
+                    <div className="header-container">
                         {user.account.header !== "https://mastodon.social/headers/original/missing.png" && <img className="profileHeader" src={user.account.header} />}
+                        {followedBy && <div className="followed-by">Follows you</div>}
                     </div>
                     <div className="profileTop">
                         <div className="profileTopLeft">
@@ -146,7 +150,7 @@ function Profile(props){
                 <EditProfile show={show} close={handleClose} display_name={user.account.display_name} note={user.account.note} />
             
                 <h2 style={{textAlign: "center"}}>POSTS</h2>
-                {user.statuses.list.map(status => {
+                {user.statuses.list.length ? user.statuses.list.map(status => {
                     return (status.in_reply_to_account_id === null && <Status 
                         key={status.id}
                         instance={currentUser.instance}
@@ -155,7 +159,7 @@ function Profile(props){
                         postedBy={status.account}
                         isUserProfile={id === currentUser.id}
                     />)
-                })}
+                }) : <p>No Posts Yet!</p>}
             </div>
             
         </div>

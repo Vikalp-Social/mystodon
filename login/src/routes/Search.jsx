@@ -7,6 +7,7 @@ import SearchAccount from "../components/SearchAccount";
 import SearchTag from "../components/SearchTag";
 import Status from "../components/Status";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import Headbar from "../components/Headbar";
 import { UserContext } from "../context/UserContext";
 import "../styles/search.css";
 
@@ -51,6 +52,7 @@ function Search(){
             <Sidebar />
             <ThemeSwitcher />
             <div className="feed container" >
+                <Headbar />
                 <div className="search-options">
                     <div onClick={() => {setStatus(true);setAccount(false)}} className={viewStatus ? "active-option" : ""}>Statuses</div>
                     <div onClick={() => {setStatus(false);setAccount(true)}} className={viewAccount ? "active-option" : ""}>Accounts</div>
@@ -75,7 +77,7 @@ function Search(){
                                 user_id={account.id}
                                 prof={account.avatar}
                                 username={account.display_name}
-                                fullname={account.acct}
+                                fullname={account.username === account.acct ? `${account.username}@${currentUser.instance}` : account.acct}
                             />
                         }) 
                     : 
