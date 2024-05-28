@@ -67,6 +67,7 @@ function Search(){
                             post={status.reblog? status.reblog : status}
                             postedBy={status.account}
                             isUserProfile={false}
+                            mentions={status.mentions}
                         />
                     })
                 : 

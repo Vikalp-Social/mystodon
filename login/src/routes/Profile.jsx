@@ -11,7 +11,7 @@ import ThemeSwitcher from "../components/ThemeSwitcher";
 import Headbar from "../components/Headbar";
 import "../styles/profile.css";
 
-function Profile(props){
+function Profile(){
     const {id} = useParams();
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const [user, setUser] = useState({
@@ -158,6 +158,7 @@ function Profile(props){
                         post={status.reblog ? status.reblog : status}
                         postedBy={status.account}
                         isUserProfile={id === currentUser.id}
+                        mentions={status.mentions}
                     />)
                 }) : <p>No Posts Yet!</p>}
             </div>

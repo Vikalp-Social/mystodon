@@ -7,6 +7,7 @@ import MediaDisplay from "./MediaDisplay";
 import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
 import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
 import "../styles/status.css";
+import Reply from "./Reply";
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
@@ -113,23 +114,6 @@ function Status(props) {
         }
     }
 
-    async function handleReply(event){
-        event.preventDefault();
-        event.stopPropagation();
-        try {
-            const response = await axios.post("http://localhost:3000/api/v1/statuses", {
-                message: replyText,
-                instance: currentUser.instance,
-                token: currentUser.token,
-                reply_id: props.post.id,
-            });
-            setReplying(false);
-            navigate(`/status/${props.post.id}`);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     function handleShare(event){
         event.preventDefault();
         event.stopPropagation();
@@ -198,7 +182,14 @@ function Status(props) {
                     </div>
                 </div>
             </div>
-                {isReplying ? 
+            <Reply 
+                show={isReplying} 
+                close={() => setReplying(false)} 
+                instance={props.instance}
+                post={props.post}
+                mentions={props.mentions}
+            />
+                {/* {isReplying ? 
                     <div style={{marginBottom: "10px"}}>
                         <form >
                             <input
@@ -213,7 +204,8 @@ function Status(props) {
                     </div>
                 : 
                     ""
-                }
+                } */}
+                
         </>
     );
 }

@@ -52,6 +52,7 @@ function Home(){
                             post={status.reblog? status.reblog : status}
                             postedBy={status.account}
                             isUserProfile={false}
+                            mentions={status.mentions}
                         />
                     })}
                     {loading && <div className="load-container"><div className="loader"></div></div>}

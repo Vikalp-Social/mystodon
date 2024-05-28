@@ -7,6 +7,7 @@ export const UserUpdateContext = React.createContext();
 export function UserContextProvider({children}){
     const [currentUser, setCurrentUser] = useLocalStorage("current_user", {
         name: "",
+        username: "",
         instance: "",
         id: "",
         token: "",

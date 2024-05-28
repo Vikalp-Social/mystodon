@@ -1,0 +1,37 @@
+.reply-modal{
+    max-width: 40vw;
+}
+
+.reply-modal-content{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    width: 100%;
+    max-height: 80vh;
+}
+
+.reply-modal-content input{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    border: none;
+    width: 100%;
+}
+
+.reply-modal-content textarea{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    border: none;
+    width: 100%;
+    resize:none;
+}
+
+.mini-status{
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: hsl(var(--body_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

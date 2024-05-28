@@ -68,6 +68,7 @@ function LoginPage() {
 
         const user = {
             name: verify.data.display_name,
+            username: verify.data.username,
             instance: user_instance,
             id: verify.data.id,
             token,
