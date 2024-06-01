@@ -49,7 +49,7 @@ function Navbar() {
                         {show && 
                             <div class="dropdown-content">
                                 <div onClick={() => navigate(`/profile/${currentUser.id}`)}>Profile</div>
-                                <div>Theme</div>
+                                <div onClick={() => navigate('/theme')}>Theme</div>
                                 <div onClick={handleLogOut}>Logout</div>
                             </div>
                         }

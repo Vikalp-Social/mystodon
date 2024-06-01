@@ -32,7 +32,7 @@ function Reply(props){
             props.close();
             navigate(`/status/${props.post.id}`);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -42,16 +42,24 @@ function Reply(props){
                 <Modal.Title id="example-modal-sizes-title-lg">Reply to Post</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <MiniStatus 
-                    instance={props.instance}
-                    post={props.post}
-                />
-                <textarea 
-                    value={replyText}
-                    onChange={(e) => setReplyText(e.target.value)}
-                    rows={5}
-                />
-                <button className='btn btn-primary' onClick={handleReply}>POST</button>
+                <div className='reply-body'>
+                    <MiniStatus 
+                        instance={props.instance}
+                        post={props.post}
+                    />
+                    <textarea 
+                        value={replyText}
+                        onChange={(e) => setReplyText(e.target.value)}
+                        rows={5}
+                        autoFocus
+                        onFocus={(e) => e.target.setSelectionRange(e.target.value.length, e.target.value.length)}
+                        maxLength={500}
+                    />
+                    <div className='reply-bottom'>
+                        <span>Remaining: {500 - replyText.length}</span>
+                        <button className='my-button' onClick={handleReply} style={{margin:"5px 0 0 10px"}}>POST</button>
+                    </div>
+                </div>
             </Modal.Body>
         </Modal>
     )

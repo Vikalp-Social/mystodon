@@ -6,10 +6,10 @@ import Sidebar from "../components/Sidebar";
 import SearchAccount from "../components/SearchAccount";
 import SearchTag from "../components/SearchTag";
 import Status from "../components/Status";
-import ThemeSwitcher from "../components/ThemeSwitcher";
 import Headbar from "../components/Headbar";
 import { UserContext } from "../context/UserContext";
 import "../styles/search.css";
+import ThemePicker from "../theme/ThemePicker";
 
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -40,7 +40,7 @@ function Search(){
                 setHashtags(response.data.hashtags);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                console.log(error.response.data);;
             }
         }
         fetchData();
@@ -50,7 +50,7 @@ function Search(){
         <div className="main">
             <Navbar />
             <Sidebar />
-            <ThemeSwitcher />
+            <ThemePicker />
             <div className="feed container" >
                 <Headbar />
                 <div className="search-options">

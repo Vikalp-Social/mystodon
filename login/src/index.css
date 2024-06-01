@@ -3,18 +3,22 @@
   --subheading: 14px;
   --text: 15px;
   --hue: 204;
+  --saturation: 66.8%;
+  --lightness: 57.5%;
 /*light mode*/
   --body-light: var(--hue) 72.4% 94.3% ;
   --status-light: var(--hue) 0% 100%;
   --text-light: black;
   --shadow-light: 3px 3px 8px #888888;
+  --text-shadow-light: 1px 1px 5px white;
 /*dark mode*/
   --body-dark: var(--hue) 16.7% 16.5% ;
   --status-dark: var(--hue) 95.2% 8.2%;
   --text-dark: white;
   --shadow-dark: none;
+  --text-shadow-dark: 1px 1px 5px black;
 
-  --button_color: var(--hue) 66.8% 57.5%;
+  --button_color: var(--hue) var(--saturation) var(--lightness);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +27,7 @@
     --status_background: var(--status-dark);
     --text_color: var(--text-dark);
     --box_shadow: var(--shadow-dark);
+    --text_shadow: var(--text-shadow-dark)
     color-scheme: dark;
   }
 }
@@ -33,6 +38,7 @@
     --status_background: var(--status-light);
     --text_color: var(--text-light);
     --box_shadow: var(--shadow-light);
+    --text_shadow: var(--text-shadow-light);
     color-scheme: light;
   }
 }
@@ -42,6 +48,7 @@
   --status_background: var(--status-dark);
   --text_color: var(--text-dark);
   --box_shadow: var(--shadow-dark);
+  --text_shadow: var(--text-shadow-dark);
   color-scheme: "dark";
 }
 
@@ -50,6 +57,7 @@
   --status_background: var(--status-light);
   --text_color: var(--text-light);
   --box_shadow: var(--shadow-light);
+  --text_shadow: var(--text-shadow-light);
   color-scheme: "light";
 }
 
@@ -89,6 +97,7 @@ body{
   padding: 10px;
   cursor: pointer;
   color: var(--text_color);
+  text-shadow: var(--text_shadow)
 }
 .my-button:hover {
   filter: brightness(85%);

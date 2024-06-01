@@ -7,9 +7,9 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Status from "../components/Status";
 import EditProfile from "../components/EditProfile";
-import ThemeSwitcher from "../components/ThemeSwitcher";
 import Headbar from "../components/Headbar";
 import "../styles/profile.css";
+import ThemePicker from "../theme/ThemePicker";
 
 function Profile(){
     const {id} = useParams();
@@ -51,7 +51,7 @@ function Profile(){
             setUser(response.data);
             setLoading(false);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -66,7 +66,7 @@ function Profile(){
             setFollowing(response.data[0].following);
             setFollowedBy(response.data[0].followed_by)
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -78,7 +78,7 @@ function Profile(){
             });
             setFollowing(true);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -90,7 +90,7 @@ function Profile(){
             });
             setFollowing(false);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -111,7 +111,7 @@ function Profile(){
         <div className="main">
             <Navbar />
             <Sidebar />
-            <ThemeSwitcher />
+            <ThemePicker />
             <div className="feed container">
                 <Headbar />
                 {loading && <div className="loader"></div>}

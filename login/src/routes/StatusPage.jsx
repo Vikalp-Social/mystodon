@@ -5,8 +5,8 @@ import Status from '../components/Status';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { UserContext } from '../context/UserContext';
-import ThemeSwitcher from '../components/ThemeSwitcher';
 import Headbar from '../components/Headbar';
+import ThemePicker from '../theme/ThemePicker';
 
 function StatusPage(props) {
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -54,7 +54,7 @@ function StatusPage(props) {
                 //console.log(response.data);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                console.log(error.response.data);;
             }
         }
         //setTimeout(fetchData, 1000);
@@ -65,7 +65,7 @@ function StatusPage(props) {
         <div className='main'>
             <Navbar />
             <Sidebar />
-            <ThemeSwitcher />
+            <ThemePicker />
             <div className="feed container">
                 <Headbar />
                 <Status 

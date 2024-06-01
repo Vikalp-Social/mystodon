@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import axios from "axios";
@@ -43,7 +43,10 @@ app.post("/api/v1/auth", async(req, res) => {
         });
         console.log(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 })
 
@@ -62,7 +65,10 @@ app.post("/api/v1/accounts/:id", async (req, res) => {
         });
         //console.log(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -80,7 +86,10 @@ app.put("/api/v1/accounts", async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -99,7 +108,10 @@ app.post("/api/v1/search", async (req, res) => {
             hashtags: response.data.hashtags,
         });
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -113,7 +125,10 @@ app.post("/api/v1/accounts/:id/follow", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -127,7 +142,10 @@ app.post("/api/v1/tags/:name/follow", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -141,7 +159,10 @@ app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -155,7 +176,10 @@ app.post("/api/v1/tags/:name/unfollow", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -174,7 +198,10 @@ app.post("/api/v1/statuses", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -188,7 +215,10 @@ app.post("/api/v1/statuses/:id/favourite", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -202,7 +232,10 @@ app.post("/api/v1/statuses/:id/boost", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -224,7 +257,10 @@ app.post("/api/v1/statuses/:id", async (req, res) => {
             replies: replies.data.descendants,
         });
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 });
 
@@ -244,7 +280,10 @@ app.post("/api/v1/timelines/tag/:name", async (req, res) => {
             max_id: response.data[response.data.length - 1].id,
         });
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);;
+        res.status(error.response.status).json({
+            error: error.response.data,
+        });
     }
 })
 
@@ -259,14 +298,17 @@ app.post("/api/v1/timelines/home", async (req, res) => {
             params: {
                 max_id: req.body.max_id,
             },
-    });
+        });
         res.json({
             data: formatData(response.data),
             max_id: response.data[response.data.length - 1].id,
         })
         //res.json(response.data);
     } catch (error) {
-        console.log(error);
+        // res.status(error.response.status).json({
+        //     error: error.response.data,
+        // });
+        console.log(error)
     }
 });
 

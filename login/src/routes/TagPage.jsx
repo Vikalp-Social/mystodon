@@ -3,12 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import ThemeSwitcher from '../components/ThemeSwitcher';
 import SearchTag from '../components/SearchTag';
 import Status from '../components/Status';
 import { UserContext } from '../context/UserContext';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from '../components/Headbar';
+import ThemePicker from '../theme/ThemePicker';
 
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -39,7 +39,7 @@ function TagPage() {
             setMaxId(response.data.max_id);
             setLoading(false);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -48,7 +48,7 @@ function TagPage() {
             <div className='main'>
                 <Navbar />
                 <Sidebar />
-                <ThemeSwitcher />
+                <ThemePicker />
                 <div className='feed container'>
                     <Headbar />
                     <SearchTag name={name}/>

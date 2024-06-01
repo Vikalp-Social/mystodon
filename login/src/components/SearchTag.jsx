@@ -25,7 +25,7 @@ function SearchAccount(props) {
             });
             setFollowing(response.data.following);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -37,7 +37,7 @@ function SearchAccount(props) {
             });
             setFollowing(true);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -49,7 +49,7 @@ function SearchAccount(props) {
             });
             setFollowing(false);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 

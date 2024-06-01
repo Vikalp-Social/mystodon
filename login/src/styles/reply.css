@@ -1,5 +1,6 @@
 .reply-modal{
     max-width: 40vw;
+    color: var(--text_color);
 }
 
 .reply-modal-content{
@@ -22,6 +23,10 @@
     border: none;
     width: 100%;
     resize:none;
+}
+
+.reply-bottom{
+    float: right;
 }
 
 .mini-status{

@@ -5,14 +5,17 @@ import { UserContext} from "../context/UserContext";
 import Status from "../components/Status";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import ThemeSwitcher from "../components/ThemeSwitcher";
+import Error from "../components/Error";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from "../components/Headbar";
+import ThemePicker from "../theme/ThemePicker";
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState(null);
     const [maxId, setMaxId] = useState("");
     useBottomScrollListener(fetchTimeline);
     let navigate = useNavigate();
@@ -28,6 +31,7 @@ function Home(){
             try {
                 setLoading(true);
                 const response = await axios.post("http://localhost:3000/api/v1/timelines/home", {...currentUser, max_id: maxId});
+                //console.log(response.data);
                 setTimeline([...timeline, ...response.data.data])
                 setMaxId(response.data.max_id);
                 setLoading(false);
@@ -39,9 +43,9 @@ function Home(){
     return (
         <>
             <div className="main">
+                <ThemePicker />
                 <Navbar />
                 <Sidebar />
-                <ThemeSwitcher />
                 <div className="feed container">
                     <Headbar />
                     {timeline.map(status => {

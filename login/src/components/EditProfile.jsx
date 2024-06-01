@@ -27,7 +27,7 @@ function EditProfile(props){
                 note, 
             });
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 

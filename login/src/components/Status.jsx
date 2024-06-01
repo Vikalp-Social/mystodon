@@ -58,7 +58,7 @@ function Status(props) {
                 },
             });
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -73,7 +73,7 @@ function Status(props) {
             });
             console.log(response.data);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -93,7 +93,7 @@ function Status(props) {
                 return !prev;
             });
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
@@ -110,7 +110,7 @@ function Status(props) {
             console.log(response.data);
             setBoosted(prev => !prev);
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 

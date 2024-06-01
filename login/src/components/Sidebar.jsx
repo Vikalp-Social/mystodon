@@ -34,7 +34,7 @@ function Sidebar() {
             setTimeout(() => postStatus(newIds), 5000)
 
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data);
         }
     }
 
@@ -50,7 +50,7 @@ function Sidebar() {
             });
             setMessage("");
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);;
         }
     }
 
