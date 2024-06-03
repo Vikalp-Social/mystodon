@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { useErrors } from "../context/ErrorContext";
 import "../styles/sidebar.css";
 
 function Sidebar() {
     const {currentUser} = useContext(UserContext);
+    const {setError} = useErrors();
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
 
@@ -34,7 +36,7 @@ function Sidebar() {
             setTimeout(() => postStatus(newIds), 5000)
 
         } catch (error) {
-            console.log(error.response.data);
+            setError(error.response.data);;
         }
     }
 
@@ -50,7 +52,7 @@ function Sidebar() {
             });
             setMessage("");
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);;;
         }
     }
 

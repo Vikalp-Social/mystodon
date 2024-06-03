@@ -8,11 +8,13 @@ import SearchTag from "../components/SearchTag";
 import Status from "../components/Status";
 import Headbar from "../components/Headbar";
 import { UserContext } from "../context/UserContext";
+import { useErrors } from "../context/ErrorContext";
 import "../styles/search.css";
 import ThemePicker from "../theme/ThemePicker";
 
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
+    const {setError} = useErrors();
     const {q} = useParams();
     const [viewStatus, setStatus] = useState(true);
     const [viewAccount, setAccount] = useState(false);
@@ -40,7 +42,7 @@ function Search(){
                 setHashtags(response.data.hashtags);
                 setLoading(false);
             } catch (error) {
-                console.log(error.response.data);;
+                setError(error.response.data);;;
             }
         }
         fetchData();
@@ -59,7 +61,7 @@ function Search(){
                     <div onClick={() => {setStatus(false);setAccount(false)}} className={!viewStatus && !viewAccount ? "active-option" : ""}>Hashtags</div>
                 </div>
                 {viewStatus ? 
-                    statuses.map((status) => {
+                    (statuses.length > 0 ? statuses.map((status) => {
                         return <Status 
                             key={status.id}
                             instance={currentUser.instance}
@@ -69,10 +71,10 @@ function Search(){
                             isUserProfile={false}
                             mentions={status.mentions}
                         />
-                    })
+                    }) : <div className="no-results">No results found</div>)
                 : 
                     (viewAccount ?
-                        accounts.map((account) => {
+                        (accounts.length > 0 ? accounts.map((account) => {
                         return <SearchAccount 
                                 key={account.id}
                                 user_id={account.id}
@@ -80,15 +82,15 @@ function Search(){
                                 username={account.display_name}
                                 fullname={account.username === account.acct ? `${account.username}@${currentUser.instance}` : account.acct}
                             />
-                        }) 
+                        }) : <div className="no-results">No results found</div>)
                     : 
-                        hashtags.map((tag) => {
+                       (hashtags.length > 0 ? hashtags.map((tag) => {
                             return <SearchTag 
                                 key={tag.name}
                                 name={tag.name}
                                 talking={tag.history[0].accounts}
                             />
-                        })
+                        }) : <div className="no-results">No results found</div>)
                     )
                 }
                 {loading && <div className="loader"></div>}

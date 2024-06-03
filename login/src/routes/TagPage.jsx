@@ -6,12 +6,14 @@ import Sidebar from '../components/Sidebar';
 import SearchTag from '../components/SearchTag';
 import Status from '../components/Status';
 import { UserContext } from '../context/UserContext';
+import { useErrors } from '../context/ErrorContext';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
 
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
+    const {setError} = useErrors();
     const {name} = useParams();
     const [statuses, setStatuses] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -39,7 +41,7 @@ function TagPage() {
             setMaxId(response.data.max_id);
             setLoading(false);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);;;
         }
     }
 

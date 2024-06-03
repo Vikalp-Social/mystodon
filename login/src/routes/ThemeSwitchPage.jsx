@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import convert from 'color-convert';
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
 import Navbar from '../components/Navbar'
-import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb} from '../theme/ThemePicker'
+import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb, rgbToHex } from '../theme/ThemePicker'
 
 function ThemeSwitchPage() {
 	const [hue, setHue] = useLocalStorage("--hue")
@@ -18,27 +17,51 @@ function ThemeSwitchPage() {
 		document.documentElement.style.setProperty('--hue', hue);
 		document.documentElement.style.setProperty('--saturation', sat);
 		document.documentElement.style.setProperty('--lightness', light);
+	}, [hue, sat, light])
+
+	useEffect(() => {
 		const [r, g, b, hex] = hslToRgb(hue/360, sat/100, light/100)
 		setR(r);
 		setG(g);
 		setB(b);
 		setHex(hex);
-	}, [hue, sat, light])
+	}, [])
 
 	function convertHex(hex){
-		const hsl = hexToRGB(hex);
-		setHue(hsl[0]);
-		setSat(hsl[1]);
-		setLight(hsl[2]);
+		if(isValidColor(hex)){
+			const [r, g, b, hsl] = hexToRGB(hex);
+			setR(r);
+			setG(g);
+			setB(b);
+			setHue(hsl[0]);
+			setSat(hsl[1]);
+			setLight(hsl[2]);
+		} else {
+			alert("Invalid Hexcode")
+		}
+		
 	}
 
 	function convertRGB(r, g, b){
-		console.log(r, g, b);
-		const hsl = rgbToHSL(r, g, b);
-		console.log(hsl)
-		setHue(hsl[0]);
-		setSat(hsl[1]);
-		setLight(hsl[2]);
+		if(isValidColor(`rgb(${r}, ${g}, ${b})`)){
+			const hsl = rgbToHSL(r, g, b);
+			const hex = rgbToHex(r, g, b);
+			setHex(hex);
+			setHue(hsl[0]);
+			setSat(hsl[1]);
+			setLight(hsl[2]);
+		} else {
+			alert("Invalid RGB values")
+		}
+	}
+
+	function isValidColor(value) {
+		// Regular expressions for hex and RGB colors
+		const hexRegex = /^#([A-Fa-f0-9]{6})$/;
+		const rgbRegex = /^rgb\(\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*\)$/;
+	
+		// Check if the value matches either hex or RGB regex
+		return hexRegex.test(value) || rgbRegex.test(value);
 	}
 
 	const handleRChange = (e) => setR(e.target.value);
@@ -82,47 +105,17 @@ function ThemeSwitchPage() {
             <form className="color-form">
                 <div className="rgb-inputs">
                     <label>
-                        R:
-                        <input
-                            type="number"
-                            value={r}
-                            onChange={handleRChange}
-                            min="0"
-                            max="255"
-							maxLength={3}
-                        />
+                        R: <input type="number" value={r} onChange={handleRChange} min="0" max="255" maxLength={3} />
                     </label>
                     <label>
-                        G:
-                        <input
-                            type="number"
-                            value={g}
-                            onChange={handleGChange}
-                            min="0"
-                            max="255"
-							maxLength={3}
-                        />
+                        G: <input type="number" value={g} onChange={handleGChange} min="0" max="255" maxLength={3} />
                     </label>
                     <label>
-                        B:
-                        <input
-                            type="number"
-                            value={b}
-                            onChange={handleBChange}
-                            min="0"
-                            max="255"
-							maxLength={3}
-                        />
+                        B: <input type="number" value={b} onChange={handleBChange} min="0" max="255" maxLength={3} />
                     </label>
                 </div>
                 <label className="hex-input">
-                    Hex:
-                    <input
-                        type="text"
-                        value={hex}
-                        onChange={handleHexChange}
-						maxLength={7}
-                    />
+                    Hex: <input type="text" value={hex} onChange={handleHexChange} maxLength={7} />
                 </label>
             </form>
         </div>

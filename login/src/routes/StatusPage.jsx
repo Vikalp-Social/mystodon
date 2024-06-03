@@ -5,11 +5,13 @@ import Status from '../components/Status';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { UserContext } from '../context/UserContext';
+import { useErrors } from '../context/ErrorContext';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
 
 function StatusPage(props) {
     const {currentUser, isLoggedIn} = useContext(UserContext);
+    const {setError} = useErrors();
     const { id } = useParams();
     const [replies, setReplies] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ function StatusPage(props) {
                 //console.log(response.data);
                 setLoading(false);
             } catch (error) {
-                console.log(error.response.data);;
+                setError(error.response.data);;;
             }
         }
         //setTimeout(fetchData, 1000);

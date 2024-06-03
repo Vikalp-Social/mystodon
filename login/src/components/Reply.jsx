@@ -4,10 +4,12 @@ import axios from 'axios';
 import MiniStatus from './MiniStatus';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
+import { useErrors } from '../context/ErrorContext';
 import "../styles/reply.css";
 
 function Reply(props){
     const {currentUser} = useContext(UserContext);
+    const {setError} = useErrors();
     const [replyText, setReplyText] = useState(() => {
         let str = `@${props.post.account.acct} `;
         props.mentions && props.mentions.map((mention) => {
@@ -32,13 +34,13 @@ function Reply(props){
             props.close();
             navigate(`/status/${props.post.id}`);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);;;
         }
     }
 
     return(
         <Modal show={props.show} onHide={props.close} dialogClassName='reply-modal' contentClassName='reply-modal-content' centered>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton closeVariant={localStorage.getItem("selectedTheme") === "dark" ? "white" : "black"}>
                 <Modal.Title id="example-modal-sizes-title-lg">Reply to Post</Modal.Title>
             </Modal.Header>
             <Modal.Body>

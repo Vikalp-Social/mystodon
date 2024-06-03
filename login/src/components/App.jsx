@@ -9,13 +9,15 @@ import  Search from "../routes/Search";
 import StatusPage from "../routes/StatusPage";
 import TagPage from "../routes/TagPage";
 import { UserContextProvider } from "../context/UserContext";
+import { ErrorProvider } from "../context/ErrorContext";
 import ThemeSwitchPage from "../routes/ThemeSwitchPage";
 
 
 function App() {
   return (
     <>
-			<UserContextProvider>
+		<UserContextProvider>
+			<ErrorProvider>
 				<Router>
 					<Routes>
 						<Route exact path="/" Component={Login} />
@@ -28,7 +30,8 @@ function App() {
 						<Route exact path="/theme" Component={ThemeSwitchPage} />
 					</Routes>
 				</Router>
-			</UserContextProvider>
+			</ErrorProvider>
+		</UserContextProvider>
     </>
   );
 }

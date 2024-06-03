@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
+import { useErrors } from "../context/ErrorContext";
 import MediaDisplay from "./MediaDisplay";
 import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
 import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
@@ -11,6 +12,7 @@ import Reply from "./Reply";
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
+    const { setError } = useErrors()
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
     const [isEditing, setEditing] = useState(false);
     const [isReplying, setReplying] = useState(false);
@@ -58,7 +60,7 @@ function Status(props) {
                 },
             });
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -73,7 +75,7 @@ function Status(props) {
             });
             console.log(response.data);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -93,7 +95,7 @@ function Status(props) {
                 return !prev;
             });
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -110,7 +112,7 @@ function Status(props) {
             console.log(response.data);
             setBoosted(prev => !prev);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -128,6 +130,24 @@ function Status(props) {
             if(data > 100) message = `${Math.round(data)}k`;
         }
         return message; 
+    }
+
+    function emoji(str){
+        // console.log(str)
+        // var emojis = /(?<=:)\w+(?=:)/g.exec(str);
+        // if(emojis){
+        //     console.log(emojis)
+        //     emojis.map(emoji => {
+        //         let custom_emoji = user.account.emojis.find((value) => value.shortcode === emoji)
+        //         console.log(Object(<img src={custom_emoji.url} />));
+        //         str = str.replace(`:${emoji}:`, <img src={custom_emoji.url} />)
+        //     })
+        //     console.log(str)
+        //     return str
+        // }
+        // return str;
+        str = str.replace(':verified:', '✅');
+        return str;
     }
 
     return(

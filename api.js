@@ -44,9 +44,19 @@ app.post("/api/v1/auth", async(req, res) => {
         console.log(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 })
 
@@ -65,10 +75,20 @@ app.post("/api/v1/accounts/:id", async (req, res) => {
         });
         //console.log(response.data);
     } catch (error) {
-        console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        //console.log(error.response.data);;
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -87,9 +107,19 @@ app.put("/api/v1/accounts", async (req, res) => {
         });
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -109,9 +139,19 @@ app.post("/api/v1/search", async (req, res) => {
         });
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -126,9 +166,19 @@ app.post("/api/v1/accounts/:id/follow", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -143,9 +193,19 @@ app.post("/api/v1/tags/:name/follow", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -160,9 +220,19 @@ app.post("/api/v1/accounts/:id/unfollow", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -177,9 +247,19 @@ app.post("/api/v1/tags/:name/unfollow", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -198,10 +278,20 @@ app.post("/api/v1/statuses", async (req, res) => {
         });
         res.status(200).json(response.data);
     } catch (error) {
-        console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        console.log(error);
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -216,9 +306,19 @@ app.post("/api/v1/statuses/:id/favourite", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -233,9 +333,19 @@ app.post("/api/v1/statuses/:id/boost", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -257,10 +367,20 @@ app.post("/api/v1/statuses/:id", async (req, res) => {
             replies: replies.data.descendants,
         });
     } catch (error) {
-        console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        //console.log(error.response.data);;
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 
@@ -281,9 +401,19 @@ app.post("/api/v1/timelines/tag/:name", async (req, res) => {
         });
     } catch (error) {
         console.log(error.response.data);;
-        res.status(error.response.status).json({
-            error: error.response.data,
-        });
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 })
 
@@ -305,10 +435,20 @@ app.post("/api/v1/timelines/home", async (req, res) => {
         })
         //res.json(response.data);
     } catch (error) {
-        // res.status(error.response.status).json({
-        //     error: error.response.data,
-        // });
         console.log(error)
+        if(error.code === 'ENOTFOUND'){
+            res.status(502).json({
+                error: "Can't Establish a connection to the server",
+                status: 502,
+                statusText: "Bad Gateway",
+            });
+        } else {
+            res.status(400).json({
+                error: error.response.data.error,
+                status: error.response.status,
+                statusText: error.response.statusText,
+            });
+        }
     }
 });
 

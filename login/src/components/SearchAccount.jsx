@@ -2,9 +2,11 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { useErrors } from "../context/ErrorContext";
 
 function SearchAccount(props) {
     const {currentUser} = useContext(UserContext);
+    const {setError} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 
@@ -26,7 +28,7 @@ function SearchAccount(props) {
             });
             setFollowing(response.data[0].following);
         } catch (error) {
-            console.log(error.response.data);;
+            console.log(error);
         }
     }
 
@@ -38,7 +40,7 @@ function SearchAccount(props) {
             });
             setFollowing(true);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -50,7 +52,7 @@ function SearchAccount(props) {
             });
             setFollowing(false);
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);;;
         }
     }
 

@@ -3,14 +3,14 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
+import { useErrors } from '../context/ErrorContext';
 import "../styles/profile.css";
 
 function EditProfile(props){
     const {currentUser} = useContext(UserContext);
+    const {setError} = useErrors();
     const [displayName, setDisplayName] = useState(props.display_name);
     const [note, setNote] = useState(props.note);
-
-    console.log(props);
 
     useEffect(() => {
         const regex = /(<([^>]+)>)/gi;
@@ -27,7 +27,7 @@ function EditProfile(props){
                 note, 
             });
         } catch (error) {
-            console.log(error.response.data);;
+            setError(error.response.data);
         }
     }
 

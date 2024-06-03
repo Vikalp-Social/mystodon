@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "../styles/navbar.css";
 
+export function handleLogOut() {
+    localStorage.removeItem("current_user");
+    localStorage.removeItem("--hue");
+    document.documentElement.style.setProperty("--hue", 204);
+    window.location.pathname = "/";
+}
+
 function Navbar() {
     const {setLoggedIn, currentUser} = useContext(UserContext);
     const [search, setSearch] = useState("");
@@ -14,13 +21,13 @@ function Navbar() {
         navigate(`/search/${encodeURIComponent(search)}`);
     }
 
-    function handleLogOut() {
-        setLoggedIn(false);
-        localStorage.removeItem("current_user");
-        localStorage.removeItem("--hue");
-        document.documentElement.style.setProperty("--hue", 204);
-        navigate("/");
-    }
+    // function handleLogOut() {
+    //     setLoggedIn(false);
+    //     localStorage.removeItem("current_user");
+    //     localStorage.removeItem("--hue");
+    //     document.documentElement.style.setProperty("--hue", 204);
+    //     navigate("/");
+    // }
 
     function goHome() {
         navigate("/home");
@@ -50,7 +57,7 @@ function Navbar() {
                             <div class="dropdown-content">
                                 <div onClick={() => navigate(`/profile/${currentUser.id}`)}>Profile</div>
                                 <div onClick={() => navigate('/theme')}>Theme</div>
-                                <div onClick={handleLogOut}>Logout</div>
+                                <div onClick={() => {setLoggedIn(false); handleLogOut()}}>Logout</div>
                             </div>
                         }
                     </div>

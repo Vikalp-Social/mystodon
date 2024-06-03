@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import convert from 'color-convert';
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
 
@@ -9,33 +8,15 @@ export function setDarkMode() {
 		localStorage.setItem("selectedTheme", "dark");
 	}
 
-	export function setLightMode() {
-		document.querySelector("body").setAttribute("color-scheme", "light")
-		localStorage.setItem("selectedTheme", "light");
-	}
+export function setLightMode() {
+	document.querySelector("body").setAttribute("color-scheme", "light")
+	localStorage.setItem("selectedTheme", "light");
+}
 
-	if(selectedTheme === "dark") {
-		setDarkMode();
-	} else if(selectedTheme === "light") {
-		setLightMode();
-	}
-
-
-export default function ThemePicker() {
-	const [hue] = useLocalStorage("--hue", 204)
-	const [sat] = useLocalStorage("--saturation", 66.8)
-	const [light] = useLocalStorage("--lightness", 57.5)
-	// const [hex, setHex] = useState("")
-	// const [r, setR] = useState("")
-	// const [g, setG] = useState("")
-	// const [b, setB] = useState("")
-
-	useEffect(() => {
-		document.documentElement.style.setProperty('--hue', hue);
-		document.documentElement.style.setProperty('--saturation', sat);
-		document.documentElement.style.setProperty('--lightness', light);
-	}, [hue, sat, light])
-
+if(selectedTheme === "dark") {
+	setDarkMode();
+} else if(selectedTheme === "light") {
+	setLightMode();
 }
 
 export function hexToRGB(hex) {
@@ -43,7 +24,7 @@ export function hexToRGB(hex) {
 	const r = parseInt(result[1], 16);
 	const g = parseInt(result[2], 16);
 	const b = parseInt(result[3], 16);
-	return rgbToHSL(r, g, b);
+	return [r, g, b, rgbToHSL(r, g, b)];
 }
 
 export function rgbToHSL(r, g, b) {
@@ -77,10 +58,10 @@ export function rgbToHSL(r, g, b) {
 	return [h, s, l];
 }
 
-function rgbToHex(r, g, b) {
-	r = r.toString(16);
-	g = g.toString(16);
-	b = b.toString(16);
+export function rgbToHex(r, g, b) {
+	r = parseInt(r).toString(16);
+	g = parseInt(g).toString(16);
+	b = parseInt(b).toString(16);
 	
 	if (r.length === 1)
 		r = "0" + r;
@@ -119,3 +100,18 @@ function hueToRgb(p, q, t) {
 	if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
 	return p;
 }
+
+function ThemePicker() {
+	const [hue] = useLocalStorage("--hue", 204)
+	const [sat] = useLocalStorage("--saturation", 66.8)
+	const [light] = useLocalStorage("--lightness", 57.5)
+
+	useEffect(() => {
+		document.documentElement.style.setProperty('--hue', hue);
+		document.documentElement.style.setProperty('--saturation', sat);
+		document.documentElement.style.setProperty('--lightness', light);
+	}, [hue, sat, light])
+
+}
+
+export default ThemePicker

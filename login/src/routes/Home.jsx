@@ -2,20 +2,19 @@ import React, {useState, useContext, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext} from "../context/UserContext";
+import { useErrors } from "../context/ErrorContext";
 import Status from "../components/Status";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Error from "../components/Error";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from "../components/Headbar";
 import ThemePicker from "../theme/ThemePicker";
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
+    const {setError} = useErrors();
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [error, setError] = useState(null);
     const [maxId, setMaxId] = useState("");
     useBottomScrollListener(fetchTimeline);
     let navigate = useNavigate();
@@ -36,7 +35,7 @@ function Home(){
                 setMaxId(response.data.max_id);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                setError(error.response.data);
             }
         }
 
