@@ -40,8 +40,7 @@
 	background-color: rgb(193,194,194);
 	color: rgb(22,28,31);
 	font-size: var(--subheading);
-	font-weight: 600;
-	padding: 5px;
+	padding: 2px;
 	border-radius: 8%;
 }
 
