@@ -5,6 +5,11 @@
     box-shadow: var(--box_shadow);
     width: 100%;
   }
+
+  .reply-line{
+    width: 50px;
+    height: 100%;
+  }
   
   .status{
     padding: 20px;

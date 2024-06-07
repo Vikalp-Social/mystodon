@@ -4,11 +4,10 @@
     align-items: center;
     height: 100vh;
     padding: 0 10%;
-    background-color: hsl();
 }
 
 .login > div{
-    background-color: hsl(204, 95.2%, 8.2%);
+    background-color: hsl(var(--status_background));
     padding: 40px 20px;
     border-radius: 1.5%;
     height: 50%;
@@ -47,4 +46,3 @@
 .login-form button:hover{
     background-color: rgb(4,130,216);
 }
-

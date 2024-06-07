@@ -28,7 +28,7 @@ function ThemeSwitchPage() {
 	}, [])
 
 	function convertHex(hex){
-		if(isValidColor(hex)){
+		if(isValidHex(hex)){
 			const [r, g, b, hsl] = hexToRGB(hex);
 			setR(r);
 			setG(g);
@@ -43,7 +43,7 @@ function ThemeSwitchPage() {
 	}
 
 	function convertRGB(r, g, b){
-		if(isValidColor(`rgb(${r}, ${g}, ${b})`)){
+		if(isValidRGB(r, g, b)){
 			const hsl = rgbToHSL(r, g, b);
 			const hex = rgbToHex(r, g, b);
 			setHex(hex);
@@ -55,13 +55,14 @@ function ThemeSwitchPage() {
 		}
 	}
 
-	function isValidColor(value) {
-		// Regular expressions for hex and RGB colors
+	function isValidHex(value) {
 		const hexRegex = /^#([A-Fa-f0-9]{6})$/;
-		const rgbRegex = /^rgb\(\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*,\s*(0|[1-9]\d{0,2}|1\d{2}|2[0-4]\d|25[0-5])\s*\)$/;
-	
-		// Check if the value matches either hex or RGB regex
-		return hexRegex.test(value) || rgbRegex.test(value);
+		return hexRegex.test(value);
+	}
+
+	function isValidRGB(r, g, b) {
+		const rgbComponentRegex = /^([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/;
+    	return rgbComponentRegex.test(r) && rgbComponentRegex.test(g) && rgbComponentRegex.test(b);
 	}
 
 	const handleRChange = (e) => setR(e.target.value);
