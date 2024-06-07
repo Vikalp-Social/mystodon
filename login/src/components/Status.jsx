@@ -5,10 +5,13 @@ import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import MediaDisplay from "./MediaDisplay";
-import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
-import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
 import "../styles/status.css";
 import Reply from "./Reply";
+import EditStatus from "./EditStatus";
+import ShareModal from "./ShareModal";
+import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
+import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
+
 
 function Status(props) {
     const {currentUser} = useContext(UserContext);
@@ -16,8 +19,8 @@ function Status(props) {
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
     const [isEditing, setEditing] = useState(false);
     const [isReplying, setReplying] = useState(false);
+    const [share, setShare] = useState(false);
     const [text, setText] = useState(sanitizedHtml);
-    const [replyText, setReplyText] = useState(`@${props.post.account.acct} `);
     const [isFavourite, setFavourite] = useState(props.post.favourited);
     const [isBoosted, setBoosted] = useState(props.post.reblogged);
     let navigate = useNavigate();
@@ -42,26 +45,6 @@ function Status(props) {
     function handleEdit(event){
         event.stopPropagation();
         setEditing(true);
-    }
-
-    function handleEditBlur(event){
-        event.stopPropagation();
-        setEditing(false);
-    }
-
-    async function handleSubmit(event){
-        event.preventDefault();
-        event.stopPropagation();
-        setEditing(false);
-        try {
-            const response = await axios.put(`https://${currentUser.instance}/api/v1/statuses/${props.post.id}`, {status: text}, {
-                headers: {
-                    Authorization: `Bearer ${currentUser.token}`,
-                },
-            });
-        } catch (error) {
-            setError(error.response.data);
-        }
     }
 
     async function handleDelete(event) {
@@ -120,6 +103,7 @@ function Status(props) {
         event.preventDefault();
         event.stopPropagation();
         navigator.clipboard.writeText(props.post.uri);
+        setShare(true);
     }
 
     function formatData(data){
@@ -171,20 +155,7 @@ function Status(props) {
                     </div>}
                 </div>
                 <div className="statusCenter">
-                    {isEditing ? 
-                        <form >
-                            <input
-                                type="text" className="form-control" id="status"
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                onBlur={handleEditBlur}
-                                autoFocus
-                                />
-                            <button type="submit" className="btn btn-primary" onMouseDown={(e) => handleSubmit(e)}>Save Changes</button> 
-                        </form>
-                    :
                     <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
-                    }
                     {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}
                 </div>
                 <div className="statusBottom">
@@ -198,7 +169,9 @@ function Status(props) {
                         <div title="Like" onClick={handleFavourite}> {isFavourite ? <FaHeart /> : <FaRegHeart />} 
                             <span className="stats">{formatData(props.post.favourites_count)}</span>
                         </div>
-                        <div title="Share" onClick={handleShare}> <FaShare/> </div>
+                        <div title="Share" onClick={handleShare}> 
+                            <FaShare/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,24 +181,14 @@ function Status(props) {
                 instance={props.instance}
                 post={props.post}
                 mentions={props.mentions}
-            />
-                {/* {isReplying ? 
-                    <div style={{marginBottom: "10px"}}>
-                        <form >
-                            <input
-                                type="text" className="form-control" id="status"
-                                value={replyText}
-                                onChange={(e) => setReplyText(e.target.value)}
-                                autoFocus
-                                />
-                            <button type="submit" className="btn btn-primary" onClick={handleReply}>reply</button> 
-                            <button type="button" className="btn btn-danger" onClick={() => setReplying(false)}>cancel</button> 
-                        </form>
-                    </div>
-                : 
-                    ""
-                } */}
-                
+            /> 
+            <EditStatus
+                show={isEditing} 
+                close={() => setEditing(false)} 
+                content={props.post.content}
+                id={props.post.id}
+            /> 
+            <ShareModal show={share} close={() => setShare(false)} link={props.post.uri}/>
         </>
     );
 }
