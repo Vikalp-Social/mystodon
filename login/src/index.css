@@ -65,8 +65,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-button{
-  background-color: rgb(16,179,209);
+html, body{
+  height: 100%;
 }
 
 body{
@@ -74,14 +74,20 @@ body{
   background-color: hsl(var(--body_background));
 }
 
+button{
+  background-color: rgb(16,179,209);
+}
+
 .root{
   background-color: hsl(var(--body_background));
   margin: 0;
+  height: 100%;
 }
 
 .main{
   background-color: hsl(var(--body_background));
   color: var(--text_color);
+  height: 100%;
 }
 
 .main input{
@@ -111,7 +117,6 @@ body{
     width: 40%;
     margin-left: 30%;
     margin-top: 20px;
-    position: relative;
     overflow-y: scroll;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -120,6 +125,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
  /* Hide scrollbar for Chrome, Safari and Opera */
@@ -156,3 +162,7 @@ body{
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {to{transform: rotate(1turn)}}
+
+.emoji{
+  display: inline;
+}

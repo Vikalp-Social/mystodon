@@ -11,6 +11,7 @@ import EditStatus from "./EditStatus";
 import ShareModal from "./ShareModal";
 import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-icons/fa6";
 import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
+import UsernameEmoji from "./UsernameEmoji";
 
 
 function Status(props) {
@@ -116,35 +117,17 @@ function Status(props) {
         return message; 
     }
 
-    function emoji(str){
-        // console.log(str)
-        // var emojis = /(?<=:)\w+(?=:)/g.exec(str);
-        // if(emojis){
-        //     console.log(emojis)
-        //     emojis.map(emoji => {
-        //         let custom_emoji = user.account.emojis.find((value) => value.shortcode === emoji)
-        //         console.log(Object(<img src={custom_emoji.url} />));
-        //         str = str.replace(`:${emoji}:`, <img src={custom_emoji.url} />)
-        //     })
-        //     console.log(str)
-        //     return str
-        // }
-        // return str;
-        str = str.replace(':verified:', '✅');
-        return str;
-    }
-
     return(
         <>
             <div className={props.reply ? "reply" : "status"} onClick={handleClick} >
                 {props.reblogged && <div className="statusRepost" onClick={(event) => handleUserClick(event, props.postedBy.id)}>
-                    <MdOutlineRepeat style={{color: "green", fontSize: "20px"}}/> <span><strong>{props.postedBy.display_name}</strong></span> reposted
+                    <MdOutlineRepeat style={{color: "green", fontSize: "20px"}}/> <span><strong><UsernameEmoji name={props.postedBy.display_name || props.postedBy.username} emojis={props.postedBy.emojis} /></strong></span> <span>reposted</span>
                 </div>}
                 <div className="statusTop">
                     <div className="statusTopLeft">
-                        <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
+                        <img className="statusProfileImg" src={props.post.account.avatar} alt="profile" onClick={(event) => handleUserClick(event, props.postedBy.id)}/>
                         <div className="statusUser">
-                            <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}>{props.post.account.display_name}</span>
+                            <span className="statusUsername" onClick={(event) => handleUserClick(event, props.post.account.id)}><UsernameEmoji name={props.post.account.display_name || props.post.account.username} emojis={props.post.account.emojis} /></span>
                             <span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
                         </div>
                     </div>
@@ -155,22 +138,25 @@ function Status(props) {
                     </div>}
                 </div>
                 <div className="statusCenter">
-                    <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
-                    {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}
-                </div>
-                <div className="statusBottom">
-                    <div className="statusBottomLeft">
-                        <div title="Reply" onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> 
-                            <span className="stats">{formatData(props.post.replies_count)}</span> 
-                        </div>
-                        <div title="Repost" onClick={handleBoost}><FaRepeat style={{color: isBoosted ? "green" : ""}} /> 
-                            <span className="stats">{formatData(props.post.reblogs_count)}</span>
-                        </div>
-                        <div title="Like" onClick={handleFavourite}> {isFavourite ? <FaHeart /> : <FaRegHeart />} 
-                            <span className="stats">{formatData(props.post.favourites_count)}</span>
-                        </div>
-                        <div title="Share" onClick={handleShare}> 
-                            <FaShare/>
+                    {props.reply && <div className="reply-line-container"><div className="reply-line"></div></div>}
+                    <div className="statusBody">
+                        <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
+                        {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}
+                        <div className="statusBottom">
+                            <div className="statusBottomLeft">
+                                <div title="Reply" onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> 
+                                    <span className="stats">{formatData(props.post.replies_count)}</span> 
+                                </div>
+                                <div title="Repost" onClick={handleBoost}><FaRepeat style={{color: isBoosted ? "green" : ""}} /> 
+                                    <span className="stats">{formatData(props.post.reblogs_count)}</span>
+                                </div>
+                                <div title="Like" onClick={handleFavourite}> {isFavourite ? <FaHeart /> : <FaRegHeart />} 
+                                    <span className="stats">{formatData(props.post.favourites_count)}</span>
+                                </div>
+                                <div title="Share" onClick={handleShare}> 
+                                    <FaShare/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

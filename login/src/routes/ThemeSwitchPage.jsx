@@ -25,7 +25,7 @@ function ThemeSwitchPage() {
 		setG(g);
 		setB(b);
 		setHex(hex);
-	}, [])
+	}, [hue])
 
 	function convertHex(hex){
 		if(isValidHex(hex)){

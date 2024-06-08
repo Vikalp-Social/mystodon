@@ -81,7 +81,7 @@ function StatusPage(props) {
                 />
                 <h2>Replies</h2>
                 {loading && <div className="loader"></div>}
-                {replies.length ? replies.map(reply => {
+                {replies.length ? replies.map((reply) => {
                     return <Status
                         key={reply.id}
                         instance={currentUser.instance}

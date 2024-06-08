@@ -81,6 +81,7 @@ function Search(){
                                 prof={account.avatar}
                                 username={account.display_name}
                                 fullname={account.username === account.acct ? `${account.username}@${currentUser.instance}` : account.acct}
+                                emojis={account.emojis}
                             />
                         }) : <div className="no-results">No results found</div>)
                     : 

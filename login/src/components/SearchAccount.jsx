@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
+import UsernameEmoji from "./UsernameEmoji";
 
 function SearchAccount(props) {
     const {currentUser} = useContext(UserContext);
     const {setError} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
+
+    console.log(props)
 
     function handleUserClick(){
         navigate(`/profile/${props.user_id}`)
@@ -62,7 +65,7 @@ function SearchAccount(props) {
                 <div className="statusTopLeft">
                     <img className="statusProfileImg" src={props.prof} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername" onClick={handleUserClick}>{props.username}</span>
+                        <span className="statusUsername" onClick={handleUserClick}><UsernameEmoji name={props.username} emojis={props.emojis} /></span>
                         <span className="userInstance">{props.fullname.length > 47 ? props.fullname.slice(0, 40) + '...' : props.fullname}</span>
                     </div>
                 </div>

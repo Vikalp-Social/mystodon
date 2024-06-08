@@ -4,11 +4,23 @@
     border-radius: 1.5%;
     box-shadow: var(--box_shadow);
     width: 100%;
+    height: 100%;
   }
 
-  .reply-line{
-    width: 50px;
+  .reply-line-container{
+    margin: 1px;
+    padding: 0;
+    margin-right: 5%;
     height: 100%;
+    background-color: aqua;
+    color: aqua;
+  }
+
+
+  .reply-line{
+    border-right: 6px solid aqua;
+    width: 2px;
+    word-break: break-all;
   }
   
   .status{
@@ -18,6 +30,7 @@
     border-radius: 1.5%;
     box-shadow: var(--box_shadow);
     width: 100%;
+    height: 100%;
   }
   .status:hover{
     cursor: pointer;
@@ -81,16 +94,28 @@
     font-size: var(--text);
     font-weight: 500;
     margin: 10px;
+    display: flex;
+    gap: 6px;
   }
   .statusRepost span:hover{
     text-decoration: underline;
   }
-  
+
   .statusCenter{
+    display: flex;
+    height: 100%;
+    margin: 0;
+  }
+  
+  .statusBody{
     margin: 10px 0 0 0;
     font-size: var(--text);
     display: flex;
     flex-direction: column;
+  }
+
+  .statusText{
+    text-wrap: wrap;
   }
   
   .statusMedia{

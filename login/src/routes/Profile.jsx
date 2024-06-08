@@ -11,6 +11,7 @@ import EditProfile from "../components/EditProfile";
 import Headbar from "../components/Headbar";
 import "../styles/profile.css";
 import ThemePicker from "../theme/ThemePicker";
+import UsernameEmoji from "../components/UsernameEmoji";
 
 function Profile(){
     const {id} = useParams();
@@ -33,6 +34,7 @@ function Profile(){
     const [loading, setLoading] = useState(false);
     const sanitizedHtml = DOMPurify.sanitize(user.account.note);
     let navigate = useNavigate();
+    const [display_name, setDisplayName] = useState("");
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -45,15 +47,23 @@ function Profile(){
         checkRelation();
     }, []);
 
+    useEffect(() => {
+        console.log(user);
+    });
+
     async function fetchUserProfile(){
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
+            var response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
             //console.log(response.data);
+            //  response.data.account.display_name = emoji(response.data.account.display_name, response.data.account)
+            //  console.log(DOMPurify.removed);
+            // console.log(response.data);
             setUser(response.data);
             setLoading(false);
             //console.log(emoji(response.data.account.display_name, response.data));
         } catch (error) {
+            console.log(error);
             setError(error.response.data);;
         }
     }
@@ -93,7 +103,7 @@ function Profile(){
             });
             setFollowing(false);
         } catch (error) {
-            setError(error.response.data);;;
+            setError(error.response.data);
         }
     }
 
@@ -109,24 +119,6 @@ function Profile(){
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    function emoji(str){
-        // console.log(str)
-        // var emojis = /(?<=:)\w+(?=:)/g.exec(str);
-        // if(emojis){
-        //     console.log(emojis)
-        //     emojis.map(emoji => {
-        //         let custom_emoji = user.account.emojis.find((value) => value.shortcode === emoji)
-        //         console.log(Object(<img src={custom_emoji.url} />));
-        //         str = str.replace(`:${emoji}:`, <img src={custom_emoji.url} />)
-        //     })
-        //     console.log(str)
-        //     return str
-        // }
-        // return str;
-        str = str.replace(':verified:', '✅');
-        return str;
-    }
 
     return (
         <div className="main">
@@ -160,7 +152,7 @@ function Profile(){
                         </div>
                     </div>
                     <div className="user">
-                        <span className="profileUsername">{user.account.display_name}</span>
+                        <span className="profileUsername"><UsernameEmoji name={user.account.display_name || user.account.username} emojis={user.account.emojis}/></span>
                         <span className="profileUserInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
                     </div>
                     <div className="profileStats"><strong><span>{formatData(user.account.followers_count)}</span> Followers <span>{formatData(user.account.following_count)}</span> Following</strong></div>
