@@ -6,7 +6,7 @@ import { useErrors } from "../context/ErrorContext";
 
 function SearchAccount(props) {
     const {currentUser} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 

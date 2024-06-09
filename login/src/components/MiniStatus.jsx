@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import DOMPurify from "dompurify";
+import UsernameEmoji from "./UsernameEmoji";
 
 function MiniStatus(props) {
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
@@ -19,7 +20,7 @@ function MiniStatus(props) {
 					<div className="statusTopLeft">
 						<img className="statusProfileImg" src={props.post.account.avatar} alt="profile" />
 						<div className="statusUser">
-							<span className="statusUsername">{props.post.account.display_name}</span>
+							<span className="statusUsername"><UsernameEmoji name={props.post.account.display_name} emojis={props.post.account.emojis} /></span>
 							<span className="userInstance">{props.post.account.username === props.post.account.acct ?`${props.post.account.username}@${props.instance}` : props.post.account.acct}</span>
 						</div>
 					</div>

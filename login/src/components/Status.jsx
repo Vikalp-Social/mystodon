@@ -48,21 +48,6 @@ function Status(props) {
         setEditing(true);
     }
 
-    async function handleDelete(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        try {
-            const response = await axios.delete(`https://${currentUser.instance}/api/v1/statuses/${props.post.id}`, {
-                headers: {
-                    Authorization: `Bearer ${currentUser.token}`,
-                },
-            });
-            console.log(response.data);
-        } catch (error) {
-            setError(error.response.data);
-        }
-    }
-
     async function handleFavourite(event){
         event.preventDefault();
         event.stopPropagation();
@@ -134,7 +119,7 @@ function Status(props) {
                     {props.isUserProfile && !props.reblogged &&
                     <div className="statusTopRight">
                         <div onClick={handleEdit}><MdOutlineModeEdit style={{color: "grey"}}/></div>
-                        <div onClick={handleDelete}><MdDeleteOutline style={{color: "rgb(127,29,29)"}}/></div>
+                        <div onClick={(e) => props.delete(e, props.post.id)}><MdDeleteOutline style={{color: "rgb(127,29,29)"}}/></div>
                     </div>}
                 </div>
                 <div className="statusCenter">

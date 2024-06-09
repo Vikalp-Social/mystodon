@@ -11,7 +11,7 @@ import ThemePicker from '../theme/ThemePicker';
 
 function StatusPage(props) {
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const { id } = useParams();
     const [replies, setReplies] = useState([]);
     const [loading, setLoading] = useState(false);

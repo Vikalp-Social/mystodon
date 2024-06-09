@@ -14,7 +14,7 @@ import ThemePicker from "../theme/ThemePicker";
 
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const {q} = useParams();
     const [viewStatus, setStatus] = useState(true);
     const [viewAccount, setAccount] = useState(false);
@@ -22,6 +22,7 @@ function Search(){
     const [statuses, setStatuses] = useState([]);
     const [hashtags, setHashtags] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [maxId, setMaxId] = useState("");
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -35,11 +36,13 @@ function Search(){
                     q,
                     token: currentUser.token,
                     instance: currentUser.instance,
+                    max_id: maxId,
                 });
                 //console.log(response.data);
                 setAccounts(response.data.accounts);
                 setStatuses(response.data.statuses);
                 setHashtags(response.data.hashtags);
+                setMaxId(response.data.max_id);
                 setLoading(false);
             } catch (error) {
                 setError(error.response.data);;;

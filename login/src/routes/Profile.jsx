@@ -16,23 +16,19 @@ import UsernameEmoji from "../components/UsernameEmoji";
 function Profile(){
     const {id} = useParams();
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [user, setUser] = useState({
-        account: {
             avatar: "",
             username: "",
             acct: "",
             note: "",
-        },
-        statuses: {
-            list: [],
-        },
-    });
+        });
+    const [statuses, setStatuses] = useState([])
     const [following, setFollowing] = useState(false);
     const [followedBy, setFollowedBy] = useState(false);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const sanitizedHtml = DOMPurify.sanitize(user.account.note);
+    const sanitizedHtml = DOMPurify.sanitize(user.note);
     let navigate = useNavigate();
     const [display_name, setDisplayName] = useState("");
 
@@ -54,14 +50,11 @@ function Profile(){
     async function fetchUserProfile(){
         try {
             setLoading(true);
-            var response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
-            //console.log(response.data);
-            //  response.data.account.display_name = emoji(response.data.account.display_name, response.data.account)
-            //  console.log(DOMPurify.removed);
-            // console.log(response.data);
-            setUser(response.data);
+            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
+            console.log(response.data)
+            setUser(response.data.account);
+            setStatuses(response.data.statuses.list);
             setLoading(false);
-            //console.log(emoji(response.data.account.display_name, response.data));
         } catch (error) {
             console.log(error);
             setError(error.response.data);;
@@ -107,6 +100,23 @@ function Profile(){
         }
     }
 
+    async function handleDelete(event, id) {
+        event.preventDefault();
+        event.stopPropagation();
+        try {
+            const response = await axios.delete(`https://${currentUser.instance}/api/v1/statuses/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${currentUser.token}`,
+                },
+            });
+            // console.log(response.data);
+            setStatuses(() => statuses.filter(status => status.id !== id))
+            setToast("Deleted Successfully!");
+        } catch (error) {
+            setError(error.response.data);
+        }
+    }
+
     function formatData(data){
         let message = data;
         if(data > 1000){
@@ -130,12 +140,12 @@ function Profile(){
                 {loading && <div className="loader"></div>}
                 <div className="profile">
                     <div className="header-container">
-                        {user.account.header !== "https://mastodon.social/headers/original/missing.png" && <img className="profileHeader" src={user.account.header} />}
+                        {user.header !== "https://mastodon.social/headers/original/missing.png" && <img className="profileHeader" src={user.header} />}
                         {followedBy && <div className="followed-by">Follows you</div>}
                     </div>
                     <div className="profileTop">
                         <div className="profileTopLeft">
-                            <img className="profileImg" src={user.account.avatar} alt="profile" />
+                            <img className="profileImg" src={user.avatar} alt="profile" />
                         </div>
                         <div className="profileTopRight">
                             {currentUser.id === id ? 
@@ -152,18 +162,18 @@ function Profile(){
                         </div>
                     </div>
                     <div className="user">
-                        <span className="profileUsername"><UsernameEmoji name={user.account.display_name || user.account.username} emojis={user.account.emojis}/></span>
-                        <span className="profileUserInstance">{user.account.username === user.account.acct ? `${user.account.username}@${currentUser.instance}` : user.account.acct}</span>
+                        <span className="profileUsername"><UsernameEmoji name={user.display_name || user.username} emojis={user.emojis}/></span>
+                        <span className="profileUserInstance">{user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}</span>
                     </div>
-                    <div className="profileStats"><strong><span>{formatData(user.account.followers_count)}</span> Followers <span>{formatData(user.account.following_count)}</span> Following</strong></div>
+                    <div className="profileStats"><strong><span>{formatData(user.followers_count)}</span> Followers <span>{formatData(user.following_count)}</span> Following</strong></div>
                     <div className="profileCenter">
                         <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     </div>
                 </div>
-                <EditProfile show={show} close={handleClose} display_name={user.account.display_name} note={user.account.note} />
+                <EditProfile show={show} close={handleClose} display_name={user.display_name} note={user.note} />
             
                 <h2 style={{textAlign: "center"}}>POSTS</h2>
-                {user.statuses.list.length ? user.statuses.list.map(status => {
+                {statuses.length ? statuses.map(status => {
                     return (status.in_reply_to_account_id === null && <Status 
                         key={status.id}
                         instance={currentUser.instance}
@@ -172,6 +182,7 @@ function Profile(){
                         postedBy={status.account}
                         isUserProfile={id === currentUser.id}
                         mentions={status.mentions}
+                        delete={handleDelete}
                     />)
                 }) : <p>No Posts Yet!</p>}
             </div>

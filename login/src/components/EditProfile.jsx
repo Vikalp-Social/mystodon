@@ -8,7 +8,7 @@ import "../styles/profile.css";
 
 function EditProfile(props){
     const {currentUser} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [displayName, setDisplayName] = useState(props.display_name);
     const [note, setNote] = useState(props.note);
 

@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap'
 
 function EditStatus(props) {
     const {currentUser} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [statusText, setStatusText] = useState(props.content);
 
     useEffect(() => {

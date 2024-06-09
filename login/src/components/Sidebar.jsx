@@ -7,7 +7,7 @@ import "../styles/sidebar.css";
 
 function Sidebar() {
     const {currentUser} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
 
@@ -33,6 +33,7 @@ function Sidebar() {
 
             const responses = await Promise.all(uploadPromises);
             const newIds = responses.map(response => response.data.id);
+            setToast("Uploaded media");
             setTimeout(() => postStatus(newIds), 5000)
 
         } catch (error) {
@@ -51,6 +52,7 @@ function Sidebar() {
                 media_ids: ids,
             });
             setMessage("");
+            setToast("Posted!")
         } catch (error) {
             setError(error.response.data);;;
         }

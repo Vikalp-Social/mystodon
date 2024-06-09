@@ -13,7 +13,7 @@ import ThemePicker from '../theme/ThemePicker';
 
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const {name} = useParams();
     const [statuses, setStatuses] = useState([]);
     const [loading, setLoading] = useState(false);

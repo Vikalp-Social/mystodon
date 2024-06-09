@@ -1,5 +1,5 @@
-import React, { useState, useContext, createContext } from 'react'
-import { Modal, Button } from 'react-bootstrap';
+import React, { useState, useContext, createContext, useEffect } from 'react'
+import { Modal, Button, Toast, ToastContainer } from 'react-bootstrap';
 import { handleLogOut } from '../components/Navbar';
 import { UserContext } from './UserContext';
 
@@ -8,6 +8,7 @@ const ErrorContext = createContext()
 export function ErrorProvider({children}) {
     const {setLoggedIn} = useContext(UserContext);
     const [error, setError] = useState('');
+    const [toast, setToast] = useState('');
     const messages = {
         401: 'Try logging in again',
         404: 'Does not exist',
@@ -17,8 +18,12 @@ export function ErrorProvider({children}) {
         502: 'Check your internet connection',
     }
 
+    useEffect(() => {
+        setTimeout(() => setToast(''), 7000);
+    })
+
     return (
-        <ErrorContext.Provider value={{setError}}>
+        <ErrorContext.Provider value={{setError, setToast}}>
             {children}
 
             <Modal show={error !== ''} onClose={() => setError('')} size='tiny'>
@@ -37,6 +42,14 @@ export function ErrorProvider({children}) {
                     }
                 </Modal.Footer>
             </Modal>
+
+            <ToastContainer className='p-3' position='bottom-start'>
+                <Toast show={toast !== ''} onClose={() => setToast('')} delay={5000}>
+                    <Toast.Header></Toast.Header>
+                    <Toast.Body>{toast}</Toast.Body>
+                </Toast>
+            </ToastContainer>
+            
         </ErrorContext.Provider>
     );
 };

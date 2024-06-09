@@ -125,20 +125,26 @@ app.put("/api/v1/accounts", async (req, res) => {
 
 //search 
 app.post("/api/v1/search", async (req, res) => {
+    console.log(req.body);
     try {
         const response = await axios.get(`https://${req.body.instance}/api/v2/search`, {
-            params: {q: req.body.q},
+            params: {
+                q: req.body.q,
+                //max_id: req.body.max_id,
+            },
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
         });
-        res.status(200).json({
+        console.log(response.data.statuses.length)
+        res.json({
             accounts: response.data.accounts,
             statuses: response.data.statuses,
             hashtags: response.data.hashtags,
+            max_id: response.data.statuses[response.data.statuses.length - 1].id,
         });
     } catch (error) {
-        console.log(error.response.data);;
+        console.log(error);;
         if(error.code === 'ENOTFOUND'){
             res.status(502).json({
                 error: "Can't Establish a connection to the server",

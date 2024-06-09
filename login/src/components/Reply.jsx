@@ -9,7 +9,7 @@ import "../styles/reply.css";
 
 function Reply(props){
     const {currentUser} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [replyText, setReplyText] = useState(() => {
         let str = `@${props.post.account.acct} `;
         props.mentions && props.mentions.map((mention) => {

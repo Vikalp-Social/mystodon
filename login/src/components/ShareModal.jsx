@@ -2,8 +2,10 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, XIcon, TelegramShareButton, TelegramIcon, WhatsappShareButton, WhatsappIcon, RedditShareButton, RedditIcon } from "react-share";
 import "../styles/reply.css";
+import { useErrors } from '../context/ErrorContext';
 
 function ShareModal(props) {
+    const {setToast} = useErrors();
     const size = 50;
 
     return (
@@ -15,7 +17,7 @@ function ShareModal(props) {
                     <div className='share-body'>
                         <div class="input-group mb-3">
                             <input type="text" className='form-control' value={props.link} readOnly/>
-                            <button class="my-button" type="button" id="button-addon2" onClick={() => navigator.clipboard.writeText(props.link)}>Copy</button>
+                            <button class="my-button" type="button" id="button-addon2" onClick={() => {navigator.clipboard.writeText(props.link);setToast("Copied!")}}>Copy</button>
                         </div>
                         <div className='share-buttons'>
                             <FacebookShareButton url={props.link}> <FacebookIcon size={size} round></FacebookIcon></FacebookShareButton>

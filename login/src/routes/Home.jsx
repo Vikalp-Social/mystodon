@@ -12,7 +12,7 @@ import ThemePicker from "../theme/ThemePicker";
 
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError} = useErrors();
+    const {setError, setToast} = useErrors();
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
     const [maxId, setMaxId] = useState("");
