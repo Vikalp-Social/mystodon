@@ -44,16 +44,17 @@ function Profile(){
     }, []);
 
     useEffect(() => {
-        console.log(user);
+        document.title = `${user.display_name || user.username} (@${user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}) | Vikalp`;  
     });
 
     async function fetchUserProfile(){
         try {
             setLoading(true);
             const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
-            console.log(response.data)
+            // console.log(response.data)
             setUser(response.data.account);
             setStatuses(response.data.statuses.list);
+            setDisplayName(response.data.account.display_name);
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -162,7 +163,7 @@ function Profile(){
                         </div>
                     </div>
                     <div className="user">
-                        <span className="profileUsername"><UsernameEmoji name={user.display_name || user.username} emojis={user.emojis}/></span>
+                        <span className="profileUsername">{display_name === '' ? display_name : <UsernameEmoji name={user.display_name || user.username} emojis={user.emojis}/>}</span>
                         <span className="profileUserInstance">{user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}</span>
                     </div>
                     <div className="profileStats"><strong><span>{formatData(user.followers_count)}</span> Followers <span>{formatData(user.following_count)}</span> Following</strong></div>

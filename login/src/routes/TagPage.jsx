@@ -27,6 +27,7 @@ function TagPage() {
         }
         
         fetchData();
+        document.title = `#${name} | Vikalp`;
     }, []);
 
     async function fetchData(){

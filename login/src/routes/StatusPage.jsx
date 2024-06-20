@@ -61,6 +61,7 @@ function StatusPage(props) {
         }
         //setTimeout(fetchData, 1000);
         fetchData();
+        document.title = "Post Details | Vikalp";
     }, [id]);
 
     return (

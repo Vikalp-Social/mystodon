@@ -14,6 +14,10 @@ function ThemeSwitchPage() {
 	const [b, setB] = useState("")
 
 	useEffect(() => {
+		document.title = "Themes | Vikalp"
+	}, [])
+
+	useEffect(() => {
 		document.documentElement.style.setProperty('--hue', hue);
 		document.documentElement.style.setProperty('--saturation', sat);
 		document.documentElement.style.setProperty('--lightness', light);

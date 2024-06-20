@@ -123,7 +123,6 @@ function Status(props) {
                     </div>}
                 </div>
                 <div className="statusCenter">
-                    {props.reply && <div className="reply-line-container"><div className="reply-line"></div></div>}
                     <div className="statusBody">
                         <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                         {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}

@@ -24,6 +24,7 @@ function Home(){
             navigate("/");
         }
         fetchTimeline();
+        document.title = "Home | Vikalp";
     }, []);
 
     async function fetchTimeline() {
@@ -58,7 +59,7 @@ function Home(){
                             mentions={status.mentions}
                         />
                     })}
-                    {loading && <div className="load-container"><div className="loader"></div></div>}
+                    {loading && <div className="loader"></div>}
                     {!loading && <button className="load-button" onClick={fetchTimeline}>Load More</button>}
                     
                 </div>

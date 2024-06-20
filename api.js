@@ -437,7 +437,7 @@ app.post("/api/v1/timelines/home", async (req, res) => {
         });
         res.json({
             data: formatData(response.data),
-            max_id: response.data[response.data.length - 1].id,
+            max_id: response.data[response.data.length - 1].id || '',
         })
         //res.json(response.data);
     } catch (error) {

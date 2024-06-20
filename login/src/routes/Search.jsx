@@ -26,6 +26,10 @@ function Search(){
     let navigate = useNavigate()
 
     useEffect(() => {
+        document.title = "Search | Vikalp";
+    }, [])
+
+    useEffect(() => {
         if(!isLoggedIn){
             navigate("/");
         }
