@@ -8,17 +8,16 @@
   }
 
   .reply-line-container{
-    margin: 1px;
+    margin: 2% 5% 0 5%;
     padding: 0;
-    margin-right: 5%;
-    height: 100%;
-    background-color: aqua;
+    height: calc(100%-1px);
+    background-color: hsl(var(--button_color));
     color: aqua;
   }
 
 
   .reply-line{
-    border-right: 6px solid aqua;
+    border-right: 3px solid hsl(var(--button_color));
     width: 2px;
     word-break: break-all;
   }

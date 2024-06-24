@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { ColorPicker } from 'react-iro'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
 import Navbar from '../components/Navbar'
 import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb, rgbToHex } from '../theme/ThemePicker'
+import ColorForm from '../components/ColorForm'
 
 function ThemeSwitchPage() {
 	const [hue, setHue] = useLocalStorage("--hue")
@@ -14,22 +16,24 @@ function ThemeSwitchPage() {
 	const [b, setB] = useState("")
 
 	useEffect(() => {
-		document.title = "Themes | Vikalp"
-	}, [])
-
-	useEffect(() => {
 		document.documentElement.style.setProperty('--hue', hue);
 		document.documentElement.style.setProperty('--saturation', sat);
 		document.documentElement.style.setProperty('--lightness', light);
-	}, [hue, sat, light])
-
-	useEffect(() => {
-		const [r, g, b, hex] = hslToRgb(hue/360, sat/100, light/100)
-		setR(r);
-		setG(g);
-		setB(b);
-		setHex(hex);
+		document.title = "Themes | Vikalp"
+		// const [r, g, b, hex] = hslToRgb(hue/360, sat/100, light/100)
+		// setR(r);
+		// setG(g);
+		// setB(b);
+		// setHex(hex);
 	}, [hue])
+
+	// useEffect(() => {
+	// 	const [r, g, b, hex] = hslToRgb(hue/360, sat/100, light/100)
+	// 	setR(r);
+	// 	setG(g);
+	// 	setB(b);
+	// 	setHex(hex);
+	// }, [hue])
 
 	function convertHex(hex){
 		if(isValidHex(hex)){
@@ -89,25 +93,30 @@ function ThemeSwitchPage() {
 					<li><a class="dropdown-item" onClick={setDarkMode}>Dark</a></li>
 				</ul>
 			</div>
-			{/* <div className='col'>
-				<label htmlFor='hexcode'>Hexcode: <input className="form-control" id='hexcode' type='text' value={hex} onChange={(e) => setHex(e.target.value)} size={7} maxLength={7}/></label>
-				
-			</div>
-			<form className='rgb-form'>
-				<div className='col'>
-					<label for='red'>R: <input id='red' className='form-control' type='number' value={r} onChange={(e) => setR(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
-				</div>
-				<div className='col'>
-					<label for='green'>G: <input id='green' className='form-control' type='number' value={g} onChange={(e) => setG(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
-				</div>
-				<div className='col'>
-					<label for='blue'>B: <input id='blue' className='form-control' type='number' value={b} onChange={(e) => setB(e.target.value)} size={3} maxLength={3} max={255} min={0}/></label>
-				</div>
-			</form>
-			 */}
 
 			<div className="color-container">
-            <form className="color-form">
+				<ColorPicker setters={{
+					onChangeColor: (color) => {
+						setHue(color.hsl.h);
+						setSat(color.hsl.s);
+						setLight(color.hsl.l);
+					},
+				}} options={{color: `hsl(${hue} ${sat} ${light})`, width: 250, wheelLightness: false}}/>
+
+				<ColorForm />
+        </div>
+			{/* <button className='my-button' onClick={() => convertHex(hex)}>Convert using Hexcode</button>
+			<button className='my-button' onClick={() => convertRGB(r, g, b)}>Convert using RGB</button> */}
+		</div>
+		
+    </div>
+    
+  )
+}
+
+export default ThemeSwitchPage
+
+{/* <form className="color-form">
                 <div className="rgb-inputs">
                     <label>
                         R: <input type="number" value={r} onChange={handleRChange} min="0" max="255" maxLength={3} />
@@ -122,18 +131,4 @@ function ThemeSwitchPage() {
                 <label className="hex-input">
                     Hex: <input type="text" value={hex} onChange={handleHexChange} maxLength={7} />
                 </label>
-            </form>
-        </div>
-		<div>
-				<input className='color-picker' type="range" min="0" max="360" value={hue} onChange={(e) => setHue(e.target.value)}/>
-			</div>
-
-			<button className='my-button' onClick={() => convertHex(hex)}>Convert using Hexcode</button>
-			<button className='my-button' onClick={() => convertRGB(r, g, b)}>Convert using RGB</button>
-		</div>
-    </div>
-    
-  )
-}
-
-export default ThemeSwitchPage
+            </form> */}

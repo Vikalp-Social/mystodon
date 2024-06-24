@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DOMPurify from "dompurify";
@@ -36,7 +36,7 @@ function Profile(){
         if(!isLoggedIn){
             navigate("/");
         }
-        fetchUserProfile();
+        fetchUserProfile();  
     }, [id]);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ function Profile(){
     }, []);
 
     useEffect(() => {
-        document.title = `${user.display_name || user.username} (@${user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}) | Vikalp`;  
+        document.title = `${user.display_name || user.username} (@${user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}) | Vikalp`;
     });
 
     async function fetchUserProfile(){
@@ -163,7 +163,7 @@ function Profile(){
                         </div>
                     </div>
                     <div className="user">
-                        <span className="profileUsername">{display_name === '' ? display_name : <UsernameEmoji name={user.display_name || user.username} emojis={user.emojis}/>}</span>
+                        <span className="profileUsername">{display_name === '' ? display_name : <UsernameEmoji key={user.id} name={user.display_name || user.username} emojis={user.emojis}/>}</span>
                         <span className="profileUserInstance">{user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}</span>
                     </div>
                     <div className="profileStats"><strong><span>{formatData(user.followers_count)}</span> Followers <span>{formatData(user.following_count)}</span> Following</strong></div>

@@ -60,12 +60,12 @@ function SearchAccount(props) {
     }
 
     return(
-        <div className="search">
+        <div className="search" onClick={handleUserClick}>
             <div className="statusTop">
                 <div className="statusTopLeft">
                     <img className="statusProfileImg" src={props.prof} alt="profile" />
                     <div className="user">
-                        <span className="statusUsername" onClick={handleUserClick}><UsernameEmoji name={props.username} emojis={props.emojis} /></span>
+                        <span className="statusUsername" onClick={handleUserClick}><UsernameEmoji name={props.display_name || props.username} emojis={props.emojis} /></span>
                         <span className="userInstance">{props.fullname.length > 47 ? props.fullname.slice(0, 40) + '...' : props.fullname}</span>
                     </div>
                 </div>

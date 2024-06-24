@@ -104,7 +104,7 @@ function Status(props) {
 
     return(
         <>
-            <div className={props.reply ? "reply" : "status"} onClick={handleClick} >
+            <div className={props.reply ? "reply" : "status"} onClick={handleClick} style={{paddingBottom: (props.reply && props.thread) ? '0' : '20px'}}>
                 {props.reblogged && <div className="statusRepost" onClick={(event) => handleUserClick(event, props.postedBy.id)}>
                     <MdOutlineRepeat style={{color: "green", fontSize: "20px"}}/> <span><strong><UsernameEmoji name={props.postedBy.display_name || props.postedBy.username} emojis={props.postedBy.emojis} /></strong></span> <span>reposted</span>
                 </div>}
@@ -123,6 +123,7 @@ function Status(props) {
                     </div>}
                 </div>
                 <div className="statusCenter">
+                    {(props.reply && props.thread) && <div className="reply-line-container"><div className="reply-line"></div></div>}
                     <div className="statusBody">
                         <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                         {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}

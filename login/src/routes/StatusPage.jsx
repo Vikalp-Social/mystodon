@@ -82,7 +82,7 @@ function StatusPage(props) {
                 />
                 <h2>Replies</h2>
                 {loading && <div className="loader"></div>}
-                {replies.length ? replies.map((reply) => {
+                {replies.length ? replies.map((reply, index) => {
                     return <Status
                         key={reply.id}
                         instance={currentUser.instance}
@@ -91,6 +91,7 @@ function StatusPage(props) {
                         postedBy={reply.account}
                         isUserProfile={false}
                         reply={true}
+                        thread={index < replies.length-1 && reply.id === replies[index+1].in_reply_to_id ? true : false}
                         mentions={reply.reblog? reply.reblog.mentions : reply.mentions}
                     />
                 }) : <p>No replies yet</p>}

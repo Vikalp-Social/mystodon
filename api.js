@@ -141,7 +141,7 @@ app.post("/api/v1/search", async (req, res) => {
             accounts: response.data.accounts,
             statuses: response.data.statuses,
             hashtags: response.data.hashtags,
-            max_id: response.data.statuses[response.data.statuses.length - 1].id,
+            //max_id: response.data.statuses[response.data.statuses.length - 1].id,
         });
     } catch (error) {
         console.log(error);;
