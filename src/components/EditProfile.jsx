@@ -16,7 +16,7 @@ function EditProfile(props){
         const regex = /(<([^>]+)>)/gi;
         const newString = props.note.replace(regex, " ");
         setNote(newString);
-    }, [note, props]);
+    }, []);
 
     async function handleSubmit() {
         try {
