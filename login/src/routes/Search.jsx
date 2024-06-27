@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios  from "axios";
+import APIClient from "../apis/APIClient";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import SearchAccount from "../components/SearchAccount";
@@ -36,7 +36,7 @@ function Search(){
         async function fetchData() {
             try {
                 setLoading(true);
-                const response = await axios.post(`http://localhost:3000/api/v1/search`, {
+                const response = await APIClient.post(`/search`, {
                     q,
                     token: currentUser.token,
                     instance: currentUser.instance,

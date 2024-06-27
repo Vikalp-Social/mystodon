@@ -1,7 +1,8 @@
 import React, {useState, useContext, useEffect} from "react";
-import axios from "axios";
-import { UserContext} from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import APIClient from "../apis/APIClient";
+import { useErrors } from "../context/ErrorContext";
+import { UserContext} from "../context/UserContext";
 import "../styles/login.css";
 
 let id = "";
@@ -9,6 +10,7 @@ let secret = "";
 
 function LoginPage() {
     const {setCurrentUser, isLoggedIn, setLoggedIn} = useContext(UserContext);
+    const { setError} = useErrors();
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
@@ -16,6 +18,9 @@ function LoginPage() {
     useEffect(() => {
         if(isLoggedIn){
             navigate("/home");
+        }
+        else {
+            setLoading(false);
         }
         
         if(window.location.pathname === '/auth'){
@@ -28,57 +33,47 @@ function LoginPage() {
         event.preventDefault();
         localStorage.setItem("instance", instance);
 
-        const register_app = await axios.post(`https://${instance}/api/v1/apps`, {
-            client_name: "Vikalp",
-            redirect_uris: "http://localhost:3001/auth",
-            scopes: "read write push",
-            website: "http://localhost:3001"
-        });
-        //console.log(register_app.data);
-        const client = register_app.data;
-        id = client.client_id;
-        secret = client.client_secret;
-        localStorage.setItem("id", id);
-        localStorage.setItem("secret", secret);
-
-        if(client.client_id){
-            //getAuthCode(instance, client);
-            window.location.href = (`https://${instance}/oauth/authorize?client_id=${client.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
+        try {
+            const register_app = await APIClient.post(`/register`, {
+                instance,
+            });
+            console.log(register_app.data);
+            localStorage.setItem("id", register_app.data.client_id);
+            localStorage.setItem("secret", register_app.data.client_secret);
+            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data);
         }
+
+        
     }
 
     async function handleAuth(id, secret, code, user_instance){
         setLoading(true);
-        const authorize = await axios.post(`https://${user_instance}/oauth/token`, {
-            client_id: id,
-            client_secret: secret,
-            redirect_uri: "http://localhost:3001/auth",
-            grant_type: "authorization_code",
-            code,
-            scope: "read write push",
-        });
-
-        let token = authorize.data.access_token;
-
-        const verify = await axios.get(`https://${user_instance}/api/v1/accounts/verify_credentials`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
+        try {
+            const authorize = await APIClient.post(`/auth`, {
+                instance: user_instance,
+                id,
+                secret,
+                code,
+            });
+            const user = {
+                name: authorize.data.account.display_name,
+                username: authorize.data.account.username,
+                instance: user_instance,
+                id: authorize.data.account.id,
+                token: authorize.data.token,
+                avatar: authorize.data.account.avatar,
             }
-        });
-
-        const user = {
-            name: verify.data.display_name,
-            username: verify.data.username,
-            instance: user_instance,
-            id: verify.data.id,
-            token,
-            avatar: verify.data.avatar,
+            setCurrentUser(user);
+            localStorage.removeItem("id");
+            localStorage.removeItem("secret");
+            setLoggedIn(true);
+            setLoading(false);
+        } catch (error) {
+            setError(error)
         }
-        setCurrentUser(user);
-        localStorage.removeItem("id");
-        localStorage.removeItem("secret");
-        setLoggedIn(true);
-        setLoading(false);
     }
 
     return(

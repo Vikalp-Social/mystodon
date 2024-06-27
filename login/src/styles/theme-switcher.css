@@ -64,12 +64,19 @@
 
 .color-container {
     padding: 20px;
+    height: calc(100%-1px);
     width: 100%;
     margin: auto;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.color-form{
+    display: flex;
+    flex-direction: column;
+
 }
 
 .button-group{
@@ -79,7 +86,7 @@
     height: 40px;
     width: 240px;
     background-color: hsl(var(--button_color));
-    border-radius: 5%;
+    text-shadow: var(--text_shadow)
 }
 
 .button-group-tab{
@@ -94,10 +101,10 @@
 }
 
 .selected{
-    background-color: hsl(var(--button_color));
-    filter: brightness(65%);
     height: 100%;
     width: 80px;
+    background-color: hsl(var(--button_color));
+    filter: brightness(65%);
     border: 1px solid black;
     text-align: center;
 }
@@ -108,20 +115,21 @@
     gap: 20px;
 }
 
-.rgb-inputs {
+.color-inputs {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px;
 }
 
-.rgb-inputs label {
+.color-inputs label {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-.rgb-inputs input {
-    width: 60px;
+.color-inputs input {
+    width: 100px;
     height: 40px;
     padding: 5px;
     font-size: 16px;
@@ -132,7 +140,7 @@
     transition: border-color 0.3s;
 }
 
-.rgb-inputs input:focus {
+.color-inputs input:focus {
     border-color: #007BFF;
 }
 

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import APIClient from '../apis/APIClient';
 import MiniStatus from './MiniStatus';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
@@ -25,7 +25,7 @@ function Reply(props){
         event.preventDefault();
         event.stopPropagation();
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/statuses", {
+            const response = await APIClient.post("/statuses", {
                 message: replyText,
                 instance: currentUser.instance,
                 token: currentUser.token,

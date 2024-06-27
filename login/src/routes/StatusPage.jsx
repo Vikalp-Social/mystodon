@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import APIClient from '../apis/APIClient';
 import Status from '../components/Status';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -47,7 +47,7 @@ function StatusPage(props) {
         async function fetchData() {
             try {
                 setLoading(true);
-                const response = await axios.post(`http://localhost:3000/api/v1/statuses/${id}`, {
+                const response = await APIClient.post(`/statuses/${id}`, {
                     instance: currentUser.instance,
                     token: currentUser.token,
                 });

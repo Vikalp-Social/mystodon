@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import APIClient from "../apis/APIClient";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import UsernameEmoji from "./UsernameEmoji";
@@ -10,8 +11,6 @@ function SearchAccount(props) {
     const {setError, setToast} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
-
-    console.log(props)
 
     function handleUserClick(){
         navigate(`/profile/${props.user_id}`)
@@ -37,7 +36,7 @@ function SearchAccount(props) {
 
     async function handleFollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/follow`, {
+            const response = await APIClient.post(`/accounts/${props.user_id}/follow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -49,7 +48,7 @@ function SearchAccount(props) {
 
     async function handleUnfollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${props.user_id}/unfollow`, {
+            const response = await APIClient.post(`/accounts/${props.user_id}/unfollow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });

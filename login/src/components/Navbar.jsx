@@ -21,14 +21,6 @@ function Navbar() {
         navigate(`/search/${encodeURIComponent(search)}`);
     }
 
-    // function handleLogOut() {
-    //     setLoggedIn(false);
-    //     localStorage.removeItem("current_user");
-    //     localStorage.removeItem("--hue");
-    //     document.documentElement.style.setProperty("--hue", 204);
-    //     navigate("/");
-    // }
-
     function goHome() {
         navigate("/home");
     }

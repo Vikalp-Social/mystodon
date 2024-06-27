@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import APIClient from "../apis/APIClient";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import "../styles/sidebar.css";
@@ -44,7 +45,7 @@ function Sidebar() {
     async function postStatus(ids){
         console.log(ids);
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/statuses", {
+            const response = await APIClient.post("/statuses", {
                 message,
                 instance: currentUser.instance,
                 token: currentUser.token,

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import APIClient from '../apis/APIClient';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
@@ -20,7 +20,7 @@ function EditProfile(props){
 
     async function handleSubmit() {
         try {
-            const response = await axios.put("http://localhost:3000/api/v1/accounts", {
+            const response = await APIClient.put("/accounts", {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 display_name: displayName,

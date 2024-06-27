@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import APIClient from '../apis/APIClient';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import SearchTag from '../components/SearchTag';
@@ -33,7 +33,7 @@ function TagPage() {
     async function fetchData(){
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:3000/api/v1/timelines/tag/${name}`, {
+            const response = await APIClient.post(`/timelines/tag/${name}`, {
                 token: currentUser.token,
                 instance: currentUser.instance,
                 max_id: maxId,

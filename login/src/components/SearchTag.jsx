@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import APIClient from "../apis/APIClient";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 
@@ -33,7 +34,7 @@ function SearchAccount(props) {
 
     async function handleFollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/tags/${props.name}/follow`, {
+            const response = await APIClient.post(`/tags/${props.name}/follow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -45,7 +46,7 @@ function SearchAccount(props) {
 
     async function handleUnfollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/tags/${props.name}/unfollow`, {
+            const response = await APIClient.post(`/tags/${props.name}/unfollow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });

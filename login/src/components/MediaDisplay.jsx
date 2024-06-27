@@ -2,6 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function MediaDisplay(props){
     return (
+        <div className="statusMediaContainer">
             <Carousel controls={props.mediaList.length > 1} indicators={props.mediaList.length > 1} onClick={(e) => e.stopPropagation()}>
                 {props.mediaList.map((media) => {
                     return(
@@ -17,6 +18,7 @@ function MediaDisplay(props){
                     )
                 })}
             </Carousel>
+        </div>
     );
 }
 

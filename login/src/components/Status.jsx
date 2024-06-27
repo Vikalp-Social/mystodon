@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import APIClient from "../apis/APIClient";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
@@ -53,7 +53,7 @@ function Status(props) {
         event.stopPropagation();
         try {
             let prefix = props.post.favourited ? "un" : "";
-            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}/favourite`, {
+            const response = await APIClient.post(`/statuses/${props.post.id}/favourite`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 prefix: prefix,
@@ -73,7 +73,7 @@ function Status(props) {
         event.stopPropagation();
         try {
             let prefix = props.post.reblogged ? "un" : "";
-            const response = await axios.post(`http://localhost:3000/api/v1/statuses/${props.post.id}/boost`, {
+            const response = await APIClient.post(`/statuses/${props.post.id}/boost`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 prefix: prefix,
@@ -104,7 +104,7 @@ function Status(props) {
 
     return(
         <>
-            <div className={props.reply ? "reply" : "status"} onClick={handleClick} style={{paddingBottom: (props.reply && props.thread) ? '0' : '20px'}}>
+            <div className={props.reply ? "reply" : "status"} onClick={handleClick} style={{paddingBottom: (props.reply && props.thread) ? '0' : '10px'}}>
                 {props.reblogged && <div className="statusRepost" onClick={(event) => handleUserClick(event, props.postedBy.id)}>
                     <MdOutlineRepeat style={{color: "green", fontSize: "20px"}}/> <span><strong><UsernameEmoji name={props.postedBy.display_name || props.postedBy.username} emojis={props.postedBy.emojis} /></strong></span> <span>reposted</span>
                 </div>}
@@ -122,7 +122,7 @@ function Status(props) {
                         <div onClick={(e) => props.delete(e, props.post.id)}><MdDeleteOutline style={{color: "rgb(127,29,29)"}}/></div>
                     </div>}
                 </div>
-                <div className="statusCenter">
+                <div className={props.thread ? "statusCenter" : ""}>
                     {(props.reply && props.thread) && <div className="reply-line-container"><div className="reply-line"></div></div>}
                     <div className="statusBody">
                         <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>

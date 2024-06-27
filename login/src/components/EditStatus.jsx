@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import axios from 'axios';
+import APIClient from '../apis/APIClient';
 import { UserContext } from '../context/UserContext'
 import { useErrors } from '../context/ErrorContext'
 import { Modal } from 'react-bootstrap'
@@ -19,11 +19,7 @@ function EditStatus(props) {
         event.preventDefault();
         event.stopPropagation();
         try {
-            const response = await axios.put(`https://${currentUser.instance}/api/v1/statuses/${props.id}`, {status: statusText}, {
-                headers: {
-                    Authorization: `Bearer ${currentUser.token}`,
-                },
-            });
+            const response = await APIClient.put(`/statuses/${props.id}`, {instance: currentUser.instance, token: currentUser.token, text: statusText});
             props.close();
         } catch (error) {
             setError(error.response.data);

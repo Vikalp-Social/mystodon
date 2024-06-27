@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import APIClient from "../apis/APIClient";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
@@ -50,7 +51,7 @@ function Profile(){
     async function fetchUserProfile(){
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}`, currentUser);
+            const response = await APIClient.post(`/accounts/${id}`, currentUser);
             // console.log(response.data)
             setUser(response.data.account);
             setStatuses(response.data.statuses.list);
@@ -79,7 +80,7 @@ function Profile(){
 
     async function handleFollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}/follow`, {
+            const response = await APIClient.post(`/accounts/${id}/follow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });
@@ -91,7 +92,7 @@ function Profile(){
 
     async function handleUnfollow(){
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/accounts/${id}/unfollow`, {
+            const response = await APIClient.post(`/accounts/${id}/unfollow`, {
                 instance: currentUser.instance,
                 token: currentUser.token,
             });

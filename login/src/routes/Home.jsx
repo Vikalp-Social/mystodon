@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import APIClient from "../apis/APIClient";
 import { UserContext} from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import Status from "../components/Status";
@@ -30,7 +30,7 @@ function Home(){
     async function fetchTimeline() {
             try {
                 setLoading(true);
-                const response = await axios.post("http://localhost:3000/api/v1/timelines/home", {...currentUser, max_id: maxId});
+                const response = await APIClient.post("/timelines/home", {...currentUser, max_id: maxId});
                 //console.log(response.data);
                 setTimeline([...timeline, ...response.data.data])
                 setMaxId(response.data.max_id);
