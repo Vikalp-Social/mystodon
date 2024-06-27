@@ -1,0 +1,49 @@
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 10%;
+    
+}
+
+.login > div{
+    background-color: hsl(var(--status_background));
+    padding: 40px 20px;
+    border-radius: 1.5%;
+    height: 50%;
+    width: 60%;
+}
+
+.login ul{
+    font-size: 20px;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.login-form input{
+    border-radius: 4%;
+}
+
+.login-form input::placeholder{
+    color: grey;
+}
+
+.login-form .my-button{
+    background-color: hsl(207, 66.8%, 57.5%);
+    border: none;
+    border-radius: 16px;
+    padding: 10px;
+    cursor: pointer;
+    color: var(--text_color);
+    float: right;
+    margin: 10px 0 20px 0;
+}
+
+.login-form button:hover{
+    background-color: rgb(4,130,216);
+}

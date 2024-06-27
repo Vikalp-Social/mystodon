@@ -1,0 +1,53 @@
+.reply-modal{
+    max-width: 40vw;
+    color: var(--text_color);
+    overflow:hidden;
+}
+
+.reply-modal-content{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    width: 100%;
+    max-height: 80vh;
+    overflow: scroll;
+}
+
+.reply-modal-content input{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    border: none;
+    width: 100%;
+}
+
+.reply-modal-content textarea{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    border: none;
+    width: 100%;
+    resize:none;
+}
+
+.reply-bottom{
+    float: right;
+}
+
+.mini-status{
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: hsl(var(--body_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+    width: 100%;
+    max-height: 35vh;
+    overflow: scroll
+}
+
+.share-body input{
+    background-color: hsl(var(--body_background));
+}
+
+.share-buttons{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

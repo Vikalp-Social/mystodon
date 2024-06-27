@@ -1,0 +1,17 @@
+.headbar{
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    font-size: calc(var(--heading) * 1.2);
+    padding-left: 10px;
+}
+
+.back{
+    display: inline-block;
+    margin-right: 10px;
+}
+.back:hover{
+    cursor: pointer;
+}

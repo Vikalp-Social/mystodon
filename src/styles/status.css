@@ -1,0 +1,147 @@
+  .reply{
+    padding: 20px;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+    width: 100%;
+    height: 100%;
+  }
+
+  .reply-line-container{
+    margin: 2% 5% 0 5%;
+    padding: 0;
+    height: calc(100%-1px);
+    background-color: hsl(var(--button_color));
+    color: aqua;
+  }
+
+  .reply-line{
+    border-right: 3px solid hsl(var(--button_color));
+    width: 2px;
+    word-break: break-all;
+  }
+  
+  .status{
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+    width: 100%;
+    height: 100%;
+  }
+  .status:hover{
+    cursor: pointer;
+  }
+  
+  .statusTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .statusTopLeft {
+    display: flex;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .statusTopRight{
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .statusTopRight > div{
+    display: inline;
+    font-size: 25px;
+    margin-right: 20px;
+  }
+  
+  .statusProfileImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .userInstance{
+    margin: 0 10px;
+    /* word-wrap: break-word;
+    width: 400px; */
+  }
+  
+  .statusUser{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .statusUsername {
+    font-size: var(--heading);
+    font-weight: 500;
+    margin: 0 10px;
+  }
+  .statusUsername:hover {
+    text-decoration: underline;
+	cursor: pointer;
+  }
+  
+  .statusRepost {
+    font-size: var(--text);
+    font-weight: 500;
+    margin: 10px;
+    display: flex;
+    gap: 6px;
+  }
+  .statusRepost span:hover{
+    text-decoration: underline;
+  }
+
+  .statusCenter{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .statusBody{
+    margin: 10px 0 0 0;
+    font-size: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .statusText{
+    text-wrap: wrap;
+  }
+  
+  .statusMedia{
+    margin: 10px 0;
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+  }
+  
+  .statusBottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .statusBottomLeft{
+    display: flex;
+    align-items: center;   
+  }
+  
+  .statusBottomLeft > div{
+    font-size: var(--heading);
+    margin-right: 20px;
+  }
+  
+  .statusBottom .stats{
+    font-size: var(--text);
+    margin-left: 5px;
+    color: var(--text_color);
+  }
