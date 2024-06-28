@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import DOMPurify from "dompurify";
 import UsernameEmoji from "./UsernameEmoji";
 
+// MiniStatus component is used to display a status in a minimized form in the Reply component
 function MiniStatus(props) {
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
 	const [text, setText] = useState(sanitizedHtml);

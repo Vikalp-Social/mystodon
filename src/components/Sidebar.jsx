@@ -6,16 +6,19 @@ import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import "../styles/sidebar.css";
 
+// Sidebar component that is present on all pages
 function Sidebar() {
     const {currentUser} = useContext(UserContext);
     const {setError, setToast} = useErrors();
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
 
+    //navigate to the current user's profile
     function handleUserClick(){
         navigate(`/profile/${currentUser.id}`);
     }
 
+    //fucntion to upload the media(if any) and post the status
     async function handleSubmit(event){
         event.preventDefault();
         // console.log(event.target.media.files);
@@ -42,6 +45,7 @@ function Sidebar() {
         }
     }
 
+    //function to post the status
     async function postStatus(ids){
         console.log(ids);
         try {
@@ -76,6 +80,7 @@ function Sidebar() {
                     <div className="mb-3">
                         <label htmlFor="message" className="form-label">Post a Status</label>
                         <textarea className="form-control" id="message" rows="3" maxLength={500} value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
+                        {/* limiting length of the status to 500 characters */}
                         Remaining Characters: {500 - message.length}
                     </div>
                     <div className="mb-3">

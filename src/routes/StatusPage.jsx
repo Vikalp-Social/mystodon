@@ -9,9 +9,10 @@ import { useErrors } from '../context/ErrorContext';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
 
-function StatusPage(props) {
+// StatusPage component is the main component that is rendered when the user visits a status/post.
+function StatusPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const { id } = useParams();
     const [replies, setReplies] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ function StatusPage(props) {
         if(!isLoggedIn){
             navigate("/");
         }
-
+        // function to fetch the status/post details along with its replies
         async function fetchData() {
             try {
                 setLoading(true);

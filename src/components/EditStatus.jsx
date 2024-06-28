@@ -10,11 +10,13 @@ function EditStatus(props) {
     const [statusText, setStatusText] = useState(props.content);
 
     useEffect(() => {
+        // Regular expression to remove HTML tags from text
         const regex = /(<([^>]+)>)/gi;
         const newString = statusText.replace(regex, " ");
         setStatusText(newString);
     }, [statusText, props]);
 
+    //function to handle the submit of the form and edit the status
     async function handleEdit(event){
         event.preventDefault();
         event.stopPropagation();

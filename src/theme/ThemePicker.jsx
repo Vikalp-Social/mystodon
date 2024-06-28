@@ -1,3 +1,4 @@
+/* ThemePicker handles all color conversions and storing them into local storage for persistence of the theme */
 import { useEffect } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'

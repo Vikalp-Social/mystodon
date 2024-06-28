@@ -23,12 +23,14 @@ function LoginPage() {
             setLoading(false);
         }
         
+        // Check if the user is coming back from the auth page
         if(window.location.pathname === '/auth'){
             const [q, c] = window.location.search.split("=");
             handleAuth(localStorage.getItem("id"), localStorage.getItem("secret"), c, localStorage.getItem("instance"));
         }
     }, [isLoggedIn]);
 
+    //function to handle the submit of the form and register the user application
     async function handleSubmit(event){
         event.preventDefault();
         localStorage.setItem("instance", instance);
@@ -38,6 +40,7 @@ function LoginPage() {
                 instance,
             });
             console.log(register_app.data);
+            // Save the client id and secret in the local storage so that the data isn't lost on reload
             localStorage.setItem("id", register_app.data.client_id);
             localStorage.setItem("secret", register_app.data.client_secret);
             window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
@@ -49,6 +52,7 @@ function LoginPage() {
         
     }
 
+    //function to handle the authentication of the user
     async function handleAuth(id, secret, code, user_instance){
         setLoading(true);
         try {
@@ -66,6 +70,7 @@ function LoginPage() {
                 token: authorize.data.token,
                 avatar: authorize.data.account.avatar,
             }
+            // Set the current user in the context
             setCurrentUser(user);
             localStorage.removeItem("id");
             localStorage.removeItem("secret");

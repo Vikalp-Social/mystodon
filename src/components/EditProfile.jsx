@@ -8,16 +8,18 @@ import "../styles/profile.css";
 
 function EditProfile(props){
     const {currentUser} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const [displayName, setDisplayName] = useState(props.display_name);
     const [note, setNote] = useState(props.note);
 
     useEffect(() => {
+        // Regular expression to remove HTML tags from note
         const regex = /(<([^>]+)>)/gi;
         const newString = props.note.replace(regex, " ");
         setNote(newString);
     }, []);
 
+    //function to handle the submit of the form and edit the profile
     async function handleSubmit() {
         try {
             const response = await APIClient.put("/accounts", {
@@ -43,7 +45,8 @@ function EditProfile(props){
                     <input
                     type="text"
                     className="form-control"
-                    id="displayName"
+                    id="displayName" 
+                    // this is so that the display name is displayed in the input field even if it hasnt been updated in the display_name hook
                     value={displayName || props.display_name}
                     onChange={(e) => setDisplayName(e.target.value)}
                     />

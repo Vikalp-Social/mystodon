@@ -11,6 +11,7 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
 
+// TagPage component is the main component that is rendered when the user wnats to view the timeline of a tag.
 function TagPage() {
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {setError, setToast} = useErrors();
@@ -30,6 +31,7 @@ function TagPage() {
         document.title = `#${name} | Vikalp`;
     }, []);
 
+    // function to fetch the timeline of the tag
     async function fetchData(){
         try {
             setLoading(true);

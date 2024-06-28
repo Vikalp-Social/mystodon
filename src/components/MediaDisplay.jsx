@@ -1,5 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 
+//Component to display the media in the status as a carousel
 function MediaDisplay(props){
     return (
         <div className="statusMediaContainer">

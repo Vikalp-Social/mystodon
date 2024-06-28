@@ -7,9 +7,11 @@ import { UserContext } from '../context/UserContext';
 import { useErrors } from '../context/ErrorContext';
 import "../styles/reply.css";
 
+// Reply component is the modal which appears when the user wants to reply to a post
 function Reply(props){
     const {currentUser} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
+    //to initialize the reply text with the username of all the users to whom the reply is being made
     const [replyText, setReplyText] = useState(() => {
         let str = `@${props.post.account.acct} `;
         props.mentions && props.mentions.map((mention) => {
@@ -21,6 +23,7 @@ function Reply(props){
     });
     let navigate = useNavigate();
 
+    //function to post the reply
     async function handleReply(event){
         event.preventDefault();
         event.stopPropagation();

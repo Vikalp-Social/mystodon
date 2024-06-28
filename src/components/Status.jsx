@@ -13,7 +13,7 @@ import { FaRegComment , FaHeart , FaRegHeart ,FaRepeat, FaShare } from "react-ic
 import { MdOutlineModeEdit, MdDeleteOutline, MdOutlineRepeat } from "react-icons/md";
 import UsernameEmoji from "./UsernameEmoji";
 
-
+// Status component is used to display the status of the user
 function Status(props) {
     const {currentUser} = useContext(UserContext);
     const { setError } = useErrors()
@@ -27,27 +27,33 @@ function Status(props) {
     let navigate = useNavigate();
 
     useEffect(() => {
+        //regular expression to remove the html tags from the text
         const regex = /(<([^>]+)>)/gi;
         const newString = text.replace(regex, " ");
         setText(newString);
     }, [text, props]);
 
+    //navigate to the status when clicked
     function handleClick(){
         if(!props.reply){
+            //navigate to the the parent status if the status is a reply
             navigate(`/status/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
         }
     }
 
+    //navigate to the user's profile when username is clicked
     function handleUserClick(event, id){
         event.stopPropagation();
         navigate(`/profile/${id}`)
     }
 
+    //function to handle the edit button
     function handleEdit(event){
         event.stopPropagation();
         setEditing(true);
     }
 
+    //function to handle the favourite button
     async function handleFavourite(event){
         event.preventDefault();
         event.stopPropagation();
@@ -68,6 +74,7 @@ function Status(props) {
         }
     }
 
+    //function to handle the repost/boost button
     async function handleBoost(event){  
         event.preventDefault();
         event.stopPropagation();
@@ -85,6 +92,7 @@ function Status(props) {
         }
     }
 
+    //function to handle the share button and display the ShareModal component corresponding to the status
     function handleShare(event){
         event.preventDefault();
         event.stopPropagation();
@@ -92,6 +100,7 @@ function Status(props) {
         setShare(true);
     }
 
+    //function to format the data to be displayed
     function formatData(data){
         let message = data;
         if(data > 1000){
@@ -123,6 +132,7 @@ function Status(props) {
                     </div>}
                 </div>
                 <div className={props.thread ? "statusCenter" : ""}>
+                    {/* this is to display the "thread" if the status is a reply and part of a thread  */}
                     {(props.reply && props.thread) && <div className="reply-line-container"><div className="reply-line"></div></div>}
                     <div className="statusBody">
                         <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
@@ -146,6 +156,7 @@ function Status(props) {
                     </div>
                 </div>
             </div>
+            {/* Reply Component to reply to the post*/}
             <Reply 
                 show={isReplying} 
                 close={() => setReplying(false)} 
@@ -153,12 +164,14 @@ function Status(props) {
                 post={props.post}
                 mentions={props.mentions}
             /> 
+            {/* EditStatus Component to edit the post*/}
             <EditStatus
                 show={isEditing} 
                 close={() => setEditing(false)} 
                 content={props.post.content}
                 id={props.post.id}
             /> 
+            {/* ShareModal Component to share the post*/}
             <ShareModal show={share} close={() => setShare(false)} link={props.post.uri}/>
         </>
     );

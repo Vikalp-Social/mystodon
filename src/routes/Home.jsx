@@ -10,9 +10,10 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from "../components/Headbar";
 import ThemePicker from "../theme/ThemePicker";
 
+// Home component is the main component that is rendered when the user logs in. It fetches the timeline of the user and displays the posts in the timeline.
 function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const [timeline, setTimeline] = useState([]);
     const [loading, setLoading] = useState(false);
     const [maxId, setMaxId] = useState("");
@@ -27,6 +28,7 @@ function Home(){
         document.title = "Home | Vikalp";
     }, []);
 
+    // function to fetch the timeline of the user
     async function fetchTimeline() {
             try {
                 setLoading(true);

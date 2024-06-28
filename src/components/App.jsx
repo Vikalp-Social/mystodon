@@ -12,11 +12,11 @@ import { UserContextProvider } from "../context/UserContext";
 import { ErrorProvider } from "../context/ErrorContext";
 import ThemeSwitchPage from "../routes/ThemeSwitchPage";
 
-
+// App component contains all the routes of the application
 function App() {
   return (
     <>
-		<UserContextProvider>
+		<UserContextProvider>	
 			<ErrorProvider>
 				<Router>
 					<Routes>

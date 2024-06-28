@@ -5,7 +5,8 @@ import APIClient from "../apis/APIClient";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 
-function SearchAccount(props) {
+// SearchTag component is used to display the search results of the tags
+function SearchTag(props) {
     const {currentUser} = useContext(UserContext);
     const {setError, setToast} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
@@ -79,4 +80,4 @@ function SearchAccount(props) {
     );
 }
 
-export default SearchAccount;
+export default SearchTag;

@@ -5,6 +5,7 @@ import { UserContext } from './UserContext';
 
 const ErrorContext = createContext()
 
+// ErrorProvider is used to display the error messages and toasts which are modals, the ErrorProvider is wrapped around the App component in index.js
 export function ErrorProvider({children}) {
     const {setLoggedIn} = useContext(UserContext);
     const [error, setError] = useState('');
@@ -26,6 +27,7 @@ export function ErrorProvider({children}) {
         <ErrorContext.Provider value={{setError, setToast}}>
             {children}
 
+            {/* modal for displaying error messages */}
             <Modal show={error !== ''} onClose={() => setError('')} size='tiny'>
                 <Modal.Header closeButton>{error.statusText} ({error.status})</Modal.Header>
                 <Modal.Body>
@@ -43,6 +45,7 @@ export function ErrorProvider({children}) {
                 </Modal.Footer>
             </Modal>
 
+            {/* toast for displaying popups/info messages */}
             <ToastContainer className='p-3' position='bottom-start'>
                 <Toast show={toast !== ''} onClose={() => setToast('')} delay={5000}>
                     <Toast.Header></Toast.Header>

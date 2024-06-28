@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "../styles/navbar.css";
 
+//function to handle the logout of the user
 export function handleLogOut() {
     localStorage.removeItem("current_user");
     localStorage.removeItem("--hue");
@@ -16,6 +17,7 @@ function Navbar() {
     const [show, setShow] = useState(false);
     let navigate = useNavigate();
 
+    //function to handle the submit of the search form
     function handleSubmit(event){
         event.preventDefault();
         navigate(`/search/${encodeURIComponent(search)}`);

@@ -12,9 +12,10 @@ import { useErrors } from "../context/ErrorContext";
 import "../styles/search.css";
 import ThemePicker from "../theme/ThemePicker";
 
+// Search component is the main component that is rendered when the user searches for something.
 function Search(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const {q} = useParams();
     const [viewStatus, setStatus] = useState(true);
     const [viewAccount, setAccount] = useState(false);
@@ -33,6 +34,7 @@ function Search(){
         if(!isLoggedIn){
             navigate("/");
         }
+        // function to fetch the data related to the search query
         async function fetchData() {
             try {
                 setLoading(true);

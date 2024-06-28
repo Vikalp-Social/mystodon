@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaHouseChimney, FaArrowLeft } from "react-icons/fa6";
 import '../styles/headbar.css';
 
+// Headbar component is used to display the back button in the header
 function Headbar() {
 	let navigate = useNavigate();
 

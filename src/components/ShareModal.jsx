@@ -4,6 +4,7 @@ import { FacebookShareButton, FacebookIcon, TwitterShareButton, XIcon, TelegramS
 import "../styles/reply.css";
 import { useErrors } from '../context/ErrorContext';
 
+//Component to display the share modal
 function ShareModal(props) {
     const {setToast} = useErrors();
     const size = 50;
@@ -19,6 +20,7 @@ function ShareModal(props) {
                             <input type="text" className='form-control' value={props.link} readOnly/>
                             <button class="my-button" type="button" id="button-addon2" onClick={() => {navigator.clipboard.writeText(props.link);setToast("Copied!")}}>Copy</button>
                         </div>
+                        {/* using react-share library to share the post on different platforms */}
                         <div className='share-buttons'>
                             <FacebookShareButton url={props.link}> <FacebookIcon size={size} round></FacebookIcon></FacebookShareButton>
                             <TwitterShareButton url={props.link}> <XIcon size={size} round></XIcon></TwitterShareButton>

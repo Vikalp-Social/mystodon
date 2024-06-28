@@ -4,8 +4,8 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
 import Navbar from '../components/Navbar'
 import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb, rgbToHex } from '../theme/ThemePicker'
-import ColorForm from '../components/ColorForm'
 
+// ThemeSwitchPage component is the main component that is rendered when the user wants to change the theme of the site.
 function ThemeSwitchPage() {
 	const [hue, setHue] = useLocalStorage("--hue")
 	const [sat, setSat] = useLocalStorage("--saturation")
@@ -159,10 +159,7 @@ function ThemeSwitchPage() {
 					</div>
 					<button className='my-button' onClick={handleConvert}>Convert</button>
 				</div>
-        
 			</div>
-			{/* <button className='my-button' onClick={() => convertHex(hex)}>Convert using Hexcode</button>
-			<button className='my-button' onClick={() => convertRGB(r, g, b)}>Convert using RGB</button> */}
 		</div>
 		
     </div>
@@ -171,20 +168,3 @@ function ThemeSwitchPage() {
 }
 
 export default ThemeSwitchPage
-
-{/* <form className="color-form">
-                <div className="rgb-inputs">
-                    <label>
-                        R: <input type="number" value={r} onChange={handleRChange} min="0" max="255" maxLength={3} />
-                    </label>
-                    <label>
-                        G: <input type="number" value={g} onChange={handleGChange} min="0" max="255" maxLength={3} />
-                    </label>
-                    <label>
-                        B: <input type="number" value={b} onChange={handleBChange} min="0" max="255" maxLength={3} />
-                    </label>
-                </div>
-                <label className="hex-input">
-                    Hex: <input type="text" value={hex} onChange={handleHexChange} maxLength={7} />
-                </label>
-            </form> */}

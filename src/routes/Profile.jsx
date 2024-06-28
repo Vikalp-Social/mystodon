@@ -14,6 +14,8 @@ import "../styles/profile.css";
 import ThemePicker from "../theme/ThemePicker";
 import UsernameEmoji from "../components/UsernameEmoji";
 
+// Profile component is the main component that is rendered when the user visits a profile. 
+// It fetches the profile of the user and displays the posts in the profile.
 function Profile(){
     const {id} = useParams();
     const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -48,6 +50,7 @@ function Profile(){
         document.title = `${user.display_name || user.username} (@${user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}) | Vikalp`;
     });
 
+    // function to fetch the profile details of the user
     async function fetchUserProfile(){
         try {
             setLoading(true);
@@ -63,6 +66,7 @@ function Profile(){
         }
     }
 
+    // function to check the relation of the user with the current user
     async function checkRelation(){
         try {
             const response = await axios.get(`https://${currentUser.instance}/api/v1/accounts/relationships`, {
@@ -78,6 +82,7 @@ function Profile(){
         }
     }
 
+    // function to follow the user
     async function handleFollow(){
         try {
             const response = await APIClient.post(`/accounts/${id}/follow`, {
@@ -90,6 +95,7 @@ function Profile(){
         }
     }
 
+    // function to unfollow the user
     async function handleUnfollow(){
         try {
             const response = await APIClient.post(`/accounts/${id}/unfollow`, {
@@ -102,6 +108,7 @@ function Profile(){
         }
     }
 
+    // function to delete the post
     async function handleDelete(event, id) {
         event.preventDefault();
         event.stopPropagation();
@@ -150,6 +157,7 @@ function Profile(){
                             <img className="profileImg" src={user.avatar} alt="profile" />
                         </div>
                         <div className="profileTopRight">
+                            {/* show edit profile button only if the user is the current user */}
                             {currentUser.id === id ? 
                                 <button type="button" className="btn btn-outline-secondary" onClick={handleShow}>Edit Profile</button>
                             :
