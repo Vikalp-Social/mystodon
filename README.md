@@ -7,5 +7,5 @@ Default port of the application is set to `3001`.
 2) `npm start`
 3) Make sure you are also running one of the backend servers, directions for which are provided in their respective repositories
 
-##Documentation
+## Documentation
 Detailed documentation for the code can be found in the [wiki](https://github.com/Vikalp-Social/mystodon/wiki)
