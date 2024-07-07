@@ -17,16 +17,17 @@ function EditProfile(props){
         const regex = /(<([^>]+)>)/gi;
         const newString = props.note.replace(regex, " ");
         setNote(newString);
+        console.log(displayName)
     }, []);
 
     //function to handle the submit of the form and edit the profile
     async function handleSubmit() {
         try {
-            const response = await APIClient.put("/accounts", {
+            const response = await APIClient.patch("/accounts", {
                 instance: currentUser.instance,
                 token: currentUser.token,
                 display_name: displayName,
-                note, 
+                note: note, 
             });
         } catch (error) {
             setError(error.response.data);

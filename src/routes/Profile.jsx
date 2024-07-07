@@ -39,7 +39,7 @@ function Profile(){
         if(!isLoggedIn){
             navigate("/");
         }
-        fetchUserProfile();  
+        fetchUserProfile(); 
     }, [id]);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ function Profile(){
     async function fetchUserProfile(){
         try {
             setLoading(true);
-            const response = await APIClient.post(`/accounts/${id}`, currentUser);
+            const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
             // console.log(response.data)
             setUser(response.data.account);
             setStatuses(response.data.statuses.list);
@@ -180,7 +180,7 @@ function Profile(){
                         <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     </div>
                 </div>
-                <EditProfile show={show} close={handleClose} display_name={user.display_name} note={user.note} />
+                {user.note && <EditProfile show={show} close={handleClose} display_name={user.display_name} note={user.note} />}
             
                 <h2 style={{textAlign: "center"}}>POSTS</h2>
                 {statuses.length ? statuses.map(status => {

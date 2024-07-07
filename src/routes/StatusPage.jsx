@@ -48,9 +48,11 @@ function StatusPage() {
         async function fetchData() {
             try {
                 setLoading(true);
-                const response = await APIClient.post(`/statuses/${id}`, {
-                    instance: currentUser.instance,
-                    token: currentUser.token,
+                const response = await APIClient.get(`/statuses/${id}`, {
+                    params: {
+                        instance: currentUser.instance,
+                        token: currentUser.token,
+                    }
                 });
                 setStatus({...response.data.status});
                 setReplies(response.data.replies);

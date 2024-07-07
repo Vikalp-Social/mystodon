@@ -37,7 +37,7 @@ function LoginPage() {
 
         try {
             const register_app = await APIClient.post(`/register`, {
-                instance,
+                instance: instance,
             });
             console.log(register_app.data);
             // Save the client id and secret in the local storage so that the data isn't lost on reload
@@ -46,7 +46,7 @@ function LoginPage() {
             window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
         } catch (error) {
             console.log(error);
-            setError(error.response.data);
+            //setError(error.response.data);
         }
 
         
@@ -58,9 +58,9 @@ function LoginPage() {
         try {
             const authorize = await APIClient.post(`/auth`, {
                 instance: user_instance,
-                id,
-                secret,
-                code,
+                id: id,
+                secret: secret,
+                code: code,
             });
             const user = {
                 name: authorize.data.account.display_name,

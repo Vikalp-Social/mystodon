@@ -8,7 +8,7 @@ import { useErrors } from "../context/ErrorContext";
 // SearchTag component is used to display the search results of the tags
 function SearchTag(props) {
     const {currentUser} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 

@@ -47,7 +47,7 @@ function Status(props) {
         navigate(`/profile/${id}`)
     }
 
-    //function to handle the edit button
+    //function to show the edit status component
     function handleEdit(event){
         event.stopPropagation();
         setEditing(true);

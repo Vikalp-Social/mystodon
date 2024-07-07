@@ -9,7 +9,7 @@ import UsernameEmoji from "./UsernameEmoji";
 // Component to display the search results of accounts
 function SearchAccount(props) {
     const {currentUser} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const {setError} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 
@@ -37,7 +37,8 @@ function SearchAccount(props) {
     }
 
     //function to handle the follow button
-    async function handleFollow(){
+    async function handleFollow(event){
+        event.stopPropagation();
         try {
             const response = await APIClient.post(`/accounts/${props.user_id}/follow`, {
                 instance: currentUser.instance,
@@ -50,7 +51,8 @@ function SearchAccount(props) {
     }
 
     //function to handle the unfollow button
-    async function handleUnfollow(){
+    async function handleUnfollow(event){
+        event.stopPropagation();
         try {
             const response = await APIClient.post(`/accounts/${props.user_id}/unfollow`, {
                 instance: currentUser.instance,
@@ -76,9 +78,9 @@ function SearchAccount(props) {
                 <div>
                     <div>
                     {isFollowing ?
-                        <button type="button" className="my-button"  onClick={handleUnfollow}>Unfollow</button>
+                        <button type="button" className="my-button"  onClick={(e) => handleUnfollow(e)}>Unfollow</button>
                     :
-                        <button type="button" className="my-button" onClick={handleFollow}>Follow</button>
+                        <button type="button" className="my-button" onClick={(e) => handleFollow(e)}>Follow</button>
                     }
                     </div>
                 </div>

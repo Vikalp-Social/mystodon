@@ -38,11 +38,12 @@ function Search(){
         async function fetchData() {
             try {
                 setLoading(true);
-                const response = await APIClient.post(`/search`, {
-                    q,
-                    token: currentUser.token,
-                    instance: currentUser.instance,
-                    max_id: maxId,
+                const response = await APIClient.get(`/search`, {
+                    params: {
+                        q: q,
+                        token: currentUser.token,
+                        instance: currentUser.instance,
+                    }
                 });
                 //console.log(response.data);
                 setAccounts(response.data.accounts);

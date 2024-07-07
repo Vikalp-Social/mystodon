@@ -7,6 +7,7 @@ function MiniStatus(props) {
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
 	const [text, setText] = useState(sanitizedHtml);
 
+	//regular expression to remove the html tags from the text
 	useEffect(() => {
         const regex = /(<([^>]+)>)/gi;
         const newString = text.replace(regex, " ");

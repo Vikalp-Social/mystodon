@@ -32,13 +32,13 @@ function Home(){
     async function fetchTimeline() {
             try {
                 setLoading(true);
-                const response = await APIClient.post("/timelines/home", {...currentUser, max_id: maxId});
-                //console.log(response.data);
+                const response = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
+                console.log(response.data);
                 setTimeline([...timeline, ...response.data.data])
                 setMaxId(response.data.max_id);
                 setLoading(false);
             } catch (error) {
-                setError(error.response.data);
+                //setError(error.response.data);
             }
         }
 

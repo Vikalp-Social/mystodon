@@ -35,16 +35,18 @@ function TagPage() {
     async function fetchData(){
         try {
             setLoading(true);
-            const response = await APIClient.post(`/timelines/tag/${name}`, {
-                token: currentUser.token,
-                instance: currentUser.instance,
-                max_id: maxId,
+            const response = await APIClient.get(`/timelines/tag/${name}`, {
+                params: {
+                    token: currentUser.token,
+                    instance: currentUser.instance,
+                    max_id: maxId,
+                }
             });
             setStatuses([...statuses, ...response.data.data]);
             setMaxId(response.data.max_id);
             setLoading(false);
         } catch (error) {
-            setError(error.response.data);;;
+            setError(error.response.data);
         }
     }
 
