@@ -8,6 +8,7 @@ import { UserContext } from '../context/UserContext';
 import { useErrors } from '../context/ErrorContext';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
+import ServerSwitcher from '../components/ServerSwitcher';
 
 // StatusPage component is the main component that is rendered when the user visits a status/post.
 function StatusPage() {
@@ -71,6 +72,7 @@ function StatusPage() {
         <div className='main'>
             <Navbar />
             <Sidebar />
+            <ServerSwitcher />
             <ThemePicker />
             <div className="feed container">
                 <Headbar />

@@ -92,6 +92,7 @@ function ThemeSwitchPage() {
 			convertHex(hex);
 		}
 		setColor(`hsl(${hue} ${sat} ${light})`);
+		window.location.reload(false)
 	}
 
   return (
