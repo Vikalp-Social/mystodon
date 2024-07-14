@@ -11,7 +11,6 @@ import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import "../styles/search.css";
 import ThemePicker from "../theme/ThemePicker";
-import ServerSwitcher from "../components/ServerSwitcher";
 
 // Search component is the main component that is rendered when the user searches for something.
 function Search(){
@@ -63,7 +62,6 @@ function Search(){
         <div className="main">
             <Navbar />
             <Sidebar />
-            <ServerSwitcher />
             <ThemePicker />
             <div className="feed container" >
                 <Headbar />

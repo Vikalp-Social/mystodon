@@ -144,6 +144,7 @@ button{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* HTML: <div class="loader"></div> */

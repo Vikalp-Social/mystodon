@@ -1,0 +1,35 @@
+.switch{
+    width: 60%;
+    min-height: 60%;
+    padding: 20px;
+    margin: 10vh 20%;
+    background-color: hsl(var(--status_background));
+    border-radius: 1.5%;
+    box-shadow: var(--box_shadow);
+    color: var(--text_color);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.list{
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin: 10px 0;
+}
+
+.custom-button {
+    border: none;
+    border-radius: 10px;
+    font-size: calc(var(--text) * 1.2);
+    padding: 30px 20px;
+    cursor: pointer;
+    box-shadow: var(--box_shadow);
+    transition: background-color 0.3s ease;
+    width: 20%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

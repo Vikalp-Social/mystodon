@@ -13,7 +13,6 @@ import Headbar from "../components/Headbar";
 import "../styles/profile.css";
 import ThemePicker from "../theme/ThemePicker";
 import UsernameEmoji from "../components/UsernameEmoji";
-import ServerSwitcher from "../components/ServerSwitcher";
 
 // Profile component is the main component that is rendered when the user visits a profile. 
 // It fetches the profile of the user and displays the posts in the profile.
@@ -144,7 +143,6 @@ function Profile(){
         <div className="main">
             <Navbar />
             <Sidebar />
-            <ServerSwitcher />
             <ThemePicker />
             <div className="feed container">
                 <Headbar />

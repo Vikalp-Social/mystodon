@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import vikalpWhite from "../images/vikalp-white.png";
+import vikalpBlack from "../images/vikalp-black.png";
 import "../styles/navbar.css";
 
 //function to handle the logout of the user
@@ -15,6 +17,7 @@ function Navbar() {
     const {setLoggedIn, currentUser} = useContext(UserContext);
     const [search, setSearch] = useState("");
     const [show, setShow] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem('selectedTheme'));
     let navigate = useNavigate();
 
     //function to handle the submit of the search form
@@ -44,6 +47,9 @@ function Navbar() {
                                 MYSTODON
                             </li>
                         </ul>
+                    </div>
+                    <div className="vikalp" onClick={() => navigate("/vikalp")}>
+                        <img className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
                     </div>
                     <div className="dropdown" onClick={() => setShow(!show)}>
                         <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />

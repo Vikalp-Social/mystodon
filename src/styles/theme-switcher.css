@@ -1,6 +1,6 @@
 .theme{
     width: 60%;
-    height: 60vh;
+    height: 60%;
     padding: 20px;
     margin: 10vh 20%;
     background-color: hsl(var(--status_background));

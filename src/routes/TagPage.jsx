@@ -10,7 +10,6 @@ import { useErrors } from '../context/ErrorContext';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
-import ServerSwitcher from '../components/ServerSwitcher';
 
 // TagPage component is the main component that is rendered when the user wnats to view the timeline of a tag.
 function TagPage() {
@@ -56,7 +55,6 @@ function TagPage() {
             <div className='main'>
                 <Navbar />
                 <Sidebar />
-                <ServerSwitcher />
                 <ThemePicker />
                 <div className='feed container'>
                     <Headbar />

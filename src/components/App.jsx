@@ -11,6 +11,7 @@ import TagPage from "../routes/TagPage";
 import { UserContextProvider } from "../context/UserContext";
 import { ErrorProvider } from "../context/ErrorContext";
 import ThemeSwitchPage from "../routes/ThemeSwitchPage";
+import Vikalp from "../routes/Vikalp";
 
 // App component contains all the routes of the application
 function App() {
@@ -28,6 +29,8 @@ function App() {
 						<Route exact path="/search/:q" Component={Search} />
 						<Route exact path="/tags/:name" Component={TagPage} />
 						<Route exact path="/theme" Component={ThemeSwitchPage} />
+						<Route exact path="/vikalp" Component={Vikalp} />
+						<Route path="*" element={<div>404</div>} />
 					</Routes>
 				</Router>
 			</ErrorProvider>
