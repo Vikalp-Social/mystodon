@@ -19,6 +19,7 @@ function Vikalp() {
         if(!isLoggedIn){
             navigate("/")
         }
+        document.title = "Vikalp";
     }, [isLoggedIn])
 
 
@@ -38,7 +39,7 @@ function Vikalp() {
                     <div>Current Algorithm: {servers[server]}</div>
                     <div className='list'>
                         {Object.keys(servers).map((algo) => {
-                                return <div className='custom-button' style={{backgroundColor: server == algo ? '#85e085' : '#6e6e6e'}} onClick={() => selectServer(algo)}>{servers[algo]}</div>
+                                return <div className='custom-button' style={{backgroundColor: server == algo ? '' : '#6e6e6e'}} onClick={() => selectServer(algo)}>{servers[algo]}</div>
                             }
                         )}
                     </div>
@@ -47,7 +48,7 @@ function Vikalp() {
                     <h2>Experiences</h2>
                     <div>Current Experience: Classic</div>
                     <div className='list'>
-                        <div className='custom-button' style={{backgroundColor:'#85e085'}}> Classic </div>
+                        <div className='custom-button'> Classic </div>
                     </div>
                     
                 </div>

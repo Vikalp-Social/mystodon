@@ -15,9 +15,10 @@ function Home(){
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {setError} = useErrors();
     const [timeline, setTimeline] = useState([]);
+    const [buffer, setBuffer] = useState([]);
     const [loading, setLoading] = useState(false);
     const [maxId, setMaxId] = useState("");
-    useBottomScrollListener(fetchTimeline);
+    useBottomScrollListener(extendTimeline);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -30,17 +31,53 @@ function Home(){
 
     // function to fetch the timeline of the user
     async function fetchTimeline() {
-            try {
-                setLoading(true);
-                const response = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
-                console.log(response.data);
-                setTimeline([...timeline, ...response.data.data])
-                setMaxId(response.data.max_id);
-                setLoading(false);
-            } catch (error) {
-                setError(error.response.data);
-            }
+        try {
+            setLoading(true);
+            const response = await APIClient.get("/timelines/home", {
+                params: {
+                    token: currentUser.token, 
+                    instance: currentUser.instance, 
+                    max_id: maxId
+                }
+            });
+            //console.log(response.data);
+            setTimeline([...timeline, ...response.data.data])
+            setLoading(false);
+            const res2 = await APIClient.get("/timelines/home", {
+                params: {
+                    token: currentUser.token, 
+                    instance: currentUser.instance, 
+                    max_id: response.data.max_id
+                }
+            });
+            setBuffer(res2.data.data);
+            setMaxId(res2.data.max_id);
+        } catch (error) {
+            setError(error.response.data);
         }
+    }
+
+    async function extendTimeline() {
+        if(buffer.length > 0){
+            console.log(buffer)
+            setLoading(true);
+            if(timeline.includes(buffer[0])){
+                setLoading(true)
+                setTimeout(() => fetchTimeline(), 2000);
+            }
+            else{
+                setTimeline([...timeline, ...buffer]);
+                setLoading(false);
+                const res2 = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
+                setBuffer(res2.data.data);
+                setMaxId(res2.data.max_id);
+            }
+            
+        }
+        else{
+            fetchTimeline();
+        }
+    }
 
     return (
         <>
@@ -62,7 +99,7 @@ function Home(){
                         />
                     })}
                     {loading && <div className="loader"></div>}
-                    {!loading && <button className="load-button" onClick={fetchTimeline}>Load More</button>}
+                    {!loading && <button className="load-button" onClick={extendTimeline}>Load More</button>}
                     
                 </div>
             </div>

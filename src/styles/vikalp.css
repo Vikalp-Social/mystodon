@@ -20,13 +20,13 @@
 }
 
 .custom-button {
+    background-color: hsl(var(--button_color));
     border: none;
     border-radius: 10px;
     font-size: calc(var(--text) * 1.2);
     padding: 30px 20px;
     cursor: pointer;
     box-shadow: var(--box_shadow);
-    transition: background-color 0.3s ease;
     width: 20%;
     text-align: center;
     display: flex;

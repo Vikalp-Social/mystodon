@@ -49,7 +49,7 @@ function Navbar() {
                         </ul>
                     </div>
                     <div className="vikalp" onClick={() => navigate("/vikalp")}>
-                        <img className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
+                        <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
                     </div>
                     <div className="dropdown" onClick={() => setShow(!show)}>
                         <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
