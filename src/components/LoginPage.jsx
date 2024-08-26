@@ -16,6 +16,10 @@ function LoginPage() {
     let navigate = useNavigate();
 
     useEffect(() => {
+        if(localStorage.getItem("server") === null){
+            localStorage.setItem("server", 1);
+        }
+
         if(isLoggedIn){
             navigate("/home");
         }
@@ -74,6 +78,7 @@ function LoginPage() {
             setCurrentUser(user);
             localStorage.removeItem("id");
             localStorage.removeItem("secret");
+            localStorage.setItem('selectedTheme', "dark");
             setLoggedIn(true);
             setLoading(false);
         } catch (error) {

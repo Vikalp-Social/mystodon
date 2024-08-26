@@ -9,9 +9,14 @@ import '../styles/vikalp.css'
 function Vikalp() {
     const {isLoggedIn} = useContext(UserContext)
     const [server, setServer] = useLocalStorage("server", 1)
+    const [experience, setExperience] = useLocalStorage("experience", 1)
     const servers = {
         1: "Hot Ranking",
         2: "Sentiment Analysis",
+    }
+    const experiences = {
+        1: "Classic",
+        2: "Graph",
     }
     let navigate = useNavigate()
 
@@ -25,6 +30,12 @@ function Vikalp() {
 
     function selectServer(id){
         setServer(+id);
+        // navigate("/home")
+        window.location.reload(false);
+    }
+
+    function selectExperience(id){
+        setExperience(+id);
         // navigate("/home")
         window.location.reload(false);
     }
@@ -46,9 +57,12 @@ function Vikalp() {
                 </div>
                 <div>
                     <h2>Experiences</h2>
-                    <div>Current Experience: Classic</div>
+                    <div>Current Experience: {experiences[experience]}</div>
                     <div className='list'>
-                        <div className='custom-button'> Classic </div>
+                        {Object.keys(experiences).map((exp) => {
+                                return <div className='custom-button' style={{backgroundColor: experience == exp ? '' : '#6e6e6e'}} onClick={() => selectExperience(exp)}>{experiences[exp]}</div>
+                            }
+                        )}
                     </div>
                     
                 </div>

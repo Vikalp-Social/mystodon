@@ -1,23 +1,23 @@
-import React, { useEffect, useContext, useState, useCallback } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import APIClient from "../apis/APIClient";
 import DOMPurify from "dompurify";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Status from "../components/Status";
-import EditProfile from "../components/EditProfile";
 import Headbar from "../components/Headbar";
 import "../styles/profile.css";
 import ThemePicker from "../theme/ThemePicker";
 import UsernameEmoji from "../components/UsernameEmoji";
 
-// Profile component is the main component that is rendered when the user visits a profile. 
-// It fetches the profile of the user and displays the posts in the profile.
-function Profile(){
+import CytoscapeComponent from "react-cytoscapejs";
+import Cytoscape, { Core } from "cytoscape"; 
+import cise from "cytoscape-cise";
+
+Cytoscape.use(cise);
+
+function GraphProfile() {
     const {id} = useParams();
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {setError, setToast} = useErrors();
@@ -27,16 +27,21 @@ function Profile(){
             acct: "",
             note: "",
         });
-    const [statuses, setStatuses] = useState([])
-    const [maxId, setMaxId] = useState("");
     const [following, setFollowing] = useState(false);
     const [followedBy, setFollowedBy] = useState(false);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const sanitizedHtml = DOMPurify.sanitize(user.note);
-    useBottomScrollListener(extendStatuses);   
     let navigate = useNavigate();
     const [display_name, setDisplayName] = useState("");
+    const cyRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement>(null)
+    const [elements, setElements] = useState([{ data: { id: "You", label: "You" } }]);
+    const [layout, setLayout] = useState({
+        name: "cise",
+        clusters: [],
+        boundingBox: { x1: 0, y1: 0, w: 600, h: 600 },
+    });
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -55,48 +60,17 @@ function Profile(){
 
     // function to fetch the profile details of the user
     async function fetchUserProfile(){
-        console.log("hi h")
         try {
             setLoading(true);
-            // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
-            const response = await APIClient.get(`/accounts/${id}`, {
-                params: {
-                    token: currentUser.token, 
-                    instance: currentUser.instance, 
-                    max_id: maxId
-                }
-            });
-            //console.log(response.data)
+            const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
+            // console.log(response.data)
             setUser(response.data.account);
-            setStatuses(response.data.statuses.list);
-            setMaxId(response.data.statuses.max_id);
+            //setStatuses(response.data.statuses.list);
             setDisplayName(response.data.account.display_name);
             setLoading(false);
         } catch (error) {
             console.log(error);
             setError(error.response.data);;
-        }
-    }
-
-    async function extendStatuses(){
-        try {
-            setLoading(true);
-            // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
-            if(maxId === -1) return;
-            const response = await APIClient.get(`/accounts/${id}`, {
-                params: {
-                    token: currentUser.token, 
-                    instance: currentUser.instance, 
-                    max_id: maxId
-                }
-            });
-            //console.log(response.data)
-            setStatuses([...statuses, ...response.data.statuses.list]);
-            setMaxId(response.data.statuses.max_id);
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-            setError(error.response.data);
         }
     }
 
@@ -142,24 +116,6 @@ function Profile(){
         }
     }
 
-    // function to delete the post
-    async function handleDelete(event, id) {
-        event.preventDefault();
-        event.stopPropagation();
-        try {
-            const response = await axios.delete(`https://${currentUser.instance}/api/v1/statuses/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${currentUser.token}`,
-                },
-            });
-            // console.log(response.data);
-            setStatuses(() => statuses.filter(status => status.id !== id))
-            setToast("Deleted Successfully!");
-        } catch (error) {
-            setError(error.response.data);
-        }
-    }
-
     function formatData(data){
         let message = data;
         if(data > 1000){
@@ -176,10 +132,10 @@ function Profile(){
     return (
         <div className="main">
             <Navbar />
-            <Sidebar />
             <ThemePicker />
-            <div className="feed container">
+            <div className=" container">
                 <Headbar />
+                {loading && <div className="loader"></div>}
                 <div className="profile">
                     <div className="header-container">
                         {user.header !== "https://mastodon.social/headers/original/missing.png" && <img className="profileHeader" src={user.header} />}
@@ -213,9 +169,8 @@ function Profile(){
                         <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     </div>
                 </div>
-                {user.note && <EditProfile show={show} close={handleClose} display_name={user.display_name} note={user.note} />}
             
-                <h2 style={{textAlign: "center"}}>POSTS</h2>
+                {/* <h2 style={{textAlign: "center"}}>POSTS</h2>
                 {statuses.length ? statuses.map(status => {
                     return (status.in_reply_to_account_id === null && <Status 
                         key={status.id}
@@ -227,12 +182,11 @@ function Profile(){
                         mentions={status.mentions}
                         delete={handleDelete}
                     />)
-                }) : <p>No Posts Yet!</p>}
-                {maxId !== -1 && loading && <div className="loader"></div>}
+                }) : <p>No Posts Yet!</p>} */}
             </div>
             
         </div>
     );
 }
 
-export default Profile;
+export default GraphProfile

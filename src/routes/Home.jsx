@@ -29,8 +29,13 @@ function Home(){
         document.title = "Home | Vikalp";
     }, []);
 
+    useEffect(() => {
+        console.log(maxId);
+    })
+
     // function to fetch the timeline of the user
     async function fetchTimeline() {
+        console.log("timeline");
         try {
             setLoading(true);
             const response = await APIClient.get("/timelines/home", {
@@ -42,7 +47,7 @@ function Home(){
             });
             //console.log(response.data);
             setTimeline([...timeline, ...response.data.data])
-            setLoading(false);
+            //setLoading(false);
             const res2 = await APIClient.get("/timelines/home", {
                 params: {
                     token: currentUser.token, 
@@ -58,21 +63,21 @@ function Home(){
     }
 
     async function extendTimeline() {
+        console.log(buffer)
         if(buffer.length > 0){
-            console.log(buffer)
             setLoading(true);
             if(timeline.includes(buffer[0])){
-                setLoading(true)
-                setTimeout(() => fetchTimeline(), 2000);
+                //setLoading(true)
+                fetchTimeline();
             }
             else{
                 setTimeline([...timeline, ...buffer]);
-                setLoading(false);
+                //setLoading(false);
                 const res2 = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
                 setBuffer(res2.data.data);
+                console.log(res2.data.max_id);
                 setMaxId(res2.data.max_id);
             }
-            
         }
         else{
             fetchTimeline();
@@ -87,7 +92,7 @@ function Home(){
                 <Sidebar />
                 <div className="feed container">
                     <Headbar />
-                    {timeline.map(status => {
+                    {timeline.length > 0 && timeline.map(status => {
                         return <Status 
                             key={status.id}
                             instance={currentUser.instance}
@@ -99,7 +104,7 @@ function Home(){
                         />
                     })}
                     {loading && <div className="loader"></div>}
-                    {!loading && <button className="load-button" onClick={extendTimeline}>Load More</button>}
+                    {/* {!loading && <button className="load-button" onClick={extendTimeline}>Load More</button>} */}
                     
                 </div>
             </div>
