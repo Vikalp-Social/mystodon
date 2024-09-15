@@ -1,19 +1,21 @@
 import axios from "axios";
 
-const ports = {
-    1: 3000,
-    2: 5000,
-}
+const urls = {
+    1: "https://tov7mk1km9.execute-api.eu-north-1.amazonaws.com/stage1",  // URL for server 1
+    2: "https://sentiment.srg.social",    // URL for server 2
+};
+
 const selectedServer = localStorage.getItem("server");
-const port = ports[selectedServer];
-if(!(selectedServer in ports)){
-    alert("Invalid Server Selected. Redirecting to Hot Ranking Server");
+
+if (!(selectedServer in urls)) {
+    alert("Invalid Server Selected. Redirecting to Default Server");
     localStorage.setItem("server", 1);
     window.location.reload(false);
-    
 }
 
-//created a new instance of axios so that any changes in the base url can be done here
+const baseURL = urls[selectedServer];
+
+// Created a new instance of axios with the dynamically selected baseURL
 export default axios.create({
-    baseURL: `http://localhost:${port}/api/v1`,
+    baseURL: `${baseURL}/api/v1/`,
 });

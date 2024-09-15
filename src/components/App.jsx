@@ -26,9 +26,9 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home" Component={+experience === 1 ? Home : Graph} />
+							<Route exact path="/home/" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
-							<Route exact path="/profile/:id" Component={+experience === 1 ? Profile : GraphProfile} />
+							<Route exact path="/profile/:id" Component={Profile} />
 							<Route exact path="/search/:q" Component={Search} />
 							<Route exact path="/tags/:name" Component={TagPage} />
 							<Route exact path="/theme" Component={ThemeSwitchPage} />

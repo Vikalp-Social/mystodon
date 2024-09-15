@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 import APIClient from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
 import { UserContext} from "../context/UserContext";
@@ -14,6 +14,7 @@ function LoginPage() {
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
+    let location = useLocation();
 
     useEffect(() => {
         if(localStorage.getItem("server") === null){
@@ -28,7 +29,7 @@ function LoginPage() {
         }
         
         // Check if the user is coming back from the auth page
-        if(window.location.pathname === '/auth'){
+        if(window.location.pathname === '/auth/'){
             const [q, c] = window.location.search.split("=");
             handleAuth(localStorage.getItem("id"), localStorage.getItem("secret"), c, localStorage.getItem("instance"));
         }
@@ -43,11 +44,10 @@ function LoginPage() {
             const register_app = await APIClient.post(`/register`, {
                 instance: instance,
             });
-            console.log(register_app.data);
             // Save the client id and secret in the local storage so that the data isn't lost on reload
             localStorage.setItem("id", register_app.data.client_id);
             localStorage.setItem("secret", register_app.data.client_secret);
-            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
+            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=https%3A%2F%2Fsrg.social/auth/&response_type=code`)
         } catch (error) {
             console.log(error);
             //setError(error.response.data);
@@ -66,6 +66,7 @@ function LoginPage() {
                 secret: secret,
                 code: code,
             });
+            console.log(authorize)
             const user = {
                 name: authorize.data.account.display_name,
                 username: authorize.data.account.username,
@@ -74,6 +75,7 @@ function LoginPage() {
                 token: authorize.data.token,
                 avatar: authorize.data.account.avatar,
             }
+            console.log(user)
             // Set the current user in the context
             setCurrentUser(user);
             localStorage.removeItem("id");
