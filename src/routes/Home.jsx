@@ -45,7 +45,7 @@ function Home(){
                     max_id: maxId
                 }
             });
-            //console.log(response.data);
+            console.log(response.data);
             setTimeline([...timeline, ...response.data.data])
             //setLoading(false);
             const res2 = await APIClient.get("/timelines/home", {
@@ -58,6 +58,7 @@ function Home(){
             setBuffer(res2.data.data);
             setMaxId(res2.data.max_id);
         } catch (error) {
+            console.log(error);
             setError(error.response.data);
         }
     }
@@ -80,6 +81,7 @@ function Home(){
             }
         }
         else{
+            console.log("Empty");
             fetchTimeline();
         }
     }

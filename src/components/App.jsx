@@ -18,6 +18,19 @@ import GraphProfile from "../routes/GraphProfile";
 // App component contains all the routes of the application
 function App() {
 	const experience = localStorage.getItem("experience");
+	const selectedExp = {
+		1: "Classic",
+		2: "Graph"
+	}
+	if(!(experience in selectedExp)){
+		alert("Invalid Experience Selected. Redirecting to Classic Experience");
+		localStorage.setItem("experience", 1);
+		window.location.reload(false);
+	}
+	const expMap = {
+		"home": [Home, Graph],
+		"profile": [Profile, GraphProfile]
+	}
 	return (
 		<>
 			<UserContextProvider>	
@@ -26,9 +39,9 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home" Component={+experience === 1 ? Home : Graph} />
+							<Route exact path="/home" Component={expMap["home"][+experience - 1]} />
 							<Route exact path="/status/:id" Component={StatusPage} />
-							<Route exact path="/profile/:id" Component={+experience === 1 ? Profile : GraphProfile} />
+							<Route exact path="/profile/:id" Component={expMap["profile"][+experience - 1]} />
 							<Route exact path="/search/:q" Component={Search} />
 							<Route exact path="/tags/:name" Component={TagPage} />
 							<Route exact path="/theme" Component={ThemeSwitchPage} />

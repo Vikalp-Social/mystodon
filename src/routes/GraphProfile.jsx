@@ -17,7 +17,7 @@ import cise from "cytoscape-cise";
 
 Cytoscape.use(cise);
 
-function GraphProfile() {
+function GraphProfile({postAndContent}) {
     const {id} = useParams();
     const {currentUser, isLoggedIn} = useContext(UserContext);
     const {setError, setToast} = useErrors();
@@ -27,6 +27,7 @@ function GraphProfile() {
             acct: "",
             note: "",
         });
+    const [statuses, setStatuses] = useState([]);
     const [following, setFollowing] = useState(false);
     const [followedBy, setFollowedBy] = useState(false);
     const [show, setShow] = useState(false);
@@ -42,6 +43,7 @@ function GraphProfile() {
         clusters: [],
         boundingBox: { x1: 0, y1: 0, w: 600, h: 600 },
     });
+    const theme = localStorage.getItem("selectedTheme");
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -58,6 +60,171 @@ function GraphProfile() {
         document.title = `${user.display_name || user.username} (@${user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}) | Vikalp`;
     });
 
+    // useEffect(() => {
+    //     //resolve postAndContent
+    //     if (containerRef.current) {
+    //         const { width, height } = containerRef.current.getBoundingClientRect();
+    //         var cleanIdAndContent = {};
+
+    //         Object.keys(statuses).forEach((account) => {
+    //         const temp = account.content
+    //             .replace(/(<([^>]+)>)/gi, "")
+    //             .replace("&#39;", "'");
+    //         if (temp) {
+    //             cleanIdAndContent[account.id] = temp;
+    //         }
+    //         });
+
+    //         // if (Object.keys(cleanIdAndContent).length !== 0) {
+    //         //     fetch("https://graph.vikalp.social", {
+    //         //         method: "POST",
+    //         //         body: JSON.stringify(cleanIdAndContent),
+    //         //         headers: {
+    //         //         "Content-type": "application/json; charset=UTF-8",
+    //         //         },
+    //         //     })
+    //         //     .then((response) => response.json())
+    //         //     .then((data) => {
+    //         //     var newelements = [
+    //         //         {
+    //         //         data: {
+    //         //             id: "No Posts From The User !",
+    //         //             label: "No Posts From The User !",
+    //         //         },
+    //         //         },
+    //         //     ];
+
+    //             Object.keys(cleanIdAndContent).forEach((id) => {
+    //                 newelements.push({
+    //                 data: { id: id, label: trimString(cleanIdAndContent[id], 100) },
+    //                 });
+    //             });
+
+    //             let clusterList = [];
+    //             Object.keys(data).forEach((category) => {
+    //                 let cluster = [];
+    //                 newelements.push(
+    //                 { data: { id: category, label: category }, classes: "category" }
+    //                 // { data: { source: "You", target: category } }
+    //                 );
+
+    //                 Object.keys(data[category]).forEach((postId) => {
+    //                 cluster.push(postId);
+    //                 newelements.push({
+    //                     data: { source: category, target: postId },
+    //                 });
+    //                 });
+    //                 clusterList.push(cluster);
+    //             });
+    //             if (newelements.length > 1) {
+    //                 newelements.splice(0, 1);
+    //             }
+    //             setElements([...newelements]);
+    //             setLayout({
+    //                 name: "cise",
+    //                 clusters: clusterList,
+    //                 boundingBox: { x1: 0, y1: 0, w: 600, h: 600 },
+    //             });
+    //             setLoading(false);
+    //             })
+    //             .catch((err) => {
+    //             console.log(err.message);
+    //             });
+    //         }
+    //     }
+    // }, [statuses]);
+    
+    const cytoscapeStylesheet = [
+        {
+            selector: "node",
+            style: {
+            "background-color": theme == "dark" ? "#1976d2" : "#9ee1f7",
+            width: "label",
+            height: "label",
+            // a single "padding" is not supported in the types :(
+            "padding-top": "8",
+            "padding-bottom": "8",
+            "padding-left": "8",
+            "padding-right": "8",
+            // this fixes the text being shifted down on nodes (sadly no fix for edges, but it's not as obvious there without borders)
+            "text-margin-y": -3,
+            "text-background-padding": "20",
+            shape: "round-rectangle",
+            // label: 'My multiline\nlabel',
+            },
+        },
+        {
+            selector: ".category",
+            style: {
+            "background-color": theme == "dark" ? "purple" : "#90fc90",
+            shape: "ellipse",
+            width: function (ele) {
+                return ele.degree() * 25;
+            },
+            height: function (ele) {
+                return ele.degree() * 25;
+            },
+            "font-size": function (ele) {
+                return ele.degree() * 25;
+            },
+            },
+        },
+        {
+            selector: "node[label]",
+            style: {
+            label: "data(label)",
+            "font-size": "24",
+            color: theme == "dark" ? "#ffffff" : "#000000",
+            "text-halign": "center",
+            "text-valign": "center",
+            "text-wrap": "wrap",
+            "text-max-width": "300",
+            },
+        },
+        {
+            selector: "edge",
+            style: {
+            "curve-style": "bezier",
+            "target-arrow-shape": "triangle",
+            opacity: 0.4,
+            width: 1.5,
+            },
+        },
+        {
+            selector: "edge[label]",
+            style: {
+            label: "data(label)",
+            "font-size": "12",
+            "text-background-color": "white",
+            "text-background-opacity": 1,
+            "text-background-padding": "2px",
+            "text-margin-y": -4,
+            // so the transition is selected when its label/name is selected
+            "text-events": "yes",
+            },
+        },
+        {
+            selector: "node.highlight",
+            style: {
+            "border-color": "#FFF",
+            "border-width": "2px",
+            },
+        },
+        {
+            selector: "node.semitransp",
+            style: { opacity: 0.5 },
+        },
+        {
+            selector: "edge.highlight",
+            style: { "mid-target-arrow-color": "#FFF" },
+        },
+        {
+            selector: "edge.semitransp",
+            style: { opacity: 0.2 },
+        },
+        ];
+    
+
     // function to fetch the profile details of the user
     async function fetchUserProfile(){
         try {
@@ -65,7 +232,7 @@ function GraphProfile() {
             const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
             // console.log(response.data)
             setUser(response.data.account);
-            //setStatuses(response.data.statuses.list);
+            setStatuses(response.data.statuses.list);
             setDisplayName(response.data.account.display_name);
             setLoading(false);
         } catch (error) {
@@ -128,6 +295,23 @@ function GraphProfile() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    function trimString(str, maxLength) {
+        if (str.length > maxLength) {
+            return str.slice(0, maxLength) + "...";
+        } else {
+            return str;
+        }
+    }
+    
+    const handlePanToOrigin = () => {
+        if (cyRef.current) {
+            cyRef.current.fit();
+            cyRef.current.center();
+        }
+    };
+    
+
 
     return (
         <div className="main">
