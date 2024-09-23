@@ -27,7 +27,7 @@ function Navbar() {
     }
 
     function goHome() {
-        navigate("/home");
+        navigate("/home/");
     }
 
     return(
