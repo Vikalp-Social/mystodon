@@ -23,11 +23,11 @@ function Navbar() {
     //function to handle the submit of the search form
     function handleSubmit(event){
         event.preventDefault();
-        navigate(`/search/${encodeURIComponent(search)}`);
+        navigate(`${paths.search}/${encodeURIComponent(search)}`);
     }
 
     function goHome() {
-        navigate("/home/");
+        navigate(`${paths.home}`);
     }
 
     return(

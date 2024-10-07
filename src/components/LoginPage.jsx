@@ -22,7 +22,7 @@ function LoginPage() {
         }
 
         if(isLoggedIn){
-            navigate("/home/");
+            navigate(`${paths.home}`);
         }
         else {
             setLoading(false);
