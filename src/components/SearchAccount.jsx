@@ -8,13 +8,13 @@ import UsernameEmoji from "./UsernameEmoji";
 
 // Component to display the search results of accounts
 function SearchAccount(props) {
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, paths} = useContext(UserContext);
     const {setError} = useErrors();
     const [isFollowing, setFollowing] = useState(false);
     let navigate = useNavigate();
 
     function handleUserClick(){
-        navigate(`/profile/${props.user_id}`)
+        navigate(`${paths.profile}/${props.user_id}`)
     }
 
     useEffect(() => {

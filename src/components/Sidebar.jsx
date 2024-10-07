@@ -8,14 +8,14 @@ import "../styles/sidebar.css";
 
 // Sidebar component that is present on all pages
 function Sidebar() {
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, paths} = useContext(UserContext);
     const {setError, setToast} = useErrors();
     const [message, setMessage] = useState("");
     let navigate = useNavigate();
 
     //navigate to the current user's profile
     function handleUserClick(){
-        navigate(`/profile/${currentUser.id}`);
+        navigate(`${paths.profile}/${currentUser.id}`);
     }
 
     //fucntion to upload the media(if any) and post the status

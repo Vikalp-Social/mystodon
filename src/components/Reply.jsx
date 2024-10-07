@@ -9,7 +9,7 @@ import "../styles/reply.css";
 
 // Reply component is the modal which appears when the user wants to reply to a post
 function Reply(props){
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, paths} = useContext(UserContext);
     const {setError} = useErrors();
     //to initialize the reply text with the username of all the users to whom the reply is being made
     const [replyText, setReplyText] = useState(() => {
@@ -35,9 +35,9 @@ function Reply(props){
                 reply_id: props.post.id,
             });
             props.close();
-            navigate(`/status/${props.post.id}`);
+            navigate(`${paths.status}/${props.post.id}`);
         } catch (error) {
-            setError(error.response.data);;;
+            setError(error.response.data);
         }
     }
 

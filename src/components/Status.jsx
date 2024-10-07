@@ -15,7 +15,7 @@ import UsernameEmoji from "./UsernameEmoji";
 
 // Status component is used to display the status of the user
 function Status(props) {
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, paths} = useContext(UserContext);
     const { setError } = useErrors()
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
     const [isEditing, setEditing] = useState(false);
@@ -37,14 +37,14 @@ function Status(props) {
     function handleClick(){
         if(!props.reply){
             //navigate to the the parent status if the status is a reply
-            navigate(`/status/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
+            navigate(`${paths.status}/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
         }
     }
 
     //navigate to the user's profile when username is clicked
     function handleUserClick(event, id){
         event.stopPropagation();
-        navigate(`/profile/${id}`)
+        navigate(`${paths.profile}/${id}`)
     }
 
     //function to show the edit status component

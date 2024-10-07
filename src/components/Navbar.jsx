@@ -14,7 +14,7 @@ export function handleLogOut() {
 }
 
 function Navbar() {
-    const {setLoggedIn, currentUser} = useContext(UserContext);
+    const {setLoggedIn, currentUser, paths} = useContext(UserContext);
     const [search, setSearch] = useState("");
     const [show, setShow] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem('selectedTheme'));
@@ -23,11 +23,11 @@ function Navbar() {
     //function to handle the submit of the search form
     function handleSubmit(event){
         event.preventDefault();
-        navigate(`/search/${encodeURIComponent(search)}`);
+        navigate(`${paths.search}/${encodeURIComponent(search)}`);
     }
 
     function goHome() {
-        navigate("/home");
+        navigate(paths.home);
     }
 
     return(
@@ -48,15 +48,15 @@ function Navbar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="vikalp" onClick={() => navigate("/vikalp")}>
+                    <div className="vikalp" onClick={() => navigate(paths.vikalp)}>
                         <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
                     </div>
                     <div className="dropdown" onClick={() => setShow(!show)}>
                         <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
                         {show && 
                             <div class="dropdown-content">
-                                <div onClick={() => navigate(`/profile/${currentUser.id}`)}>Profile</div>
-                                <div onClick={() => navigate('/theme')}>Theme</div>
+                                <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
+                                <div onClick={() => navigate(paths.theme)}>Theme</div>
                                 <div onClick={() => {setLoggedIn(false); handleLogOut()}}>Logout</div>
                             </div>
                         }

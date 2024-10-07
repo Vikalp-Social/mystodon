@@ -7,7 +7,7 @@ import ThemePicker from '../theme/ThemePicker';
 import Navbar from '../components/Navbar';
 
 function Graph() {
-    const {currentUser} = useContext(UserContext);
+    const {currentUser, paths} = useContext(UserContext);
     const [elements, setElements] = useState([])
     const [stylesheet, setStylesheet] = useState([])
     let navigate = useNavigate();
@@ -150,7 +150,7 @@ function Graph() {
                     if (!cy.data("tapListenerAdded")) {
                         cy.data("tapListenerAdded", true);
                         const node = e.target;
-                        navigate(`/profile/${node.id()}`);
+                        navigate(`${paths.profile}/${node.id()}`);
                     }
                     });
 
