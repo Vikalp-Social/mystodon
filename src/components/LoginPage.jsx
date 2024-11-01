@@ -9,7 +9,7 @@ let id = "";
 let secret = "";
 
 function LoginPage() {
-    const {setCurrentUser, isLoggedIn, setLoggedIn} = useContext(UserContext);
+    const {setCurrentUser, isLoggedIn, setLoggedIn, paths} = useContext(UserContext);
     const { setError} = useErrors();
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);

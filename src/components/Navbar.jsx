@@ -14,7 +14,7 @@ export function handleLogOut() {
 }
 
 function Navbar() {
-    const {setLoggedIn, currentUser} = useContext(UserContext);
+    const {setLoggedIn, currentUser, paths} = useContext(UserContext);
     const [search, setSearch] = useState("");
     const [show, setShow] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem('selectedTheme'));
@@ -48,7 +48,7 @@ function Navbar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="vikalp" onClick={() => navigate("/vikalp")}>
+                    <div className="vikalp" onClick={() => navigate(`${paths.vikalp}`)}>
                         <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
                     </div>
                     <div className="dropdown" onClick={() => setShow(!show)}>
