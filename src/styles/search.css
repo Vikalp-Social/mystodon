@@ -23,6 +23,7 @@
     background-color: hsl(var(--status_background));
     border-bottom: 5px solid hsl(var(--status_background));
     color: grey;
+    text-align: center;
 }
 
 .search-options div:hover {

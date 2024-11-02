@@ -101,7 +101,7 @@ function ThemeSwitchPage() {
 		<Navbar />
 		<div className='theme'>
 			ThemeSwitcher
-			<div class="dropdown">
+			<div class="dropdown t-drop">
 				<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					Theme
 				</button>
