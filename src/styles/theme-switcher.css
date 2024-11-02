@@ -8,6 +8,10 @@
     box-shadow: var(--box_shadow);
     color: var(--text_color);
 }
+
+.t-drop{
+    padding: 0 10px;
+}
   
 .color-picker:focus {
     outline: none;

@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ColorPicker } from 'react-iro'
+import { UserContext } from '../context/UserContext'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
 import Navbar from '../components/Navbar'
@@ -7,6 +9,7 @@ import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb, r
 
 // ThemeSwitchPage component is the main component that is rendered when the user wants to change the theme of the site.
 function ThemeSwitchPage() {
+	const { isLoggedIn } = useContext(UserContext);
 	const [hue, setHue] = useLocalStorage("--hue")
 	const [sat, setSat] = useLocalStorage("--saturation")
 	const [light, setLight] = useLocalStorage("--lightness")
@@ -16,8 +19,12 @@ function ThemeSwitchPage() {
 	const [b, setB] = useState("")
 	const [color, setColor] = useState(`hsl(${hue} ${sat} ${light})`)
 	const [selected, setSelected] = useState(1)
+	let navigate = useNavigate();
 
 	useEffect(() => {
+		if(!isLoggedIn){
+			navigate("/");
+		}
 		document.title = "Themes | Vikalp"
 		const [r, g, b, hex] = hslToRgb(hue/360, sat/100, light/100)
 		setR(r);
@@ -100,16 +107,19 @@ function ThemeSwitchPage() {
 		<ThemePicker />
 		<Navbar />
 		<div className='theme'>
-			ThemeSwitcher
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Theme
-				</button>
-				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" onClick={setLightMode}>Light</a></li>
-					<li><a class="dropdown-item" onClick={setDarkMode}>Dark</a></li>
-				</ul>
+			<div>
+				ThemeSwitcher
+				<div class="dropdown t-drop">
+					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Theme
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" onClick={setLightMode}>Light</a></li>
+						<li><a class="dropdown-item" onClick={setDarkMode}>Dark</a></li>
+					</ul>
+				</div>
 			</div>
+			
 
 			<div className="color-container" >
 				<ColorPicker setters={{
