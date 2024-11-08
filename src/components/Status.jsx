@@ -111,6 +111,12 @@ function Status(props) {
         return message; 
     }
 
+    function formatTime(time){
+        let date = new Date(time);
+        //format to month day year, hours:minutes AM/PM
+        return date.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+    }
+
     return(
         <>
             <div className={props.reply ? "reply" : "status"} onClick={handleClick} style={{paddingBottom: (props.reply && props.thread) ? '0' : '10px'}}>
@@ -137,6 +143,7 @@ function Status(props) {
                     <div className="statusBody">
                         <span className="statusText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                         {props.post.media_attachments.length ? <MediaDisplay mediaList={props.post.media_attachments}/> : <div></div>}
+                        
                         <div className="statusBottom">
                             <div className="statusBottomLeft">
                                 <div title="Reply" onClick={(e) => {e.stopPropagation(); setReplying(true)}}> <FaRegComment/> 
@@ -151,6 +158,10 @@ function Status(props) {
                                 <div title="Share" onClick={handleShare}> 
                                     <FaShare/>
                                 </div>
+                            </div>
+
+                            <div className="statusBottomRight">
+                                <span>{formatTime(props.post.created_at)}</span>
                             </div>
                         </div>
                     </div>
