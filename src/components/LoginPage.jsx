@@ -90,32 +90,42 @@ function LoginPage() {
 
     return(
         <>
-        {loading ? <div className="load-container"><div className="loader"></div></div> : <div className="login">
+        {loading ? 
+            <div className="load-container"><div className="loader"></div></div> : 
             <div>
-                <form action="" onSubmit={handleSubmit}>
-                    <div className="login-form">
-                        <div><label htmlFor="name">Enter your Mastodon/Pleroma Instance URL below</label></div>
-                        <div><input value={instance} onChange={(event) => setInstance(event.target.value)} id="name" placeholder="example.com" type="text" className="form-control" /></div>
+                <div className="top-link">
+                    <div className="my-button" onClick={() => navigate("/about")}>About Us</div>
+                </div>
+                <div className="login">
+                    <div>
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="login-form">
+                                <div><label htmlFor="name">Enter your Mastodon/Pleroma Instance URL below</label></div>
+                                <div><input value={instance} onChange={(event) => setInstance(event.target.value)} id="name" placeholder="example.com" type="text" className="form-control" /></div>
+                                <div>
+                                    <button className="my-button" type="submit">
+                                        {isSubmitting ? (
+                                            <div className="spinner"></div> // Loading animation
+                                        ) : (
+                                            "Log In"
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                         <div>
-                            <button className="my-button" type="submit">
-                                {isSubmitting ? (
-                                    <div className="spinner"></div> // Loading animation
-                                ) : (
-                                    "Log In"
-                                )}
-                            </button>
+                            <ul className="list-disc">
+                                <li className="text-xl">Vikalp is just a frontend</li>
+                                <li className="text-xl">Everything runs in your browser</li>
+                                <li className="text-xl">We do not store any information about you</li>
+                            </ul>
                         </div>
                     </div>
-                </form>
-                <div>
-                    <ul className="list-disc">
-                        <li className="text-xl">Vikalp is just a frontend</li>
-                        <li className="text-xl">Everything runs in your browser</li>
-                        <li className="text-xl">We do not store any information about you</li>
-                    </ul>
                 </div>
             </div>
-        </div>}
+            
+        }
+
         </>
     );
 }

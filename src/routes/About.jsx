@@ -15,7 +15,7 @@ function About() {
           Join a network that values privacy, autonomy, and community. Here, you’re part of a user-first platform.
         </p>
         <div className="cta-buttons">
-          <button className="my-button" type="submit" onClick={() => navigate("/home")}>Explore</button>
+          <button className="my-button" type="submit" onClick={() => window.location.pathname = "/"}>Explore</button>
           <button className="my-button" type="submit" onClick={() => window.open("https://joinmastodon.org/", "_blank")}>Join Now</button>
         </div>
       </header>
