@@ -3,6 +3,7 @@
     color: var(--text_color);
     box-shadow: var(--box_shadow);
     position: sticky;
+    
 }
   
 .navbar li{
@@ -21,6 +22,21 @@
 }
 .navbarProfileImg:hover{
   cursor: pointer;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*little sus*/
+@media (max-width: 768px) { /* Tablet and below */
+  .container-fluid {
+    flex-direction: row;
+    align-items: flex-start; /* Stack elements vertically */
+  }
 }
 
  /* Dropdown Button */
@@ -74,4 +90,26 @@
 }
 .vikalpImg:hover{
   cursor: pointer;
+}
+
+.navbar-right{
+  display: flex;
+  align-items: center;
+}
+
+.mystodon {
+  flex-grow: 1; /* Ensure it takes up space between left and right sections */
+  text-align: center; /* Center the text */
+  font-size: 1.2rem; /* Adjust font size as needed */
+  font-weight: bold; /* Optional: Make the font bold */
+  margin-left: -17%;
+}
+
+@media (max-width: 768px) {
+  /* Adjust navbar layout on small screens */
+  .navbar .container-fluid {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  }
 }

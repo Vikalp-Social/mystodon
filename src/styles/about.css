@@ -1,0 +1,121 @@
+/* about.css */
+
+:root {
+    --background-color: #1a1a2e;
+    --primary-color: #2a9df4;
+    --accent-color: #4f6d91;
+    --secondary-color: #aad4ff; /* Cooler blue color for headings */
+    --button-hover: #1b6ca8;
+    height: 100%;;
+  }
+  
+  body, html {
+    height: 100%; /* Ensures background color covers full page */
+    margin: 0;
+    padding: 0;
+    background-color: hsl(var(--body_background));
+    color: var(--text_color);
+    font-family: Arial, sans-serif;
+  }
+
+  /* About Description Styling */
+  .about-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    color: var(--text_color);
+  }
+  
+  .about-description h2 {
+    font-size: 1.8rem;
+    color: var(--secondary-color); /* Use cooler blue color */
+    margin-bottom: 1rem;
+  }
+  
+  .about-description p {
+    font-size: 1.1rem;
+    color: var(--text_color);
+    line-height: 1.6;
+  }
+  
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: auto;
+    height: 100%;
+  }
+  
+  .about-header {
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .about-header h1 {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+  }
+  
+  .about-header p {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin: 1.5rem 0;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .about-features {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .feature {
+    background-color: var(--accent-color);
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 350px;
+    text-align: center;
+  }
+  
+  .feature h2 {
+    font-size: 1.6rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.8rem;
+  }
+  
+  .feature p {
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .about-header h1 {
+      font-size: 2rem;
+    }
+  
+    .about-features {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .feature {
+      max-width: 100%;
+      margin: 1rem 0;
+    }
+  }
+  
+  /* about.css */
+  

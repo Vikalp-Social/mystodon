@@ -44,3 +44,60 @@
     color: var(--text_color);
     border: none;
 }
+
+@media (max-width: 1024px) {
+    /* Sidebar as a single bar at the top */
+    .sidebar {
+        width: 80%;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-left: 10%;
+        margin: 10px;
+        z-index: 1000;
+        border-radius: 0;
+        padding: 10px;
+        box-shadow: var(--box_shadow);
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Adjust the textarea for mobile */
+    .sidebar textarea {
+        width: 80%;
+        margin: 0;
+        font-size: var(--text);
+    }
+
+    /* Hide any unnecessary elements like avatar and user info */
+    .sidebar .sidebarTop {
+        display: none;
+    }
+
+    /* Remove file upload input */
+    .sidebar .mb-3 input[type="file"] {
+        display: none;
+    }
+
+    /* Button styling for mobile */
+    .my-button {
+        width: 80%;
+        margin-top: 10px;
+    }
+}
+
+/* Adjust sidebar for very small screens */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 80%;
+        margin-left: 10%;
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .sidebar textarea {
+        width: 100%;
+        padding: 10px;
+    }
+}
