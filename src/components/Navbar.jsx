@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import vikalpWhite from "../images/vikalp-white.png";
 import vikalpBlack from "../images/vikalp-black.png";
 import "../styles/navbar.css";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
-//function to handle the logout of the user
 export function handleLogOut() {
     localStorage.removeItem("current_user");
     localStorage.removeItem("--hue");
@@ -14,27 +14,27 @@ export function handleLogOut() {
 }
 
 function Navbar() {
-    const {setLoggedIn, currentUser, paths} = useContext(UserContext);
+    const { setLoggedIn, currentUser, paths } = useContext(UserContext);
     const [search, setSearch] = useState("");
-    const [show, setShow] = useState(false);
-    const [theme, setTheme] = useState(localStorage.getItem('selectedTheme'));
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem("selectedTheme"));
     let navigate = useNavigate();
 
-    //function to handle the submit of the search form
-    function handleSubmit(event){
+    function handleSubmit(event) {
         event.preventDefault();
         navigate(`${paths.search}/${encodeURIComponent(search)}`);
     }
 
-    function goHome() {
-        navigate(paths.home);
+    function toggleSearch() {
+        setShowSearch(!showSearch);
     }
 
-    return(
+    return (
         <nav className="navbar sticky-top border-bottom">
             <div className="container">
                 <div className="container-fluid">
-                    <div>
+                    <div className={`search-form ${showSearch ? "active" : ""}`}>
                         <form className="d-flex" role="search" onSubmit={handleSubmit}>
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
                                 value={search} 
@@ -43,28 +43,40 @@ function Navbar() {
                             <button className="my-button" type="submit">Search</button>
                         </form>
                     </div>
-                    <div className="mystodon">
+
+                    {/* Search icon for smaller screens */}
+                    <div className="search-icon" onClick={toggleSearch}>
+                        <FaMagnifyingGlass />
+                    </div>
+
+                    <div className="mystodon" onClick={() => navigate("/home")}>
                         MYSTODON
                     </div>
+
                     <div className="navbar-right">
                         <div className="vikalp" onClick={() => navigate(paths.vikalp)}>
-                            <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
+                            <img
+                                key={theme}
+                                className="vikalpImg"
+                                src={theme === "dark" ? vikalpWhite : vikalpBlack}
+                                alt="vikalp"
+                            />
                         </div>
-                        <div className="dropdown" onClick={() => setShow(!show)}>
-                            <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
-                            {show && 
-                                <div class="dropdown-content">
+                        <div className="dropdown" onClick={() => setShowDropdown(!showDropdown)}>
+                            <img className="navbarProfileImg" src={currentUser.avatar} alt="profile" />
+                            {showDropdown && (
+                                <div className="dropdown-content">
                                     <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
                                     <div onClick={() => navigate(paths.theme)}>Theme</div>
-                                    <div onClick={() => {setLoggedIn(false); handleLogOut()}}>Logout</div>
+                                    <div onClick={() => { setLoggedIn(false); handleLogOut() }}>Logout</div>
                                 </div>
-                            }
+                            )}
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </nav>
     );
 }
+
 export default Navbar;

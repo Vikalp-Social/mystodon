@@ -13,12 +13,15 @@ function Reply(props){
     const {setError} = useErrors();
     //to initialize the reply text with the username of all the users to whom the reply is being made
     const [replyText, setReplyText] = useState(() => {
-        let str = `@${props.post.account.acct} `;
-        props.mentions && props.mentions.map((mention) => {
-            if(mention.acct !== currentUser.username){
-                str += `@${mention.acct} `;
-            }
-        })
+        let str = "";
+        if(props.post){
+            str = `@${props.post.account.acct} `;
+            props.mentions && props.mentions.map((mention) => {
+                if(mention.acct !== currentUser.username){
+                    str += `@${mention.acct} `;
+                }
+            })
+        }
         return str;
     });
     let navigate = useNavigate();
@@ -44,14 +47,14 @@ function Reply(props){
     return(
         <Modal show={props.show} onHide={props.close} dialogClassName='reply-modal' contentClassName='reply-modal-content' centered>
             <Modal.Header closeButton closeVariant={localStorage.getItem("selectedTheme") === "dark" ? "white" : "black"}>
-                <Modal.Title id="example-modal-sizes-title-lg">Reply to Post</Modal.Title>
+                <Modal.Title id="example-modal-sizes-title-lg">{props.post ? "Reply to Post" : "Post a Status"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className='reply-body'>
-                    <MiniStatus 
+                    {props.post && <MiniStatus 
                         instance={props.instance}
                         post={props.post}
-                    />
+                    />}
                     <textarea 
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}

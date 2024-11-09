@@ -1,8 +1,8 @@
-.switch{
+.switch {
     width: 60%;
     min-height: 60%;
     padding: 20px;
-    margin: 10vh 20%;
+    margin: 10vh auto; /* Centering horizontally */
     background-color: hsl(var(--status_background));
     border-radius: 1.5%;
     box-shadow: var(--box_shadow);
@@ -12,13 +12,16 @@
     gap: 50px;
 }
 
-.list{
+/* List section with horizontal scrolling on smaller screens */
+.list {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
     margin: 10px 0;
+    overflow-x: auto; /* Enables horizontal scroll */
 }
 
+/* Custom button style with consistent size */
 .custom-button {
     background-color: hsl(var(--button_color));
     border: none;
@@ -27,9 +30,23 @@
     padding: 30px 20px;
     cursor: pointer;
     box-shadow: var(--box_shadow);
-    width: 20%;
+    min-width: 150px; /* Consistent button width on smaller screens */
+    max-width: 180px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .switch {
+        width: 80%;
+        margin: 5vh auto; /* Reduced top margin */
+    }
+
+    .custom-button {
+        min-width: 120px; /* Slightly smaller for mobile */
+        padding: 20px 15px; /* Adjust padding for mobile */
+    }
 }

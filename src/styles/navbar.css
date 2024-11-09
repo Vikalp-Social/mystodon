@@ -105,11 +105,37 @@
   margin-left: -17%;
 }
 
-@media (max-width: 768px) {
-  /* Adjust navbar layout on small screens */
-  .navbar .container-fluid {
+.search-icon{
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 876px) {
+  /* Hide the search form and show the search icon */
+  .navbar .search-form {
+      display: none;
+  }
+
+  /* Show search icon */
+  .search-icon {
+      display: block;
+      font-size: 1.2rem;
+      cursor: pointer;
+  }
+
+  /* Show search bar on icon click */
+  .search-form.active {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: hsl(var(--status_background));
+      box-shadow: var(--box_shadow);
+  }
+
+  .mystodon{
+    margin: 0;
   }
 }
