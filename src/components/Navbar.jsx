@@ -31,10 +31,10 @@ function Navbar() {
     }
 
     return(
-        <nav className="navbar sticky-top navbar-expand-lg border-bottom border-body">
+        <nav className="navbar sticky-top border-bottom">
             <div className="container">
                 <div className="container-fluid">
-                    <div className="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+                    <div>
                         <form className="d-flex" role="search" onSubmit={handleSubmit}>
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
                                 value={search} 
@@ -42,25 +42,26 @@ function Navbar() {
                             />
                             <button className="my-button" type="submit">Search</button>
                         </form>
-                        <ul className="navbar-nav col-lg-6 justify-content-lg-center">
-                            <li className="nav-item" onClick={goHome}>
-                                MYSTODON
-                            </li>
-                        </ul>
                     </div>
-                    <div className="vikalp" onClick={() => navigate(paths.vikalp)}>
-                        <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
+                    <div className="mystodon">
+                        MYSTODON
                     </div>
-                    <div className="dropdown" onClick={() => setShow(!show)}>
-                        <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
-                        {show && 
-                            <div class="dropdown-content">
-                                <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
-                                <div onClick={() => navigate(paths.theme)}>Theme</div>
-                                <div onClick={() => {setLoggedIn(false); handleLogOut()}}>Logout</div>
-                            </div>
-                        }
+                    <div className="navbar-right">
+                        <div className="vikalp" onClick={() => navigate(paths.vikalp)}>
+                            <img key={theme} className="vikalpImg" src={theme === "dark" ? vikalpWhite : vikalpBlack} alt="vikalp" /> 
+                        </div>
+                        <div className="dropdown" onClick={() => setShow(!show)}>
+                            <img className="navbarProfileImg" id="myelement" src={currentUser.avatar} alt="profile" />
+                            {show && 
+                                <div class="dropdown-content">
+                                    <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
+                                    <div onClick={() => navigate(paths.theme)}>Theme</div>
+                                    <div onClick={() => {setLoggedIn(false); handleLogOut()}}>Logout</div>
+                                </div>
+                            }
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </nav>

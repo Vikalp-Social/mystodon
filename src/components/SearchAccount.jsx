@@ -76,13 +76,11 @@ function SearchAccount(props) {
                     </div>
                 </div>
                 <div>
-                    <div>
                     {isFollowing ?
                         <button type="button" className="my-button"  onClick={(e) => handleUnfollow(e)}>Unfollow</button>
                     :
                         <button type="button" className="my-button" onClick={(e) => handleFollow(e)}>Follow</button>
                     }
-                    </div>
                 </div>
             </div>
         </div>

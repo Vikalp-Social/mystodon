@@ -66,8 +66,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-html, body{
-  height: 100%;
+html, body, #root{
+  background-color: hsl(var(--body_background));
 }
 
 body{
@@ -109,6 +109,12 @@ button{
 .my-button:hover {
   filter: brightness(85%);
 }
+@media (max-width: 768px) { /* Tablet and below */
+  .my-button, button {
+    width: 100%;
+    padding: 10px;
+  }
+}
 
 .homelayout {
   margin: 0;
@@ -140,11 +146,25 @@ button{
   scrollbar-width: none;  /* Firefox */
 } 
 
-.container-fluid {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+@media (max-width: 1024px) { /* Tablet screens */
+  .feed {
+    width: 80%;
+    margin-left: 10%; /* Adjust the left margin */
+  }
+}
+
+@media (max-width: 768px) { /* Smaller screens like tablets */
+  .feed {
+    width: 80%;
+    margin-left: 10%; /* Adjust the left margin */
+  }
+}
+
+@media (max-width: 480px) { /* Mobile screens */
+  .feed {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 /* HTML: <div class="loader"></div> */
