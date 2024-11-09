@@ -23,6 +23,10 @@ function App() {
 		1: "Classic",
 		2: "Graph"
 	}
+	if(!experience){
+		localStorage.setItem("experience", 1);
+		window.location.reload(false);
+	}
 	if(!(experience in selectedExp)){
 		alert("Invalid Experience Selected. Redirecting to Classic Experience");
 		localStorage.setItem("experience", 1);

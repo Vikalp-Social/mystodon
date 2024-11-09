@@ -1,10 +1,12 @@
 // About.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/about.css';
 import ThemePicker from '../theme/ThemePicker';
 
 function About() {
-<ThemePicker />
+  let navigate = useNavigate()
+
   return (
     <div className="about-container">
       <header className="about-header">
@@ -13,8 +15,8 @@ function About() {
           Join a network that values privacy, autonomy, and community. Here, you’re part of a user-first platform.
         </p>
         <div className="cta-buttons">
-          <button className="my-button" type="submit">Explore</button>
-          <button className="my-button" type="submit">Join Now</button>
+          <button className="my-button" type="submit" onClick={() => navigate("/home")}>Explore</button>
+          <button className="my-button" type="submit" onClick={() => window.open("https://joinmastodon.org/", "_blank")}>Join Now</button>
         </div>
       </header>
 

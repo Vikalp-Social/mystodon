@@ -4,7 +4,6 @@
     align-items: center;
     height: 100vh;
     padding: 0 10%;
-    
 }
 
 .login > div{
@@ -42,8 +41,75 @@
     color: var(--text_color);
     float: right;
     margin: 10px 0 20px 0;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-form button:hover{
     background-color: rgb(4,130,216);
+}
+
+.spinner {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Disable the button when submitting */
+.login-form .my-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) { /* Tablet and below */
+    .login {
+        padding: 0 5%; /* Reduced padding for smaller screens */
+    }
+
+    .login > div {
+        width: 80%; /* Increase width for better readability on small screens */
+        height: auto; /* Allow height to adjust based on content */
+        padding: 20px; /* Reduced padding for smaller screens */
+    }
+
+    .login-form {
+        width: 100%; /* Ensure the form takes full width */
+    }
+
+    .login-form .my-button {
+        width: 100%; /* Button takes up the full width */
+        margin: 10px 0; /* Ensure proper spacing */
+    }
+
+    .login ul {
+        font-size: 18px; /* Slightly smaller font size */
+    }
+}
+
+/* Responsive for mobile screens */
+@media (max-width: 480px) { 
+    .login {
+        padding: 0 3%; /* Further reduce padding for very small screens */
+    }
+
+    .login > div {
+        width: 90%; /* Ensure the form container is wide enough on very small screens */
+        padding: 15px; /* Minimal padding for smaller screens */
+    }
+
+    .login-form .my-button {
+        padding: 12px; /* Larger button padding on mobile */
+        font-size: 16px; /* Adjust button text size */
+    }
 }

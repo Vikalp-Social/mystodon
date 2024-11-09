@@ -13,6 +13,7 @@ function LoginPage() {
     const { setError} = useErrors();
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -38,6 +39,7 @@ function LoginPage() {
     async function handleSubmit(event){
         event.preventDefault();
         localStorage.setItem("instance", instance);
+        setIsSubmitting(true);
 
         try {
             const register_app = await APIClient.post(`/register`, {
@@ -50,7 +52,7 @@ function LoginPage() {
             window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
         } catch (error) {
             console.log(error);
-            //setError(error.response.data);
+            setError(error.response.data);
         }
 
         
@@ -94,7 +96,15 @@ function LoginPage() {
                     <div className="login-form">
                         <div><label htmlFor="name">Enter your Mastodon/Pleroma Instance URL below</label></div>
                         <div><input value={instance} onChange={(event) => setInstance(event.target.value)} id="name" placeholder="example.com" type="text" className="form-control" /></div>
-                        <div><button className="my-button" type="submit">Log In</button></div>
+                        <div>
+                            <button className="my-button" type="submit">
+                                {isSubmitting ? (
+                                    <div className="spinner"></div> // Loading animation
+                                ) : (
+                                    "Log In"
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </form>
                 <div>

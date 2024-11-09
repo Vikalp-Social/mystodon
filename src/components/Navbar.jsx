@@ -10,6 +10,8 @@ export function handleLogOut() {
     localStorage.removeItem("current_user");
     localStorage.removeItem("--hue");
     document.documentElement.style.setProperty("--hue", 204);
+    localStorage.removeItem("experience");
+    localStorage.removeItem("server");
     window.location.pathname = "/";
 }
 
@@ -68,6 +70,7 @@ function Navbar() {
                                 <div className="dropdown-content">
                                     <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
                                     <div onClick={() => navigate(paths.theme)}>Theme</div>
+                                    <div onClick={() => navigate("/about")}>About Us</div>
                                     <div onClick={() => { setLoggedIn(false); handleLogOut() }}>Logout</div>
                                 </div>
                             )}
