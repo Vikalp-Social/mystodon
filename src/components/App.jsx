@@ -19,7 +19,6 @@ function App() {
 	const experience = localStorage.getItem("experience");
 	const selectedExp = {
 		1: "Classic",
-		2: "Graph"
 	}
 	if(!experience){
 		localStorage.setItem("experience", 1);

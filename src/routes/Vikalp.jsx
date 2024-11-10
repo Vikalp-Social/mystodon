@@ -15,7 +15,7 @@ function Vikalp() {
         2: "Sentiment Analysis",
     }
     const experiences = {
-        1: "Classic",
+        1: "Classic"
     }
     let navigate = useNavigate()
 
