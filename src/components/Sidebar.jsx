@@ -24,7 +24,6 @@ function Sidebar() {
     //fucntion to upload the media(if any) and post the status
     async function handleSubmit(event){
         event.preventDefault();
-        // console.log(event.target.media.files);
         const files = Array.from(event.target.media.files);
         try {
             const uploadPromises = files.map(file => 
@@ -50,7 +49,6 @@ function Sidebar() {
 
     //function to post the status
     async function postStatus(ids){
-        console.log(ids);
         try {
             const response = await APIClient.post("/statuses", {
                 message,

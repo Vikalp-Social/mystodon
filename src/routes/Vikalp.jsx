@@ -16,7 +16,6 @@ function Vikalp() {
     }
     const experiences = {
         1: "Classic",
-        2: "Graph",
     }
     let navigate = useNavigate()
 

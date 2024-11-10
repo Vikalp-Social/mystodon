@@ -45,7 +45,6 @@ function Search(){
                         instance: currentUser.instance,
                     }
                 });
-                //console.log(response.data);
                 setAccounts(response.data.accounts);
                 setStatuses(response.data.statuses);
                 setHashtags(response.data.hashtags);

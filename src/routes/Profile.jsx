@@ -55,7 +55,6 @@ function Profile(){
 
     // function to fetch the profile details of the user
     async function fetchUserProfile(){
-        console.log("hi h")
         try {
             setLoading(true);
             // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
@@ -66,14 +65,12 @@ function Profile(){
                     max_id: maxId
                 }
             });
-            //console.log(response.data)
             setUser(response.data.account);
             setStatuses(response.data.statuses.list);
             setMaxId(response.data.statuses.max_id);
             setDisplayName(response.data.account.display_name);
             setLoading(false);
         } catch (error) {
-            console.log(error);
             setError(error.response.data);;
         }
     }
@@ -90,12 +87,10 @@ function Profile(){
                     max_id: maxId
                 }
             });
-            //console.log(response.data)
             setStatuses([...statuses, ...response.data.statuses.list]);
             setMaxId(response.data.statuses.max_id);
             setLoading(false);
         } catch (error) {
-            console.log(error);
             setError(error.response.data);
         }
     }
@@ -152,7 +147,6 @@ function Profile(){
                     Authorization: `Bearer ${currentUser.token}`,
                 },
             });
-            // console.log(response.data);
             setStatuses(() => statuses.filter(status => status.id !== id))
             setToast("Deleted Successfully!");
         } catch (error) {

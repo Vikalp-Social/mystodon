@@ -29,13 +29,8 @@ function Home(){
         document.title = "Home | Vikalp";
     }, []);
 
-    useEffect(() => {
-        console.log(maxId);
-    })
-
     // function to fetch the timeline of the user
     async function fetchTimeline() {
-        console.log("timeline");
         try {
             setLoading(true);
             const response = await APIClient.get("/timelines/home", {
@@ -45,7 +40,6 @@ function Home(){
                     max_id: maxId
                 }
             });
-            console.log(response.data);
             setTimeline([...timeline, ...response.data.data])
             //setLoading(false);
             const res2 = await APIClient.get("/timelines/home", {
@@ -58,13 +52,11 @@ function Home(){
             setBuffer(res2.data.data);
             setMaxId(res2.data.max_id);
         } catch (error) {
-            console.log(error);
             setError(error.response.data);
         }
     }
 
     async function extendTimeline() {
-        console.log(buffer)
         if(buffer.length > 0){
             setLoading(true);
             if(timeline.includes(buffer[0])){
@@ -76,12 +68,10 @@ function Home(){
                 //setLoading(false);
                 const res2 = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
                 setBuffer(res2.data.data);
-                console.log(res2.data.max_id);
                 setMaxId(res2.data.max_id);
             }
         }
         else{
-            console.log("Empty");
             fetchTimeline();
         }
     }

@@ -45,7 +45,6 @@ function LoginPage() {
             const register_app = await APIClient.post(`/register`, {
                 instance: instance,
             });
-            console.log(register_app.data);
             // Save the client id and secret in the local storage so that the data isn't lost on reload
             localStorage.setItem("id", register_app.data.client_id);
             localStorage.setItem("secret", register_app.data.client_secret);

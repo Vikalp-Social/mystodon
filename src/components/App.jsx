@@ -12,8 +12,6 @@ import { UserContextProvider } from "../context/UserContext";
 import { ErrorProvider } from "../context/ErrorContext";
 import ThemeSwitchPage from "../routes/ThemeSwitchPage";
 import Vikalp from "../routes/Vikalp";
-import Graph from "../routes/Graph";
-import GraphProfile from "../routes/GraphProfile";
 import About from "../routes/About";
 
 // App component contains all the routes of the application
@@ -33,8 +31,8 @@ function App() {
 		window.location.reload(false);
 	}
 	const expMap = {
-		"home": [Home, Graph],
-		"profile": [Profile, GraphProfile]
+		"home": [Home],
+		"profile": [Profile]
 	}
 	return (
 		<>
@@ -51,7 +49,6 @@ function App() {
 							<Route exact path="/tags/:name" Component={TagPage} />
 							<Route exact path="/theme" Component={ThemeSwitchPage} />
 							<Route exact path="/vikalp" Component={Vikalp} />
-							{/* <Route exact path="/graph" Component={Graph} /> */}
 							<Route exact path="/about" Component={About} />
 							<Route path="*" element={<div>404</div>} />
 						</Routes>

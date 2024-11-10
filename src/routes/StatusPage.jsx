@@ -56,7 +56,6 @@ function StatusPage() {
                 });
                 setStatus({...response.data.status});
                 setReplies(response.data.replies);
-                //console.log(response.data);
                 setLoading(false);
             } catch (error) {
                 setError(error.response.data);;;

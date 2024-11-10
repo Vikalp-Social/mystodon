@@ -61,7 +61,6 @@ function TagPage() {
 
     async function extendTimeline() {
         if(buffer.length > 0){
-            console.log(buffer)
             setLoading(true);
             if(statuses.includes(buffer[0])){
                 setLoading(true)

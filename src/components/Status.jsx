@@ -64,7 +64,6 @@ function Status(props) {
                 token: currentUser.token,
                 prefix: prefix,
             });
-            //console.log(response.data);
             setFavourite(prev => {
                 props.post.favourites_count = !prev ? props.post.favourites_count + 1 : props.post.favourites_count - 1;
                 return !prev;
@@ -85,7 +84,6 @@ function Status(props) {
                 token: currentUser.token,
                 prefix: prefix,
             });
-            console.log(response.data);
             setBoosted(prev => !prev);
         } catch (error) {
             setError(error.response.data);
