@@ -42,9 +42,9 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home" Component={expMap["home"][+experience - 1]} />
+							<Route exact path="/home/" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
-							<Route exact path="/profile/:id" Component={expMap["profile"][+experience - 1]} />
+							<Route exact path="/profile/:id" Component={Profile} />
 							<Route exact path="/search/:q" Component={Search} />
 							<Route exact path="/tags/:name" Component={TagPage} />
 							<Route exact path="/theme" Component={ThemeSwitchPage} />
