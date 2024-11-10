@@ -46,7 +46,7 @@ export function ErrorProvider({children}) {
                 </Modal.Body>
                 <Modal.Footer>
                     {(error.status === 401) || (error.status === 404) ? <Button onClick={() => {setError('-1'); setLoggedIn(false); handleLogOut()}}>Logout</Button>
-                     : <Button onClick={() => {setError('-1'); window.location.pathname = "/home"}}>Close</Button>
+                     : <Button onClick={() => {setError('-1'); window.location.pathname = "/home/"}}>Close</Button>
 
                     }
                 </Modal.Footer>

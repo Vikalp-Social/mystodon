@@ -104,15 +104,16 @@ button{
   padding: 10px;
   cursor: pointer;
   color: var(--text_color);
-  text-shadow: var(--text_shadow)
+  text-shadow: var(--text_shadow);
+  min-width: 90px;
 }
 .my-button:hover {
   filter: brightness(85%);
 }
-@media (max-width: 768px) { /* Tablet and below */
+@media (max-width: 1024px) { /* Tablet and below */
   .my-button, button {
-    width: 100%;
     padding: 10px;
+    width: auto;
   }
 }
 
