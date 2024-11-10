@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const urls = {
-    1: "https://tov7mk1km9.execute-api.eu-north-1.amazonaws.com/stage1",  // URL for server 1
-    2: "https://sentiment.srg.social",    // URL for server 2
+    1: "https://hot.vikalp.social",  // URL for server 1
+    2: "https://sentiment.vikalp.social",    // URL for server 2
 };
 
 // const ports = {

@@ -49,7 +49,7 @@ function LoginPage() {
             // Save the client id and secret in the local storage so that the data isn't lost on reload
             localStorage.setItem("id", register_app.data.client_id);
             localStorage.setItem("secret", register_app.data.client_secret);
-            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=https%3A%2F%2Fsrg.social/auth/&response_type=code`)
+            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=https%3A%2F%2Fvikalp.social/auth/&response_type=code`)
         } catch (error) {
             console.log(error);
             setError(error.response.data);
