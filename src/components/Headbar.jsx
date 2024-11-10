@@ -10,7 +10,7 @@ function Headbar() {
 	return (
 		<>
 			<div className='headbar'>
-				{window.location.pathname === '/home/' ? 
+				{window.location.pathname === '/home' ? 
 					<div><FaHouseChimney style={{marginBottom:8}}/> Home</div> 
 				: 
 					<div onClick={() => navigate(-1)}> 

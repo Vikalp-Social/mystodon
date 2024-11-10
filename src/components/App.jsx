@@ -24,7 +24,7 @@ function App() {
 		localStorage.setItem("experience", 1);
 		window.location.reload(false);
 	}
-	if(!(experience in selectedExp)){
+	else if(!(experience in selectedExp)){
 		alert("Invalid Experience Selected. Redirecting to Classic Experience");
 		localStorage.setItem("experience", 1);
 		window.location.reload(false);
@@ -41,7 +41,7 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home/" Component={Home} />
+							<Route exact path="/home" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
 							<Route exact path="/profile/:id" Component={Profile} />
 							<Route exact path="/search/:q" Component={Search} />
