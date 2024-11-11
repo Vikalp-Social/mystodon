@@ -2,6 +2,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
+    width: 90px;
 }
 
 .login{
@@ -78,7 +79,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 768px) { /* Tablet and below */
+@media (max-width: 1024px) { /* Tablet and below */
     .login {
         padding: 0 5%; /* Reduced padding for smaller screens */
     }
@@ -94,7 +95,7 @@
     }
 
     .login-form .my-button {
-        width: 100%; /* Button takes up the full width */
+        width: auto; /* Button takes up the full width */
         margin: 10px 0; /* Ensure proper spacing */
     }
 

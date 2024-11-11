@@ -30,7 +30,7 @@ function LoginPage() {
         }
         
         // Check if the user is coming back from the auth page
-        if(window.location.pathname === '/auth/'){
+        if(window.location.pathname === '/auth'){
             const [q, c] = window.location.search.split("=");
             handleAuth(localStorage.getItem("id"), localStorage.getItem("secret"), c, localStorage.getItem("instance"));
         }
