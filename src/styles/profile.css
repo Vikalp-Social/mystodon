@@ -81,8 +81,13 @@
 	padding-top: 0;
 }
 
-.profileStats span{
+.profileStats .stats{
 	color: rgb(4,117,194);
+}
+
+.profileStats .follow:hover{
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .profileCenter{
