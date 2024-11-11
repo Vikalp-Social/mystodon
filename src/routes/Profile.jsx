@@ -202,7 +202,12 @@ function Profile(){
                         <span className="profileUsername">{display_name === '' ? display_name : <UsernameEmoji key={user.id} name={user.display_name || user.username} emojis={user.emojis}/>}</span>
                         <span className="profileUserInstance">{user.username === user.acct ? `${user.username}@${currentUser.instance}` : user.acct}</span>
                     </div>
-                    <div className="profileStats"><strong><span>{formatData(user.followers_count)}</span> Followers <span>{formatData(user.following_count)}</span> Following</strong></div>
+                    <div className="profileStats">
+                        <strong>
+                            <span className="stats">{formatData(user.followers_count)}</span> <span className="follow" onClick={() => navigate(`/profile/${id}/followers`)}>Followers </span> 
+                            <span className="stats">{formatData(user.following_count)}</span> <span className="follow" onClick={() => navigate(`/profile/${id}/following`)}>Following</span>
+                        </strong>
+                    </div>
                     <div className="profileCenter">
                         <span className="profileText"><div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} /></span>
                     </div>
