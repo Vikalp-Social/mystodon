@@ -13,6 +13,7 @@ import { ErrorProvider } from "../context/ErrorContext";
 import ThemeSwitchPage from "../routes/ThemeSwitchPage";
 import Vikalp from "../routes/Vikalp";
 import About from "../routes/About";
+import FollowPage from "../routes/FollowPage";
 
 // App component contains all the routes of the application
 function App() {
@@ -44,6 +45,7 @@ function App() {
 							<Route exact path="/home" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
 							<Route exact path="/profile/:id" Component={Profile} />
+							<Route exact path="/profile/:id/:follow" Component={FollowPage} />
 							<Route exact path="/search/:q" Component={Search} />
 							<Route exact path="/tags/:name" Component={TagPage} />
 							<Route exact path="/theme" Component={ThemeSwitchPage} />
