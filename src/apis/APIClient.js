@@ -11,7 +11,7 @@ const urls = {
 // }
 
 const selectedServer = localStorage.getItem("server");
-// const port = ports[selectedServer];
+//const port = ports[selectedServer];
 
 if(!selectedServer){
     localStorage.setItem("server", 1);
@@ -22,6 +22,8 @@ else if(!(selectedServer in urls)){
     localStorage.setItem("server", 1);
     window.location.reload(false);
 }
+
+const baseURL = urls[selectedServer];
 
 // Created a new instance of axios with the dynamically selected baseURL
 export default axios.create({
