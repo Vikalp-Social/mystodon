@@ -16,7 +16,7 @@ export function UserContextProvider({children}){
     });
     const [isLoggedIn, setLoggedIn] = useLocalStorage("logged_in",false);
     const [paths] = useState({
-        home: "/home",
+        home: "/home/",
         profile: "/profile",
         search: "/search",
         tags: "/tags",

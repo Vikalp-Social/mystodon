@@ -41,7 +41,7 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home" Component={Home} />
+							<Route exact path="/home/" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
 							<Route exact path="/profile/:id" Component={Profile} />
 							<Route exact path="/search/:q" Component={Search} />

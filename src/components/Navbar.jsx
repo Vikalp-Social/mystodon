@@ -51,7 +51,7 @@ function Navbar() {
                         <FaMagnifyingGlass />
                     </div>
 
-                    <div className="mystodon" onClick={() => navigate("/home")}>
+                    <div className="mystodon" onClick={() => navigate("/home/")}>
                         MYSTODON
                     </div>
 
