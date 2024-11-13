@@ -11,6 +11,7 @@ import "../styles/reply.css";
 function Reply(props){
     const {currentUser, paths} = useContext(UserContext);
     const {setError} = useErrors();
+    
     //to initialize the reply text with the username of all the users to whom the reply is being made
     const [replyText, setReplyText] = useState(() => {
         let str = "";
@@ -31,14 +32,18 @@ function Reply(props){
         event.preventDefault();
         event.stopPropagation();
         try {
-            const response = await APIClient.post("/statuses", {
+            const response = await APIClient.post("statuses", {
                 message: replyText,
                 instance: currentUser.instance,
                 token: currentUser.token,
-                reply_id: props.post.id,
+                reply_id: props.post ? props.post.id : "",
             });
             props.close();
-            navigate(`${paths.status}/${props.post.id}`);
+            
+            if(props.post){
+                navigate(`${paths.status}/${props.post.id}`);
+            }
+            
         } catch (error) {
             setError(error.response.data);
         }
@@ -65,7 +70,9 @@ function Reply(props){
                     />
                     <div className='reply-bottom'>
                         <span>Remaining: {500 - replyText.length}</span>
-                        <button className='my-button' onClick={handleReply} style={{margin:"5px 0 0 10px"}}>POST</button>
+                        <button className='my-button' onClick={handleReply} style={{margin:"5px 0 0 10px"}}>
+                            POST
+                        </button>
                     </div>
                 </div>
             </Modal.Body>
