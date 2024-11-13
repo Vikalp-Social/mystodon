@@ -25,12 +25,10 @@ function FollowPage() {
 			navigate("/");
 		}
 		fetchFollowList();
-		console.log(id, follow);
 	}, [id, follow]);
 
 	async function fetchFollowList(){
 		try {
-			console.log("fetching");
 			setLoading(true);
 			const response = await APIClient.get(`accounts/${id}/${follow}`, {
 				params: {
@@ -38,10 +36,8 @@ function FollowPage() {
 					token: currentUser.token
 				}
 			});
-			console.log(response.data);
 			setList(response.data.accounts);
 			setLoading(false);
-			console.log("done fetching");
 		} catch (error) {
 			setError(error.response.data);
 		}

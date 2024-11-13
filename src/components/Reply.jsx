@@ -35,10 +35,10 @@ function Reply(props){
                 message: replyText,
                 instance: currentUser.instance,
                 token: currentUser.token,
-                reply_id: props.post.id,
+                reply_id: props.post ? props.post.id : '',
             });
             props.close();
-            navigate(`${paths.status}/${props.post.id}`);
+            if(props.post) navigate(`${paths.status}/${props.post.id}`);
         } catch (error) {
             setError(error.response.data);
         }

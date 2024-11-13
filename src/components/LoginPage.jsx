@@ -68,7 +68,7 @@ function LoginPage() {
                 secret: secret,
                 code: code,
             });
-            console.log(authorize)
+
             const user = {
                 name: authorize.data.account.display_name,
                 username: authorize.data.account.username,
@@ -77,7 +77,7 @@ function LoginPage() {
                 token: authorize.data.token,
                 avatar: authorize.data.account.avatar,
             }
-            console.log(user)
+
             // Set the current user in the context
             setCurrentUser(user);
             localStorage.removeItem("id");
