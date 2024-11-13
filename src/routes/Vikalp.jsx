@@ -12,7 +12,7 @@ function Vikalp() {
     const [experience, setExperience] = useLocalStorage("experience", 1)
     const servers = {
         1: "Hot Ranking",
-        2: "Sentiment Analysis",
+        2: "Positive Recommender",
     }
     const experiences = {
         1: "Classic"
