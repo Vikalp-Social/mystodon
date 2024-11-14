@@ -117,9 +117,9 @@ function LoginPage() {
                         </form>
                         <div>
                             <ul className="list-disc">
-                                <li className="text-xl">Vikalp is just a frontend</li>
-                                <li className="text-xl">Everything runs in your browser</li>
+                                <li className="text-xl">Vikalp is just a client</li>
                                 <li className="text-xl">We do not store any information about you</li>
+                                <li className="text-xl">We're 100% Open Source</li>
                             </ul>
                         </div>
                     </div>
