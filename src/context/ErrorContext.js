@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext, useEffect } from 'react'
 import { Modal, Button, Toast, ToastContainer } from 'react-bootstrap';
 import { handleLogOut } from '../components/Navbar';
 import { UserContext } from './UserContext';
+import "../styles/error.css";
 
 const ErrorContext = createContext()
 
@@ -35,16 +36,16 @@ export function ErrorProvider({children}) {
             {error.status === '' ? handleLogOut() : null}   
             
             {/* modal for displaying error messages */}
-            <Modal show={error !== '-1'} onClose={() => setError('-1')} size='tiny'>
-                <Modal.Header closeButton>{error.statusText} ({error.status})</Modal.Header>
-                <Modal.Body>
+            <Modal show={error !== '-1'} onClose={() => setError('-1')} size='tiny' className='modal-custom'>
+                <Modal.Header closeButton  className='modal-custom'>{error.statusText} ({error.status})</Modal.Header>
+                <Modal.Body  className='modal-custom'>
                 <p>
                 {error.error}
                 </p>
                 <hr />
                 <p>{messages[error.status]}</p>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer  className='modal-custom'>
                     {(error.status === 401) || (error.status === 404) ? <Button onClick={() => {setError('-1'); setLoggedIn(false); handleLogOut()}}>Logout</Button>
                      : <Button onClick={() => {setError('-1'); window.location.pathname = "/home/"}}>Close</Button>
 
@@ -55,7 +56,7 @@ export function ErrorProvider({children}) {
             {/* toast for displaying popups/info messages */}
             <ToastContainer className='p-3' position='bottom-start'>
                 <Toast show={toast !== ''} onClose={() => setToast('')} delay={5000}>
-                    <Toast.Header></Toast.Header>
+                    <Toast.Header  className='toast-header-custom'></Toast.Header>
                     <Toast.Body>{toast}</Toast.Body>
                 </Toast>
             </ToastContainer>
