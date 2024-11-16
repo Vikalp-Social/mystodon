@@ -102,7 +102,7 @@ function LoginPage() {
                     <div>
                         <form action="" onSubmit={handleSubmit}>
                             <div className="login-form">
-                                <div><label htmlFor="name">Enter your Mastodon/Pleroma Instance URL below</label></div>
+                                <div><label htmlFor="name">Enter your Mastodon Instance URL below</label></div>
                                 <div><input value={instance} onChange={(event) => setInstance(event.target.value)} id="name" placeholder="example.com" type="text" className="form-control" /></div>
                                 <div>
                                     <button className="my-button" type="submit">
