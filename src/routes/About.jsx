@@ -27,7 +27,7 @@ function About() {
           empowering users with the freedom to decide what they consume on social media and how they consume it.</p>
           <p>At Vikalp.Social, we are dedicated to providing options that put you in control.</p>
         <p>
-          We’re a work in progress, continuously improving and evolving to create a platform that gives people the 
+          We're a work in progress, continuously improving and evolving to create a platform that gives people the 
           freedom to shape their social media experience.
         </p>
       </section>

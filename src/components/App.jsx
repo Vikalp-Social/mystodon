@@ -14,6 +14,7 @@ import ThemeSwitchPage from "../routes/ThemeSwitchPage";
 import Vikalp from "../routes/Vikalp";
 import About from "../routes/About";
 import FollowPage from "../routes/FollowPage";
+import Users from "../routes/Users";
 
 // App component contains all the routes of the application
 function App() {
@@ -51,6 +52,7 @@ function App() {
 							<Route exact path="/theme" Component={ThemeSwitchPage} />
 							<Route exact path="/vikalp" Component={Vikalp} />
 							<Route exact path="/about" Component={About} />
+							<Route exact path="/users" Component={Users} />
 							<Route path="*" element={<div>404</div>} />
 						</Routes>
 					</Router>

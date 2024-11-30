@@ -1,8 +1,11 @@
-.top-link {
+.top-links {
     position: absolute;
     top: 20px;
     right: 20px;
     width: 90px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .login{
