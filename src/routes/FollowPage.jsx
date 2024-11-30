@@ -8,12 +8,15 @@ import Sidebar from "../components/Sidebar";
 import Headbar from "../components/Headbar";
 import ThemePicker from "../theme/ThemePicker";
 import SearchAccount from "../components/SearchAccount";
+import SearchTag from '../components/SearchTag';
 
 function FollowPage() {
 	const {currentUser, isLoggedIn} = useContext(UserContext);
     const {setError} = useErrors();
     const {id, follow} = useParams();
     const [list, setList] = useState([]);
+	const [tags, setTags] = useState([]);
+	const [viewAccount, setAccount] = useState(true);
 	const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
 
@@ -40,12 +43,23 @@ function FollowPage() {
 			});
 			console.log(response.data);
 			setList(response.data.accounts);
+
+			const tags = await APIClient.get("tags/following", {
+				params: {
+					instance: currentUser.instance,
+					token: currentUser.token
+				}
+			});
+			console.log(tags.data);
+			setTags(tags.data);
+
 			setLoading(false);
 			console.log("done fetching");
 		} catch (error) {
 			setError(error.response.data);
 		}
 	}
+
 
 	return (
 		<div className="main">
@@ -54,7 +68,15 @@ function FollowPage() {
             <ThemePicker />
             <div className="feed container" >
                 <Headbar />
-					{list.length > 0 ? list.map((account) => {
+					{follow === "following" ? 
+						<div className="search-options">
+							<div onClick={() => setAccount(true)} className={viewAccount ? "active-option" : ""}>Accounts</div>
+							<div onClick={() => setAccount(false)} className={!viewAccount ? "active-option" : ""}>Hashtags</div>
+						</div> 
+						: 
+						<div></div>
+					}
+					{viewAccount && (list.length > 0 ? list.map((account) => {
                         return <SearchAccount 
                                 key={account.id}
                                 user_id={account.id}
@@ -64,7 +86,15 @@ function FollowPage() {
                                 emojis={account.emojis}
                             />
                         })
-						 : <div className="no-results">No results found</div>}
+						 : <div className="no-results">No results found</div>)}
+
+					{!viewAccount && (tags.length > 0 ? tags.map((tag) => {
+						return <SearchTag 
+                                key={tag.name}
+                                name={tag.name}
+                                talking={tag.history[0].accounts}
+                            />}	
+					) : <div className="no-results">No results found</div>)}
                 {loading && <div className="loader"></div>}
             </div>
         </div>
