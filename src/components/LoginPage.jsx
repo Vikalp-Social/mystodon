@@ -4,16 +4,18 @@ import APIClient from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
 import { UserContext} from "../context/UserContext";
 import "../styles/login.css";
+import { Navbar } from "react-bootstrap";
 
 let id = "";
 let secret = "";
 
 function LoginPage() {
-    const {setCurrentUser, isLoggedIn, setLoggedIn, paths} = useContext(UserContext);
+    const {setCurrentUser, setLoggedIn, paths, currentUser, users, setUsers, setUserId} = useContext(UserContext);
     const { setError} = useErrors();
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [didLogIn, setDidLogIn] = useState(false);
     let navigate = useNavigate();
     let location = useLocation();
 
@@ -22,7 +24,7 @@ function LoginPage() {
             localStorage.setItem("server", 1);
         }
 
-        if(isLoggedIn){
+        if(didLogIn){
             navigate(paths.home);
         }
         else {
@@ -34,7 +36,7 @@ function LoginPage() {
             const [q, c] = window.location.search.split("=");
             handleAuth(localStorage.getItem("id"), localStorage.getItem("secret"), c, localStorage.getItem("instance"));
         }
-    }, [isLoggedIn]);
+    }, [didLogIn]);
 
     //function to handle the submit of the form and register the user application
     async function handleSubmit(event){
@@ -79,11 +81,15 @@ function LoginPage() {
             }
             console.log(user)
             // Set the current user in the context
-            setCurrentUser(user);
+            setUserId(users.length);
+            setUsers([...users, user]);
+
             localStorage.removeItem("id");
             localStorage.removeItem("secret");
             localStorage.setItem('selectedTheme', "dark");
             setLoggedIn(true);
+            setCurrentUser(user);
+            setDidLogIn(true);
             setLoading(false);
         } catch (error) {
             setError(error)
@@ -95,9 +101,11 @@ function LoginPage() {
         {loading ? 
             <div className="load-container"><div className="loader"></div></div> : 
             <div>
-                <div className="top-link">
+                <div className="top-links">
                     <div className="my-button" onClick={() => navigate("/about")}>About Us</div>
+                    {users.length ? <div className="my-button" onClick={() => navigate("/home")}>Home</div> : <div></div>}
                 </div>
+                
                 <div className="login">
                     <div>
                         <form action="" onSubmit={handleSubmit}>

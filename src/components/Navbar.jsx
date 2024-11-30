@@ -7,7 +7,7 @@ import "../styles/navbar.css";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 export function handleLogOut() {
-    localStorage.removeItem("current_user");
+    
     localStorage.removeItem("--hue");
     document.documentElement.style.setProperty("--hue", 204);
     localStorage.removeItem("experience");
@@ -16,7 +16,7 @@ export function handleLogOut() {
 }
 
 function Navbar() {
-    const { setLoggedIn, currentUser, paths } = useContext(UserContext);
+    const { setLoggedIn, currentUser, paths, setUsers, users, setUserId} = useContext(UserContext);
     const [search, setSearch] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
@@ -30,6 +30,18 @@ function Navbar() {
 
     function toggleSearch() {
         setShowSearch(!showSearch);
+    }
+
+    function logOut() {
+        setUsers((prev) => {
+            return prev.filter((user) => user.id !== currentUser.id)
+        })
+        setUserId(users.length - 2);
+        if(users.length === 1){
+            setLoggedIn(false);
+            setUserId(0);
+        }
+        handleLogOut();
     }
 
     return (
@@ -71,7 +83,8 @@ function Navbar() {
                                     <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
                                     <div onClick={() => navigate(paths.theme)}>Theme</div>
                                     <div onClick={() => navigate("/about")}>About Us</div>
-                                    <div onClick={() => { setLoggedIn(false); handleLogOut() }}>Logout</div>
+                                    <div onClick={() => navigate("/users")}>Switch User</div>
+                                    <div onClick={() => { logOut() }}>Logout</div>
                                 </div>
                             )}
                         </div>

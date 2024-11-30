@@ -1,0 +1,8 @@
+.addUser{
+    margin: 5px 0 10px 0;
+    width: 100%;
+}
+
+.addUser button{
+    float: right;
+}
