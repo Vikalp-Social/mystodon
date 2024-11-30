@@ -11,6 +11,7 @@ export function ErrorProvider({children}) {
     const {setLoggedIn} = useContext(UserContext);
     const [error, setError] = useState('-1');
     const [toast, setToast] = useState('');
+    const [theme, setTheme] = useState('dark');
     const messages = {
         401: 'Try logging in again',
         404: 'Does not exist',
@@ -26,6 +27,8 @@ export function ErrorProvider({children}) {
             setError('-1');
             handleLogOut();
         }
+
+        setTheme(localStorage.getItem('selectedTheme'));
     })
 
     return (
@@ -36,7 +39,7 @@ export function ErrorProvider({children}) {
             {error.status === '' ? handleLogOut() : null}   
             
             {/* modal for displaying error messages */}
-            <Modal show={error !== '-1'} onClose={() => setError('-1')} size='tiny' className='modal-custom'>
+            <Modal show={error !== '-1'} onClose={() => setError('-1')} size='tiny' data-bs-theme={theme}>
                 <Modal.Header closeButton  className='modal-custom'>{error.statusText} ({error.status})</Modal.Header>
                 <Modal.Body  className='modal-custom'>
                 <p>
