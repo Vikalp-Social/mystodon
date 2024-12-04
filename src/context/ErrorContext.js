@@ -35,10 +35,10 @@ export function ErrorProvider({children}) {
             {children}
 
             {/* if the error status is empty it means there was an error formatting the error */}
-            {error.status !== '' ? handleLogOut() : null}   
+            {error.status === '' ? handleLogOut() : null}   
             
             {/* modal for displaying error messages */}
-            <Modal show={error === '-1'} onClose={() => setError('-1')} size='tiny' data-bs-theme={theme}>
+            <Modal show={error !== '-1'} onClose={() => setError('-1')} size='tiny' data-bs-theme={theme}>
                 <Modal.Header closeButton>{error.statusText} ({error.status})</Modal.Header>
                 <Modal.Body>
                 <p>
