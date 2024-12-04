@@ -16,7 +16,7 @@ export function handleLogOut() {
 }
 
 function Navbar() {
-    const { setLoggedIn, currentUser, paths, setUsers, users, setUserId} = useContext(UserContext);
+    const { setLoggedIn, currentUser, paths, setUsers, users, setUserId, setCurrentUser} = useContext(UserContext);
     const [search, setSearch] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
@@ -41,6 +41,7 @@ function Navbar() {
             setLoggedIn(false);
             setUserId(0);
         }
+        setCurrentUser(users[users.length - 2]);
         handleLogOut();
     }
 

@@ -1,10 +1,9 @@
 import React, {useState, useContext, useEffect} from "react";
 import { useNavigate, useLocation  } from "react-router-dom";
-import APIClient from "../apis/APIClient";
+import APIClient, {domain} from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
 import { UserContext} from "../context/UserContext";
 import "../styles/login.css";
-import { Navbar } from "react-bootstrap";
 
 let id = "";
 let secret = "";
@@ -51,7 +50,7 @@ function LoginPage() {
             // Save the client id and secret in the local storage so that the data isn't lost on reload
             localStorage.setItem("id", register_app.data.client_id);
             localStorage.setItem("secret", register_app.data.client_secret);
-            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2Flocalhost:3001/auth&response_type=code`)
+            window.location.href = (`https://${instance}/oauth/authorize?client_id=${register_app.data.client_id}&scope=read+write+push&redirect_uri=http%3A%2F%2F${domain}/auth&response_type=code`)
         } catch (error) {
             console.log(error);
             setError(error.response.data);
@@ -81,14 +80,21 @@ function LoginPage() {
             }
             console.log(user)
             // Set the current user in the context
-            setUserId(users.length);
-            setUsers([...users, user]);
+            //check if the user is already registered
+            if(users.filter((u) => u.id === user.id).length > 0){
+                setCurrentUser(users.filter((u) => u.id === user.id)[0]);
+                setUserId(users.findIndex((u) => u.id === user.id));
+            }
+            else{
+                setUserId(users.length);
+                setUsers([...users, user]);
+                setCurrentUser(user);
+            }
 
             localStorage.removeItem("id");
             localStorage.removeItem("secret");
             localStorage.setItem('selectedTheme', "dark");
             setLoggedIn(true);
-            setCurrentUser(user);
             setDidLogIn(true);
             setLoading(false);
         } catch (error) {

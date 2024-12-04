@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const domain = "localhost:3001";
+
 const ports = {
     1: 3000,
     2: 5000,
