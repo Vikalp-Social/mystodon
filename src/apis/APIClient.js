@@ -5,13 +5,9 @@ const urls = {
     2: "https://sentiment.vikalp.social",    // URL for server 2
 };
 
-// const ports = {
-//     1: 3000,
-//     2: 5000,
-// }
+export const domain = "vikalp.social";
 
 const selectedServer = localStorage.getItem("server");
-//const port = ports[selectedServer];
 
 if(!selectedServer){
     localStorage.setItem("server", 1);

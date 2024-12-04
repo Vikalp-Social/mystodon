@@ -8,7 +8,7 @@ const ErrorContext = createContext()
 
 // ErrorProvider is used to display the error messages and toasts which are modals, the ErrorProvider is wrapped around the App component in index.js
 export function ErrorProvider({children}) {
-    const {setLoggedIn} = useContext(UserContext);
+    const {setLoggedIn, paths} = useContext(UserContext);
     const [error, setError] = useState('-1');
     const [toast, setToast] = useState('');
     const [theme, setTheme] = useState('dark');
@@ -50,7 +50,7 @@ export function ErrorProvider({children}) {
                 </Modal.Body>
                 <Modal.Footer  className='modal-custom'>
                     {(error.status === 401) || (error.status === 404) ? <Button onClick={() => {setError('-1'); setLoggedIn(false); handleLogOut()}}>Logout</Button>
-                     : <Button onClick={() => {setError('-1'); window.location.pathname = "/home/"}}>Close</Button>
+                     : <Button onClick={() => {setError('-1'); window.location.pathname = paths.home}}>Close</Button>
 
                     }
                 </Modal.Footer>

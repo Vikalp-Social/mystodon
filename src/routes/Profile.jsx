@@ -57,7 +57,6 @@ function Profile(){
     async function fetchUserProfile(){
         try {
             setLoading(true);
-            // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
             const response = await APIClient.get(`/accounts/${id}`, {
                 params: {
                     token: currentUser.token, 
@@ -78,7 +77,6 @@ function Profile(){
     async function extendStatuses(){
         try {
             setLoading(true);
-            // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
             if(maxId === -1) return;
             const response = await APIClient.get(`/accounts/${id}`, {
                 params: {

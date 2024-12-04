@@ -116,20 +116,6 @@
       margin: 1rem 0;
     }
   }
-  
-  a {
-    color: blue; /* Replace 'blue' with your desired color */
-  }
-
-  /* Change color on hover */
-  a:hover {
-    color: red; /* Replace 'red' with your desired hover color */
-  }
-
-  /* Change color for visited links */
-  a:visited {
-    color: purple; /* Replace 'purple' with your desired color */
-  }
 
   /* about.css */
   
