@@ -105,7 +105,7 @@ button{
   cursor: pointer;
   color: var(--text_color);
   text-shadow: var(--text_shadow);
-  min-width: 90px;
+  min-width: 80px;
   text-align: center;
 }
 .my-button:hover {
@@ -116,6 +116,14 @@ button{
     padding: 10px;
     width: auto;
   }
+}
+
+.edit-button {
+  background-color: grey;
+}
+
+.delete-button {
+  background-color: red;
 }
 
 .homelayout {

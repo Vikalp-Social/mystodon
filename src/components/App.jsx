@@ -15,6 +15,8 @@ import Vikalp from "../routes/Vikalp";
 import About from "../routes/About";
 import FollowPage from "../routes/FollowPage";
 import Users from "../routes/Users";
+import Lists from "../routes/Lists";
+import EditList from "../routes/EditList";
 
 // App component contains all the routes of the application
 function App() {
@@ -53,6 +55,8 @@ function App() {
 							<Route exact path="/vikalp" Component={Vikalp} />
 							<Route exact path="/about" Component={About} />
 							<Route exact path="/users" Component={Users} />
+							<Route exact path="/lists" Component={Lists} />
+							<Route exact path="/lists/:id/edit" Component={EditList} />
 							<Route path="*" element={<div>404</div>} />
 						</Routes>
 					</Router>
