@@ -105,7 +105,7 @@ button{
   cursor: pointer;
   color: var(--text_color);
   text-shadow: var(--text_shadow);
-  min-width: 80px;
+  text-wrap-mode: nowrap;
   text-align: center;
 }
 .my-button:hover {

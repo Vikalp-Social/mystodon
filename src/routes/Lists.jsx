@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useBottomScrollListener } from 'react-bottom-scroll-listener'
 import APIClient from '../apis/APIClient'
 import { UserContext } from '../context/UserContext'
 import ThemePicker from '../theme/ThemePicker'
@@ -17,10 +18,12 @@ function Lists() {
     const {setError} = useErrors();
     const [show, setShow] = useState(false);
     const [timeline, setTimeline] = useState([]);
+    const [buffer, setBuffer] = useState([]);
     const [lists, setLists] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedId, setSelectedId] = useState("");
     const [maxId, setMaxId] = useState("");
+    useBottomScrollListener(extendTimeline);
     let navigate = useNavigate();
 
     useEffect(() =>{
@@ -62,7 +65,17 @@ function Lists() {
                 }
             });
             setTimeline(response.data.data);
-            setMaxId(response.data.max_id);
+            console.log(response.data);
+            const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
+                params: {
+                    token: currentUser.token,
+                    instance: currentUser.instance,
+                    max_id: response.data.max_id,
+                }
+            });
+            console.log(res2.data);
+            setBuffer(res2.data.data);
+            setMaxId(res2.data.max_id);
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -70,7 +83,34 @@ function Lists() {
         }
     }
 
+    async function extendTimeline() {
+        if(buffer.length > 0){
+            setLoading(true);
+            if(timeline.includes(buffer[0])){
+                //setLoading(true)
+                fetchListTimeline();
+            }
+            else{
+                setTimeline([...timeline, ...buffer]);
+                //setLoading(false);
+                const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
+                    params: {
+                        token: currentUser.token, 
+                        instance: currentUser.instance, 
+                        max_id: maxId
+                    }
+                });
+                setBuffer(res2.data.data);
+                setMaxId(res2.data.max_id);
+            }
+        }
+        else{
+            fetchListTimeline();
+        }
+    }
+
     async function fetchPublicLists(){
+        setLoading(false);
         console.log("public");
     }
 
