@@ -1,38 +1,52 @@
 import React from 'react'
+import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useBottomScrollListener } from 'react-bottom-scroll-listener'
 import APIClient from '../apis/APIClient'
 import { UserContext } from '../context/UserContext'
 import ThemePicker from '../theme/ThemePicker'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Headbar from '../components/Headbar'
-import Status from '../components/Status'
 import { useErrors } from '../context/ErrorContext'
 import CreateList from '../components/CreateList'
 import "../styles/lists.css"
+import ListCard from '../components/ListCard'
 
 function Lists() {
     const {currentUser} = useContext(UserContext);
     const {setError} = useErrors();
     const [show, setShow] = useState(false);
-    const [timeline, setTimeline] = useState([]);
-    const [buffer, setBuffer] = useState([]);
     const [lists, setLists] = useState([]);
+    const [publicLists, setPublicLists] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [selectedId, setSelectedId] = useState("");
+    const [selectedId, setSelectedId] = useState("public");
     const [maxId, setMaxId] = useState("");
-    useBottomScrollListener(extendTimeline);
     let navigate = useNavigate();
 
-    useEffect(() =>{
-        fetchLists();
-    }, []);
+    // useEffect(() =>{
+    //     fetchPublicLists();
+    //     setLists(publicLists);
+    // }, []);
 
     useEffect(() =>{
-        fetchListTimeline();
-    }, [selectedId]);
+        document.title = "Lists | Vikalp"
+        fetchPublicLists();
+    }, []);
+
+    useEffect(() => {
+        fetchListHelper();
+    }, [selectedId])
+
+    async function fetchListHelper(){
+        if(selectedId == "public"){
+            fetchPublicLists();
+            setLists(publicLists);
+        }
+        else if(selectedId == "private"){
+            fetchLists();
+        }
+    }
 
     async function fetchLists(){
         try {
@@ -49,72 +63,22 @@ function Lists() {
         }
     }
 
-    async function fetchListTimeline(){
-        console.log(selectedId);
+    async function fetchPublicLists(){
         try {
-            if (selectedId === "" ){
-                fetchPublicLists();
-                return;
-            }
             setLoading(true);
-            const response = await APIClient.get(`/timelines/lists/${selectedId}`, {
-                params: {
-                    token: currentUser.token,
-                    instance: currentUser.instance,
-                    max_id: maxId,
-                }
-            });
-            setTimeline(response.data.data);
+            const response = await axios.get("https://auth.srg.social/api/v1/lists/public");
             console.log(response.data);
-            const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
-                params: {
-                    token: currentUser.token,
-                    instance: currentUser.instance,
-                    max_id: response.data.max_id,
-                }
-            });
-            console.log(res2.data);
-            setBuffer(res2.data.data);
-            setMaxId(res2.data.max_id);
+            setPublicLists(response.data);
+            setLists(response.data);
             setLoading(false);
         } catch (error) {
+            // setError(error.response.data);
             console.log(error);
-            setError(error.response.data);
         }
     }
 
-    async function extendTimeline() {
-        if(buffer.length > 0){
-            setLoading(true);
-            if(timeline.includes(buffer[0])){
-                //setLoading(true)
-                fetchListTimeline();
-            }
-            else{
-                setTimeline([...timeline, ...buffer]);
-                //setLoading(false);
-                const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
-                    params: {
-                        token: currentUser.token, 
-                        instance: currentUser.instance, 
-                        max_id: maxId
-                    }
-                });
-                setBuffer(res2.data.data);
-                setMaxId(res2.data.max_id);
-            }
-        }
-        else{
-            fetchListTimeline();
-        }
-    }
-
-    async function fetchPublicLists(){
-        setLoading(false);
-        console.log("public");
-    }
-
-    async function deleteList(id){
+    async function deleteList(event, id){
+        event.stopPropagation();
         if(id === ""){
             return;
         }
@@ -133,7 +97,28 @@ function Lists() {
         }
     }
 
-    function editList(id){
+    async function removePublicList(event, id){
+        event.stopPropagation();
+        if(id == ""){
+            return;
+        }
+        try {
+            const response = await axios.delete(`https://auth.srg.social/api/v1/lists/public/${id}`)
+            console.log(response.data);
+            fetchLists()
+        } catch (error) {
+            setError(error.response.data);
+        }
+    }
+
+    function editList(event, id){
+        event.stopPropagation();
+        if(selectedId == "private" && publicLists.some(publicList => publicList.id === id)){
+            id += "1";
+        }
+        else if(selectedId === "private"){
+            id += "0";
+        }
         if(id === ""){
             return;
         }
@@ -149,37 +134,37 @@ function Lists() {
                 <div className="feed container">
                     <Headbar />
                     <div className="search-options">
-                        <div onClick={() => {setSelectedId("");setMaxId("");}} className={selectedId == "" ? "active-option" : ""}>Public</div>
-                        {lists.length > 0 && lists.map(list => {
-                            return <div key={list.id} onClick={() => {setSelectedId(list.id);setMaxId("");}} className={selectedId == list.id ? "active-option" : ""}>{list.title}</div>
-                        })}
+                        <div onClick={() => {setSelectedId("public");setMaxId("");}} className={selectedId == "public" ? "active-option" : ""}>Public</div>
+                        <div onClick={() => {setSelectedId("private");setMaxId("");}} className={selectedId == "private" ? "active-option" : ""}>Private</div>
                     </div>
                     <div className='list-options'>
                         <button className='my-button' onClick={() => setShow(true)}>Create</button>
-                        <button className='my-button edit-button' onClick={() => editList(selectedId)}>Edit</button>
-                        <button className='my-button delete-button' onClick={() => deleteList(selectedId)}>Delete</button>
                     </div>
-                    {selectedId !== "" ? 
-                    timeline.length > 0 && timeline.map(status => {
-                        return <Status 
-                            key={status.id}
-                            instance={currentUser.instance}
-                            reblogged={status.reblog ? true : false}
-                            post={status.reblog? status.reblog : status}
-                            postedBy={status.account}
-                            isUserProfile={false}
-                            mentions={status.mentions}
-                        />
+                    {lists.length > 0 ? lists.map(list => {
+                        return (
+                            <ListCard 
+                                key={list.id}
+                                id={list.id}
+                                title={list.title}
+                                owner={list.owner}
+                                type={selectedId}
+                                is_public = {publicLists.some(publicList => publicList.id === list.id)}
+                                edit={editList}
+                                remove={removePublicList}
+                                delete={deleteList}
+                            />
+                        )
                     })
                     :
-                    <div className="no-data">Select a list to view timeline</div>
+                    <div className="no-data">Create a list first!!</div>
                     }
                     <CreateList 
                         show={show} 
-                        close={() => setShow(false)}
+                        close={() => {setShow(false);fetchListHelper()}}
+                        type={selectedId}
                     /> 
                     {loading && <div className="loader"></div>}
-                    {/* {!loading && <button className="load-button" onClick={extendTimeline}>Load More</button>} */}
+                    {/* {!loading && <button className="load-button" onClick={extendListTimeline}>Load More</button>} */}
                     
                 </div>
             </div>

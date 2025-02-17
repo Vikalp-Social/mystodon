@@ -41,11 +41,11 @@ function ListAccount(props) {
                     </div>
                 </div>
                 <div>
-                    {props.check && !removed?
+                    {!(props.viewOnly) && (props.check && !removed?
                         <button type="button" className="my-button"  onClick={(e) => removeAccount(e)}>Remove</button>
                     :
                         <button type="button" className="my-button" onClick={(e) => addAccount(e)}>Add</button>
-                    }
+                    )}
                 </div>
             </div>
         </div>

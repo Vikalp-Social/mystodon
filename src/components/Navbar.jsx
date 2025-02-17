@@ -82,6 +82,7 @@ function Navbar() {
                             {showDropdown && (
                                 <div className="dropdown-content">
                                     <div onClick={() => navigate(`${paths.profile}/${currentUser.id}`)}>Profile</div>
+                                    <div onClick={() => navigate("/lists")}>Lists</div>
                                     <div onClick={() => navigate(paths.theme)}>Theme</div>
                                     <div onClick={() => navigate("/about")}>About Us</div>
                                     <div onClick={() => navigate("/users")}>Switch User</div>

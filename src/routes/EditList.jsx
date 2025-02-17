@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
+import axios from "axios"
 import { useParams, useNavigate } from 'react-router-dom'
 import APIClient from '../apis/APIClient'
 import { useErrors } from '../context/ErrorContext'
@@ -12,7 +13,7 @@ import ListAccount from '../components/ListAccount'
 function EditList() {
     const {currentUser} = useContext(UserContext);
     const {setError} = useErrors();
-    const {id} = useParams();
+    const {fullid} = useParams();
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [title, setTitle] = useState("");
@@ -20,10 +21,13 @@ function EditList() {
     const [accounts, setAccounts] = useState([]);
     const [newMembers, setNewMembers] = useState([]);
     const [removeMembers, setRemoveMembers] = useState([]);
+    const [type, setType] = useState(0);
+    const [id, setId] = useState(fullid.slice(0, -1));
     let navigate = useNavigate();
 
     useEffect(() => {
-        console.log(id);
+        setType(+fullid[fullid.length - 1]);
+        console.log(type, id);
         fetchList();
         fetchListMembers();
     }, [id]);
@@ -98,7 +102,18 @@ function EditList() {
         }
     }
 
-    async function saveList(){
+    function saveListHelper(){
+        console.log(type);
+        if(type === 1){
+            saveListPublic();
+        }
+        else{
+            saveListPrivate()
+        }
+    }
+
+    async function saveListPublic(){
+        console.log("saved public")
         console.log(members);
         //remove members already in members list
         var objectIds = new Set(members.map(obj => obj.id));
@@ -107,7 +122,56 @@ function EditList() {
         var newMembersList = newMembers.filter(id => !objectIds.has(id));
         //remove duplicates
         newMembersList = [...new Set(newMembersList)];
-        var removeMembersList = removeMembers.filter(id => objectIds.has(id));
+        console.log(newMembersList);
+        console.log("saved!!");
+        try{
+            if(newMembersList.length > 0){
+                const response = await axios.post(`https://auth.srg.social/api/v1/lists/public/${id}/accounts`, {
+                    account_ids: newMembersList,
+                }, {
+                    params: {
+                        token: currentUser.token,
+                        instance: currentUser.instance,
+                    }
+                });
+                console.log(response.data)
+            }
+            // if(removeMembers.length > 0){
+            //     const response2 = await axios.delete(`https://auth.srg.social/api/v1/lists/public/${id}/accounts`, { 
+            //         params: {
+            //             token: currentUser.token,
+            //             instance: currentUser.instance,
+            //             account_ids: removeMembers,
+            //         }
+            //     });
+            // }
+            if(title !== ""){
+                const response3 = await axios.put(`https://auth.srg.social/api/v1/lists/public/${id}`, {
+                    title: title,
+                }, {
+                    params: {
+                        token: currentUser.token,
+                        instance: currentUser.instance,
+                    }
+                });
+            }
+            navigate("/lists");
+        }
+        catch(error){
+            setError(error.response.data);
+        }
+    }
+
+    async function saveListPrivate(){
+        console.log("saved private");
+        console.log(members);
+        //remove members already in members list
+        var objectIds = new Set(members.map(obj => obj.id));
+
+        // Filter out IDs present in the objects array
+        var newMembersList = newMembers.filter(id => !objectIds.has(id));
+        //remove duplicates
+        newMembersList = [...new Set(newMembersList)];
         console.log("saved!!");
         try{
             if(newMembersList.length > 0){
@@ -120,13 +184,12 @@ function EditList() {
                     }
                 });
             }
-            if(removeMembersList.length > 0){
-                const response2 = await APIClient.delete(`/lists/${id}/accounts`, {
-                        account_ids: removeMembersList,
-                    },
-                    { params: {
+            if(removeMembers.length > 0){
+                const response2 = await APIClient.delete(`/lists/${id}/accounts`, { 
+                    params: {
                         token: currentUser.token,
                         instance: currentUser.instance,
+                        account_ids: removeMembers,
                     }
                 });
             }
@@ -158,7 +221,7 @@ function EditList() {
                     <div className='bg-div'>
                         <div className='edit-list-header'>
                             <h1>Edit List</h1>
-                            <button className="my-button" onClick={saveList}>Save</button>
+                            <button className="my-button" onClick={saveListHelper}>Save</button>
                         </div>
                         <label className='form-label'>Title</label>
                         <input className="form-control me-2" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -194,6 +257,7 @@ function EditList() {
                                 add={() => addAccount(account.id)}
                                 remove={() => removeAccount(account.id)}
                                 check={newMembers.includes(account.id) || members.map(m => m.id).includes(account.id)}
+                                viewOnly={false}
                             />
                         }) : <div className="no-results">No results found</div>}
                     
