@@ -23,4 +23,5 @@ else if(!(selectedServer in ports)){
 // Created a new instance of axios with the dynamically selected baseURL
 export default axios.create({
     baseURL: `http://localhost:${port}/api/v1/`,
+    withCredentials: true,
 });

@@ -38,7 +38,6 @@ function FollowPage() {
 			const response = await APIClient.get(`accounts/${id}/${follow}`, {
 				params: {
 					instance: currentUser.instance,
-					token: currentUser.token
 				}
 			});
 			console.log(response.data);
@@ -47,7 +46,6 @@ function FollowPage() {
 			const tags = await APIClient.get("tags/following", {
 				params: {
 					instance: currentUser.instance,
-					token: currentUser.token
 				}
 			});
 			console.log(tags.data);

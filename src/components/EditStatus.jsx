@@ -21,7 +21,10 @@ function EditStatus(props) {
         event.preventDefault();
         event.stopPropagation();
         try {
-            const response = await APIClient.put(`/statuses/${props.id}`, {instance: currentUser.instance, token: currentUser.token, text: statusText});
+            const response = await APIClient.put(`/statuses/${props.id}`, {
+                instance: currentUser.instance,
+                text: statusText
+            });
             props.close();
         } catch (error) {
             setError(error.response.data);

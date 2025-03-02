@@ -26,7 +26,6 @@ function CreateList(props){
                     title: replyText,
                 },
                 {params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                         user: currentUser.name || currentUser.username,
                     }
@@ -37,7 +36,6 @@ function CreateList(props){
                     title: replyText,
                 },
                 {params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                         user: currentUser.name || currentUser.username,
                     }

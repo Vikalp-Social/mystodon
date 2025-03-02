@@ -52,7 +52,6 @@ function Lists() {
         try {
             const response = await APIClient.get("/lists", {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -85,7 +84,6 @@ function Lists() {
         try {
             const response = await APIClient.delete(`/lists/${id}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });

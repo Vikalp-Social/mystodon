@@ -35,7 +35,6 @@ function Reply(props){
             const response = await APIClient.post("statuses", {
                 message: replyText,
                 instance: currentUser.instance,
-                token: currentUser.token,
                 reply_id: props.post ? props.post.id : "",
             });
             props.close();

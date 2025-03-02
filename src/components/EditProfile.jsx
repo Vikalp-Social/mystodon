@@ -24,7 +24,6 @@ function EditProfile(props){
         try {
             const response = await APIClient.patch("/accounts", {
                 instance: currentUser.instance,
-                token: currentUser.token,
                 display_name: displayName,
                 note: note, 
             });

@@ -60,7 +60,6 @@ function Profile(){
             // const response = await APIClient.get(`/accounts/${id}`, {params: {instance: currentUser.instance}});
             const response = await APIClient.get(`/accounts/${id}`, {
                 params: {
-                    token: currentUser.token, 
                     instance: currentUser.instance, 
                     max_id: maxId
                 }
@@ -82,7 +81,6 @@ function Profile(){
             if(maxId === -1) return;
             const response = await APIClient.get(`/accounts/${id}`, {
                 params: {
-                    token: currentUser.token, 
                     instance: currentUser.instance, 
                     max_id: maxId
                 }
@@ -116,7 +114,6 @@ function Profile(){
         try {
             const response = await APIClient.post(`/accounts/${id}/follow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(true);
         } catch (error) {
@@ -129,7 +126,6 @@ function Profile(){
         try {
             const response = await APIClient.post(`/accounts/${id}/unfollow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(false);
         } catch (error) {

@@ -42,7 +42,6 @@ function SearchAccount(props) {
         try {
             const response = await APIClient.post(`/accounts/${props.user_id}/follow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(true);
         } catch (error) {
@@ -56,7 +55,6 @@ function SearchAccount(props) {
         try {
             const response = await APIClient.post(`/accounts/${props.user_id}/unfollow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(false);
         } catch (error) {

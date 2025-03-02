@@ -28,7 +28,8 @@ function Home(){
         if(!isLoggedIn){
             navigate("/");
         }
-        fetchLists();
+        // fetchLists();
+        // testCookieToken();
         document.title = "Home | Vikalp";
     }, []);
 
@@ -45,13 +46,23 @@ function Home(){
         }
     }
 
+    const testCookieToken = async () => {
+        try {
+            const response = await axios.get("http://localhost:3000/test-cookie-token", {
+                withCredentials: true,
+            });
+            console.log("Backend Response:", response.data);
+        } catch (error) {
+            console.error("Error fetching token:", error.response ? error.response.data : error.message);
+        }
+    };
+
     async function fetchLists(){
         try {
             const response = await APIClient.get("/lists", {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
-                }
+                },
             });
             console.log(response.data);
             setLists(response.data);
@@ -71,19 +82,17 @@ function Home(){
                 setLoading(true);
                 const response = await APIClient.get(`/timelines/lists/${selectedId}`, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                         max_id: maxId,
-                    }
+                    },
                 });
                 setTimeline(response.data.data);
                 console.log(response.data);
                 const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                         max_id: response.data.max_id,
-                    }
+                    },
                 });
                 console.log(res2.data);
                 setBuffer(res2.data.data);
@@ -101,21 +110,20 @@ function Home(){
             setLoading(true);
             const response = await APIClient.get("/timelines/home", {
                 params: {
-                    token: currentUser.token, 
                     instance: currentUser.instance, 
                     max_id: maxId
-                }
+                },
             });
+            console.log(response.data)
             setTimeline(response.data.data)
             //setLoading(false);
-            // const res2 = await APIClient.get("/timelines/home", {
-            //     params: {
-            //         token: currentUser.token, 
-            //         instance: currentUser.instance, 
-            //         max_id: response.data.max_id
-            //     }
-            // });
-            const res2 = await axios.get("https://hot.srg.social/api/v1/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: response.data.max_id}});
+            const res2 = await APIClient.get("/timelines/home", {
+                params: {
+                    instance: currentUser.instance, 
+                    max_id: response.data.max_id
+                },
+            });
+            // // const res2 = await axios.get("https://hot.srg.social/api/v1/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: response.data.max_id}});
             setBuffer(res2.data.data);
             setMaxId(res2.data.max_id);
         } catch (error) {
@@ -133,7 +141,12 @@ function Home(){
             else{
                 setTimeline([...timeline, ...buffer]);
                 //setLoading(false);
-                const res2 = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
+                const res2 = await APIClient.get("/timelines/home", {
+                    params: {
+                        instance: currentUser.instance, 
+                        max_id: maxId
+                    },
+                });
                 setBuffer(res2.data.data);
                 setMaxId(res2.data.max_id);
             }
@@ -155,7 +168,6 @@ function Home(){
                 //setLoading(false);
                 const res2 = await APIClient.get(`/timelines/lists/${selectedId}`, {
                     params: {
-                        token: currentUser.token, 
                         instance: currentUser.instance, 
                         max_id: maxId
                     }

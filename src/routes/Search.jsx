@@ -41,7 +41,6 @@ function Search(){
                 const response = await APIClient.get(`/search`, {
                     params: {
                         q: q,
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });

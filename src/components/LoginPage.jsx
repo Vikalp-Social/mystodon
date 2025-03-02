@@ -1,4 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
+import axios from "axios"
 import { useNavigate, useLocation  } from "react-router-dom";
 import APIClient, {domain} from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
@@ -68,14 +69,15 @@ function LoginPage() {
                 id: id,
                 secret: secret,
                 code: code,
+                exp: "my",
             });
+
             console.log(authorize)
             const user = {
                 name: authorize.data.account.display_name,
                 username: authorize.data.account.username,
                 instance: user_instance,
                 id: authorize.data.account.id,
-                token: authorize.data.token,
                 avatar: authorize.data.account.avatar,
             }
             console.log(user)

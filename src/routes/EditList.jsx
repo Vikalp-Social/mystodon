@@ -37,7 +37,6 @@ function EditList() {
             setLoading(true);
             const response = await APIClient.get(`/lists/${id}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -54,7 +53,6 @@ function EditList() {
             setLoading(true);
             const response = await APIClient.get(`/lists/${id}/accounts`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -74,7 +72,6 @@ function EditList() {
             const response = await APIClient.get(`/search`, {
                 params: {
                     q: search,
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -130,7 +127,6 @@ function EditList() {
                     account_ids: newMembersList,
                 }, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });
@@ -150,7 +146,6 @@ function EditList() {
                     title: title,
                 }, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });
@@ -179,7 +174,6 @@ function EditList() {
                     account_ids: newMembersList,
                 }, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });
@@ -187,7 +181,6 @@ function EditList() {
             if(removeMembers.length > 0){
                 const response2 = await APIClient.delete(`/lists/${id}/accounts`, { 
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                         account_ids: removeMembers,
                     }
@@ -198,7 +191,6 @@ function EditList() {
                     title: title,
                 }, {
                     params: {
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });

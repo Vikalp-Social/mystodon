@@ -46,7 +46,6 @@ function ListPage() {
             setLoading(true);
             const response = await APIClient.get(`/lists/${id}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -54,7 +53,6 @@ function ListPage() {
             setList(response.data);
             const res2 = await APIClient.get(`/lists/${id}/accounts`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                 }
             });
@@ -73,7 +71,6 @@ function ListPage() {
             title: list.title,
         },
         {params: {
-                token: currentUser.token,
                 instance: currentUser.instance,
                 user: currentUser.name || currentUser.username,
             }
@@ -85,7 +82,6 @@ function ListPage() {
             account_ids: member_ids,
         }, {
             params: {
-                token: currentUser.token,
                 instance: currentUser.instance,
             }
         });

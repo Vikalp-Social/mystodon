@@ -38,7 +38,6 @@ function TagPage() {
             setLoading(true);
             const response = await APIClient.get(`/timelines/tag/${name}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                     max_id: maxId,
                 }
@@ -47,7 +46,6 @@ function TagPage() {
             setLoading(false);
             const res2 = await APIClient.get(`/timelines/tag/${name}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                     max_id: response.data.max_id,
                 }
@@ -69,7 +67,12 @@ function TagPage() {
             else{
                 setStatuses([...statuses, ...buffer]);
                 setLoading(false);
-                const res2 = await APIClient.get("/timelines/home", {params: {token: currentUser.token, instance: currentUser.instance, max_id: maxId}});
+                const res2 = await APIClient.get("/timelines/home", {
+                    params: { 
+                        instance: currentUser.instance, 
+                        max_id: maxId
+                    }
+                });
                 setBuffer(res2.data.data);
                 setMaxId(res2.data.max_id);
             }

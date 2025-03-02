@@ -53,7 +53,6 @@ function Sidebar() {
             const response = await APIClient.post("/statuses", {
                 message,
                 instance: currentUser.instance,
-                token: currentUser.token,
                 reply_id: "",
                 media_ids: ids,
             });

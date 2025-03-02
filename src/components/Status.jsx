@@ -61,7 +61,6 @@ function Status(props) {
             let prefix = props.post.favourited ? "un" : "";
             const response = await APIClient.post(`/statuses/${props.post.id}/favourite`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
                 prefix: prefix,
             });
             setFavourite(prev => {
@@ -81,7 +80,6 @@ function Status(props) {
             let prefix = props.post.reblogged ? "un" : "";
             const response = await APIClient.post(`/statuses/${props.post.id}/boost`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
                 prefix: prefix,
             });
             setBoosted(prev => !prev);

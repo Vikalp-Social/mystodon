@@ -51,7 +51,6 @@ function StatusPage() {
                 const response = await APIClient.get(`/statuses/${id}`, {
                     params: {
                         instance: currentUser.instance,
-                        token: currentUser.token,
                     }
                 });
                 setStatus({...response.data.status});
