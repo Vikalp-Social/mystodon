@@ -10,6 +10,8 @@
     "cytoscape": "^3.30.2",
     "cytoscape-cise": "^2.0.0",
     "dompurify": "^3.1.5",
+    "js-cookie": "^3.0.5",
+    "luxon": "^3.5.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.3",
     "react-bottom-scroll-listener": "^5.1.0",

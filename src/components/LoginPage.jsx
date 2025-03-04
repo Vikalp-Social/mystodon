@@ -1,5 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
-import axios from "axios"
+import axios from "axios";
+import Cookies from "js-cookie";
+import { DateTime } from "luxon";
 import { useNavigate, useLocation  } from "react-router-dom";
 import APIClient, {domain} from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
@@ -8,6 +10,7 @@ import "../styles/login.css";
 
 let id = "";
 let secret = "";
+const experience = "my";
 
 function LoginPage() {
     const {setCurrentUser, setLoggedIn, paths, currentUser, users, setUsers, setUserId} = useContext(UserContext);
@@ -64,13 +67,13 @@ function LoginPage() {
     async function handleAuth(id, secret, code, user_instance){
         setLoading(true);
         try {
-            const authorize = await APIClient.post(`/auth`, {
+            const authorize = await axios.post(`http://localhost:4000/api/v1/auth`, {
                 instance: user_instance,
                 id: id,
                 secret: secret,
                 code: code,
                 exp: "my",
-            });
+            }, {withCredentials: true});
 
             console.log(authorize)
             const user = {
