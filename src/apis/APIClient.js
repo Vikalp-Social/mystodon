@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const domain = "localhost:3001";
+export const domain = "srg.social";
 
 const ports = {
     1: 3000,
