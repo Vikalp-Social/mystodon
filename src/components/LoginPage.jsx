@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { DateTime } from "luxon";
 import { useNavigate, useLocation  } from "react-router-dom";
-import APIClient, {domain} from "../apis/APIClient";
+import {domain, AuthClient} from "../apis/APIClient";
 import { useErrors } from "../context/ErrorContext";
 import { UserContext} from "../context/UserContext";
 import "../styles/login.css";
@@ -48,7 +48,7 @@ function LoginPage() {
         setIsSubmitting(true);
 
         try {
-            const register_app = await axios.post(`http://localhost:4000/api/v1/register`, {
+            const register_app = await AuthClient.post(`/register`, {
                 instance: instance,
             });
             // Save the client id and secret in the local storage so that the data isn't lost on reload
@@ -67,13 +67,13 @@ function LoginPage() {
     async function handleAuth(id, secret, code, user_instance){
         setLoading(true);
         try {
-            const authorize = await axios.post(`http://localhost:4000/api/v1/auth`, {
+            const authorize = await AuthClient.post(`/auth`, {
                 instance: user_instance,
                 id: id,
                 secret: secret,
                 code: code,
                 exp: "my",
-            }, {withCredentials: true});
+            });
 
             console.log(authorize)
             const user = {

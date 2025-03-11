@@ -35,6 +35,22 @@ else if(!(selectedServer in ports)){
 //     }
 // });
 
+// const AuthClient = axios.create({
+//     baseURL: `https://backend.srg.social/api/v1/`,
+//     withCredentials: true,
+//     headers: {
+//         "algo": "auth"
+//     }
+// });
+
+export const AuthClient = axios.create({
+    baseURL: `https://backend.srg.social/api/v1/`,
+    withCredentials: true,
+    headers: {
+        "algo": "auth"
+    }
+});
+
 export default axios.create({
     baseURL: `https://backend.srg.social/api/v1/`,
     withCredentials: true,
