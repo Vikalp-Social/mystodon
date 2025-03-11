@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import APIClient from '../apis/APIClient'
+import APIClient, { AuthClient } from '../apis/APIClient'
 import { UserContext } from '../context/UserContext'
 import ThemePicker from '../theme/ThemePicker'
 import Navbar from '../components/Navbar'
@@ -50,7 +50,7 @@ function Lists() {
 
     async function fetchLists(){
         try {
-            const response = await axios.get("http://localhost:4000/api/v1/lists", {
+            const response = await AuthClient.get("/lists", {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -65,7 +65,7 @@ function Lists() {
     async function fetchPublicLists(){
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:4000/api/v1/lists/public");
+            const response = await AuthClient.get("/lists/public");
             console.log(response.data);
             setPublicLists(response.data);
             setLists(response.data);
