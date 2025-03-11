@@ -121,6 +121,8 @@ function EditList() {
         newMembersList = [...new Set(newMembersList)];
         console.log(newMembersList);
         console.log("saved!!");
+        
+        // send id, name, username, avatar url with request
         try{
             if(newMembersList.length > 0){
                 const response = await axios.post(`https://auth.srg.social/api/v1/lists/public/${id}/accounts`, {

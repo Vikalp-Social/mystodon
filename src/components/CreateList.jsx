@@ -28,6 +28,7 @@ function CreateList(props){
                 {params: {
                         instance: currentUser.instance,
                         user: currentUser.name || currentUser.username,
+                        token: currentUser.token,
                     }
                 });
             }

@@ -50,7 +50,7 @@ function Lists() {
 
     async function fetchLists(){
         try {
-            const response = await APIClient.get("/lists", {
+            const response = await axios.get("http://localhost:4000/api/v1/lists", {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -65,7 +65,7 @@ function Lists() {
     async function fetchPublicLists(){
         try {
             setLoading(true);
-            const response = await axios.get("https://auth.srg.social/api/v1/lists/public");
+            const response = await axios.get("http://localhost:4000/api/v1/lists/public");
             console.log(response.data);
             setPublicLists(response.data);
             setLists(response.data);

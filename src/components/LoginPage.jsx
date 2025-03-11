@@ -48,7 +48,7 @@ function LoginPage() {
         setIsSubmitting(true);
 
         try {
-            const register_app = await APIClient.post(`/register`, {
+            const register_app = await axios.post(`http://localhost:4000/api/v1/register`, {
                 instance: instance,
             });
             // Save the client id and secret in the local storage so that the data isn't lost on reload

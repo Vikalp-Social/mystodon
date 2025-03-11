@@ -7,8 +7,14 @@ const ports = {
     2: 5000,
 }
 
+const algos = {
+    1: "hot",
+    2: "sentiment",
+}
+
 const selectedServer = localStorage.getItem("server");
 const port = ports[selectedServer];
+const algo = algos[selectedServer];
 
 if(!selectedServer){
     localStorage.setItem("server", 1);
@@ -24,4 +30,7 @@ else if(!(selectedServer in ports)){
 export default axios.create({
     baseURL: `http://localhost:${port}/api/v1/`,
     withCredentials: true,
+    headers: {
+        "algo": algo
+    }
 });
