@@ -27,8 +27,16 @@ else if(!(selectedServer in ports)){
 }
 
 // Created a new instance of axios with the dynamically selected baseURL
+// export default axios.create({
+//     baseURL: `http://localhost:${port}/api/v1/`,
+//     withCredentials: true,
+//     headers: {
+//         "algo": algo
+//     }
+// });
+
 export default axios.create({
-    baseURL: `http://localhost:${port}/api/v1/`,
+    baseURL: `https://backend.srg.social/api/v1/`,
     withCredentials: true,
     headers: {
         "algo": algo
