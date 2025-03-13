@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const domain = "srg.social";
+// export const domain = "localhost:3001";
 
 const ports = {
     1: 3000,
@@ -35,8 +36,8 @@ else if(!(selectedServer in ports)){
 //     }
 // });
 
-// const AuthClient = axios.create({
-//     baseURL: `https://backend.srg.social/api/v1/`,
+// export const AuthClient = axios.create({
+//     baseURL: `http://localhost:4000/api/v1/`,
 //     withCredentials: true,
 //     headers: {
 //         "algo": "auth"

@@ -18,6 +18,8 @@ export function UserContextProvider({children}){
         status: "/status",
         theme: "/theme",
         vikalp: "/vikalp",
+        auth: "/auth",
+        lists: "/lists",
     });
 
     return (

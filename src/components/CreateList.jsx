@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import APIClient from '../apis/APIClient';
+import APIClient, { AuthClient } from '../apis/APIClient';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from '../context/UserContext';
 import { useErrors } from '../context/ErrorContext';
@@ -22,7 +22,7 @@ function CreateList(props){
         event.stopPropagation();
         try {
             if(props.type == "public"){
-                const response = await axios.post("https://auth.srg.social/api/v1/lists/public", {
+                const response = await AuthClient.post("/lists/public", {
                     title: replyText,
                 },
                 {params: {
@@ -33,7 +33,7 @@ function CreateList(props){
                 });
             }
             else if(props.type == "private"){
-                const response = await APIClient.post("/lists", {
+                const response = await AuthClient.post("/lists", {
                     title: replyText,
                 },
                 {params: {

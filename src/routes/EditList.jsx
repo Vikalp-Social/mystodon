@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from "axios"
 import { useParams, useNavigate } from 'react-router-dom'
-import APIClient from '../apis/APIClient'
+import APIClient, { AuthClient } from '../apis/APIClient'
 import { useErrors } from '../context/ErrorContext'
 import { UserContext } from '../context/UserContext'
 import ThemePicker from '../theme/ThemePicker'
@@ -35,7 +35,7 @@ function EditList() {
     async function fetchList(){
         try {
             setLoading(true);
-            const response = await APIClient.get(`/lists/${id}`, {
+            const response = await AuthClient.get(`/lists/${id}`, {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -51,7 +51,7 @@ function EditList() {
     async function fetchListMembers(){
         try {
             setLoading(true);
-            const response = await APIClient.get(`/lists/${id}/accounts`, {
+            const response = await AuthClient.get(`/lists/${id}/accounts`, {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -83,15 +83,24 @@ function EditList() {
         }
     }
 
-    function addAccount(id){
-        console.log("add", id);
-        setNewMembers([...newMembers, id]);
+    function addAccount(account){
+        
+        let newMember = {
+            id: account.id,
+            avatar: account.avatar,
+            display_name: account.display_name,
+            username: account.username,
+            acct: account.acct,
+            emojis: account.emojis,
+        }
+        console.log("add", newMember);
+        setNewMembers([...newMembers, newMember]);
     }
 
     function removeAccount(id){
         console.log("remove", id);
-        if(newMembers.includes(id)){
-            const newMembersList = newMembers.filter((member) => member !== id);
+        if(newMembers.map(m => m.id).includes(id)){
+            const newMembersList = newMembers.filter((member) => member.id !== id);
             setNewMembers(newMembersList);
         }
         else{
@@ -125,7 +134,7 @@ function EditList() {
         // send id, name, username, avatar url with request
         try{
             if(newMembersList.length > 0){
-                const response = await axios.post(`https://auth.srg.social/api/v1/lists/public/${id}/accounts`, {
+                const response = await AuthClient.post(`/lists/public/${id}/accounts`, {
                     account_ids: newMembersList,
                 }, {
                     params: {
@@ -135,7 +144,7 @@ function EditList() {
                 console.log(response.data)
             }
             // if(removeMembers.length > 0){
-            //     const response2 = await axios.delete(`https://auth.srg.social/api/v1/lists/public/${id}/accounts`, { 
+            //     const response2 = await AuthClient.delete(`/lists/public/${id}/accounts`, { 
             //         params: {
             //             token: currentUser.token,
             //             instance: currentUser.instance,
@@ -144,7 +153,7 @@ function EditList() {
             //     });
             // }
             if(title !== ""){
-                const response3 = await axios.put(`https://auth.srg.social/api/v1/lists/public/${id}`, {
+                const response3 = await AuthClient.put(`/lists/public/${id}`, {
                     title: title,
                 }, {
                     params: {
@@ -166,14 +175,14 @@ function EditList() {
         var objectIds = new Set(members.map(obj => obj.id));
 
         // Filter out IDs present in the objects array
-        var newMembersList = newMembers.filter(id => !objectIds.has(id));
+        var newMembersList = newMembers.filter(m => !objectIds.has(m.id));
         //remove duplicates
         newMembersList = [...new Set(newMembersList)];
         console.log("saved!!");
         try{
             if(newMembersList.length > 0){
-                const response = await APIClient.post(`/lists/${id}/accounts`, {
-                    account_ids: newMembersList,
+                const response = await AuthClient.post(`/lists/${id}/accounts`, {
+                    account_ids: newMembersList.map(m => m.id),
                 }, {
                     params: {
                         instance: currentUser.instance,
@@ -181,7 +190,7 @@ function EditList() {
                 });
             }
             if(removeMembers.length > 0){
-                const response2 = await APIClient.delete(`/lists/${id}/accounts`, { 
+                const response2 = await AuthClient.delete(`/lists/${id}/accounts`, { 
                     params: {
                         instance: currentUser.instance,
                         account_ids: removeMembers,
@@ -189,7 +198,7 @@ function EditList() {
                 });
             }
             if(title !== ""){
-                const response3 = await APIClient.put(`/lists/${id}`, {
+                const response3 = await AuthClient.put(`/lists/${id}`, {
                     title: title,
                 }, {
                     params: {
@@ -219,17 +228,6 @@ function EditList() {
                         </div>
                         <label className='form-label'>Title</label>
                         <input className="form-control me-2" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                        {/* <h3>Members</h3>
-                        {members.length > 0 && members.map((account) => {
-                            return <ListAccount 
-                                    key={account.id}
-                                    user_id={account.id}
-                                    prof={account.avatar}
-                                    username={account.display_name}
-                                    fullname={account.username === account.acct ? `${account.username}@${currentUser.instance}` : account.acct}
-                                    emojis={account.emojis}
-                            />
-                        })} */}
                         <h3>Add Members</h3>
                         <form className="d-flex add-members" role="search" onSubmit={handleSearch}>
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
@@ -248,9 +246,9 @@ function EditList() {
                                 username={account.display_name}
                                 fullname={account.username === account.acct ? `${account.username}@${currentUser.instance}` : account.acct}
                                 emojis={account.emojis}
-                                add={() => addAccount(account.id)}
+                                add={() => addAccount(account)}
                                 remove={() => removeAccount(account.id)}
-                                check={newMembers.includes(account.id) || members.map(m => m.id).includes(account.id)}
+                                check={newMembers.map(m => m.id).includes(account.id) || members.map(m => m.id).includes(account.id)}
                                 viewOnly={false}
                             />
                         }) : <div className="no-results">No results found</div>}

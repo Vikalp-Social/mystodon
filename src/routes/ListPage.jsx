@@ -5,7 +5,7 @@ import ThemePicker from '../theme/ThemePicker'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Headbar from '../components/Headbar'
-import APIClient from '../apis/APIClient';
+import { AuthClient } from '../apis/APIClient';
 import { UserContext } from '../context/UserContext';
 import { useErrors } from '../context/ErrorContext';
 import ListAccount from '../components/ListAccount';
@@ -30,7 +30,7 @@ function ListPage() {
     async function fetchPublicList(){
         try{
             setLoading(true);
-            const response = await axios.get(`https://auth.srg.social/api/v1/lists/public/${id}`);
+            const response = await AuthClient.get(`/lists/public/${id}`);
             console.log(response.data);
             setList(response.data);
             setMembers(response.data.account_ids || []);
@@ -44,14 +44,14 @@ function ListPage() {
     async function fetchList(){
         try{
             setLoading(true);
-            const response = await APIClient.get(`/lists/${id}`, {
+            const response = await AuthClient.get(`/lists/${id}`, {
                 params: {
                     instance: currentUser.instance,
                 }
             });
             console.log(response.data);
             setList(response.data);
-            const res2 = await APIClient.get(`/lists/${id}/accounts`, {
+            const res2 = await AuthClient.get(`/lists/${id}/accounts`, {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -67,7 +67,7 @@ function ListPage() {
 
     async function followList(){
         //creates a private list with the same members
-        const response = await APIClient.post("/lists", {
+        const response = await AuthClient.post("/lists", {
             title: list.title,
         },
         {params: {
@@ -78,7 +78,7 @@ function ListPage() {
 
         const member_ids = members.map(member => member.id);
         //add all members of this this to the newly created one
-        const res2 = await APIClient.post(`/lists/${response.data.id}/accounts`, {
+        const res2 = await AuthClient.post(`/lists/${response.data.id}/accounts`, {
             account_ids: member_ids,
         }, {
             params: {
