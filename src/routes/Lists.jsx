@@ -82,7 +82,7 @@ function Lists() {
             return;
         }
         try {
-            const response = await APIClient.delete(`/lists/${id}`, {
+            const response = await AuthClient.delete(`/lists/${id}`, {
                 params: {
                     instance: currentUser.instance,
                 }
@@ -101,7 +101,7 @@ function Lists() {
             return;
         }
         try {
-            const response = await axios.delete(`https://auth.srg.social/api/v1/lists/public/${id}`)
+            const response = await AuthClient.delete(`/lists/public/${id}`)
             console.log(response.data);
             fetchLists()
         } catch (error) {

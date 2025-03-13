@@ -5,7 +5,7 @@ function ListCard(props) {
     let navigate = useNavigate();
 
     return (
-        <div className='list' key={props.id} onClick={console.log(props)}>
+        <div className='list' key={props.id} onClick={() => navigate(`/lists/${props.type}/${props.id}`)}>
             {props.title} - {props.owner}
             {props.type == "private" && props.is_public && <div className='public-list'>Public</div>}
 
