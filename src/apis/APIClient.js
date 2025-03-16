@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const domain = "srg.social";
+export const domain = process.env.REACT_APP_DOMAIN_TEST;
 // export const domain = "localhost:3001";
 
 const ports = {
@@ -28,34 +28,34 @@ else if(!(selectedServer in ports)){
 }
 
 // Created a new instance of axios with the dynamically selected baseURL
-// export default axios.create({
-//     baseURL: `http://localhost:${port}/api/v1/`,
-//     withCredentials: true,
-//     headers: {
-//         "algo": algo
-//     }
-// });
-
-// export const AuthClient = axios.create({
-//     baseURL: `http://localhost:4000/api/v1/`,
-//     withCredentials: true,
-//     headers: {
-//         "algo": "auth"
-//     }
-// });
+export default axios.create({
+    baseURL: `http://localhost:${port}/api/v1/`,
+    withCredentials: true,
+    headers: {
+        "algo": algo
+    }
+});
 
 export const AuthClient = axios.create({
-    baseURL: `https://backend.srg.social/api/v1/`,
+    baseURL: `http://localhost:4000/api/v1/`,
     withCredentials: true,
     headers: {
         "algo": "auth"
     }
 });
 
-export default axios.create({
-    baseURL: `https://backend.srg.social/api/v1/`,
-    withCredentials: true,
-    headers: {
-        "algo": algo
-    }
-});
+// export const AuthClient = axios.create({
+//     baseURL: `https://backend.srg.social/api/v1/`,
+//     withCredentials: true,
+//     headers: {
+//         "algo": "auth"
+//     }
+// });
+
+// export default axios.create({
+//     baseURL: `https://backend.srg.social/api/v1/`,
+//     withCredentials: true,
+//     headers: {
+//         "algo": algo
+//     }
+// });

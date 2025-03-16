@@ -46,17 +46,6 @@ function Home(){
         }
     }
 
-    const testCookieToken = async () => {
-        try {
-            const response = await axios.get("http://localhost:3000/test-cookie-token", {
-                withCredentials: true,
-            });
-            console.log("Backend Response:", response.data);
-        } catch (error) {
-            console.error("Error fetching token:", error.response ? error.response.data : error.message);
-        }
-    };
-
     async function fetchLists(){
         try {
             const response = await APIClient.get("/lists", {
@@ -114,7 +103,8 @@ function Home(){
                     max_id: maxId
                 },
             });
-            console.log(response.data)
+            // console.log("home");
+            // console.log(response.data)
             setTimeline(response.data.data)
             //setLoading(false);
             const res2 = await APIClient.get("/timelines/home", {
@@ -127,7 +117,8 @@ function Home(){
             setBuffer(res2.data.data);
             setMaxId(res2.data.max_id);
         } catch (error) {
-            setError(error.response.data);
+            console.log(error);
+            // setError(error.response.data);
         }
     }
 
