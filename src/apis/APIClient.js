@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const domain = process.env.REACT_APP_DOMAIN_TEST;
-// export const domain = "localhost:3001";
+// export const domain = process.env.REACT_APP_DOMAIN_TEST;
+export const domain = "localhost:3001";
 
 const ports = {
     1: 3000,
