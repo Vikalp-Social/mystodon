@@ -15,8 +15,9 @@ import UsernameEmoji from "./UsernameEmoji";
 
 // Status component is used to display the status of the user
 function Status(props) {
-    const {currentUser, paths} = useContext(UserContext);
-    const { setError } = useErrors()
+    const userContext = useContext(UserContext);
+    const { setError } = useErrors();
+    const navigate = useNavigate();
     const sanitizedHtml = DOMPurify.sanitize(props.post.content);
     const [isEditing, setEditing] = useState(false);
     const [isReplying, setReplying] = useState(false);
@@ -24,7 +25,6 @@ function Status(props) {
     const [text, setText] = useState(sanitizedHtml);
     const [isFavourite, setFavourite] = useState(props.post.favourited);
     const [isBoosted, setBoosted] = useState(props.post.reblogged);
-    let navigate = useNavigate();
 
     useEffect(() => {
         //regular expression to remove the html tags from the text
@@ -37,14 +37,14 @@ function Status(props) {
     function handleClick(){
         if(!props.reply){
             //navigate to the the parent status if the status is a reply
-            navigate(`${paths.status}/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
+            navigate(`/status/${props.post.in_reply_to_id ? props.post.in_reply_to_id : props.post.id}`);
         }
     }
 
     //navigate to the user's profile when username is clicked
     function handleUserClick(event, id){
         event.stopPropagation();
-        navigate(`${paths.profile}/${id}`)
+        navigate(`/profile/${id}`);
     }
 
     //function to show the edit status component
@@ -60,8 +60,7 @@ function Status(props) {
         try {
             let prefix = props.post.favourited ? "un" : "";
             const response = await APIClient.post(`/statuses/${props.post.id}/favourite`, {
-                instance: currentUser.instance,
-                token: currentUser.token,
+                instance: userContext?.currentUser?.instance,
                 prefix: prefix,
             });
             setFavourite(prev => {
@@ -80,8 +79,7 @@ function Status(props) {
         try {
             let prefix = props.post.reblogged ? "un" : "";
             const response = await APIClient.post(`/statuses/${props.post.id}/boost`, {
-                instance: currentUser.instance,
-                token: currentUser.token,
+                instance: userContext?.currentUser?.instance,
                 prefix: prefix,
             });
             setBoosted(prev => !prev);

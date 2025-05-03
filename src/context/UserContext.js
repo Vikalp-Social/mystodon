@@ -11,13 +11,15 @@ export function UserContextProvider({children}){
     const [isLoggedIn, setLoggedIn] = useLocalStorage("logged_in",false);
     const [currentUser, setCurrentUser] = useState(users[userId]);
     const [paths] = useState({
-        home: "/home/",
+        home: "/home",
         profile: "/profile",
         search: "/search",
         tags: "/tags",
         status: "/status",
         theme: "/theme",
         vikalp: "/vikalp",
+        auth: "/auth",
+        lists: "/lists",
     });
 
     return (
@@ -26,3 +28,6 @@ export function UserContextProvider({children}){
         </UserContext.Provider>
       )
 }
+
+// Add default export for module federation
+export default { UserContextProvider };

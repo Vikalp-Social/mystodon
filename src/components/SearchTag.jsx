@@ -37,7 +37,6 @@ function SearchTag(props) {
         try {
             const response = await APIClient.post(`/tags/${props.name}/follow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(true);
         } catch (error) {
@@ -49,7 +48,6 @@ function SearchTag(props) {
         try {
             const response = await APIClient.post(`/tags/${props.name}/unfollow`, {
                 instance: currentUser.instance,
-                token: currentUser.token,
             });
             setFollowing(false);
         } catch (error) {

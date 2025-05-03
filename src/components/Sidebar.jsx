@@ -10,15 +10,15 @@ import { FaPenToSquare } from "react-icons/fa6";
 
 // Sidebar component that is present on all pages
 function Sidebar() {
-    const {currentUser, paths} = useContext(UserContext);
-    const {setError, setToast} = useErrors();
+    const userContext = useContext(UserContext);
+    const { setError, setToast } = useErrors();
     const [message, setMessage] = useState("");
     const [show, setShow] = useState(false);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     //navigate to the current user's profile
     function handleUserClick(){
-        navigate(`${paths.profile}/${currentUser.id}`);
+        navigate(`/profile/${userContext?.currentUser?.id}`);
     }
 
     //fucntion to upload the media(if any) and post the status
@@ -27,11 +27,11 @@ function Sidebar() {
         const files = Array.from(event.target.media.files);
         try {
             const uploadPromises = files.map(file => 
-                axios.post(`https://${currentUser.instance}/api/v2/media`, {
+                axios.post(`https://${userContext?.currentUser?.instance}/api/v2/media`, {
                     file,
                 }, {
                     headers: {
-                        Authorization: `Bearer ${currentUser.token}`,
+                        Authorization: `Bearer ${userContext?.currentUser?.token}`,
                         "Content-Type": "multipart/form-data",
                     }
                 })
@@ -43,7 +43,7 @@ function Sidebar() {
             setTimeout(() => postStatus(newIds), 5000)
 
         } catch (error) {
-            setError(error.response.data);;
+            setError(error.response.data);
         }
     }
 
@@ -52,15 +52,14 @@ function Sidebar() {
         try {
             const response = await APIClient.post("/statuses", {
                 message,
-                instance: currentUser.instance,
-                token: currentUser.token,
+                instance: userContext?.currentUser?.instance,
                 reply_id: "",
                 media_ids: ids,
             });
             setMessage("");
             setToast("Posted!")
         } catch (error) {
-            setError(error.response.data);;;
+            setError(error.response.data);
         }
     }
 
@@ -69,10 +68,10 @@ function Sidebar() {
             <div className="sidebar">
                 <div className="sidebarTop">
                     <div className="sidebarTopLeft">
-                        <img src={currentUser.avatar} alt="profile" />
+                        <img src={userContext?.currentUser?.avatar} alt="profile" />
                         <div className="sidebarUser">
-                            <span className="statusUsername" onClick={handleUserClick}>{currentUser.name}</span>
-                            <span className="userInstance">{`${currentUser.name}@${currentUser.instance}`}</span>
+                            <span className="statusUsername" onClick={handleUserClick}>{userContext?.currentUser?.name}</span>
+                            <span className="userInstance">{`${userContext?.currentUser?.name}@${userContext?.currentUser?.instance}`}</span>
                         </div>
                     </div>
                 </div>

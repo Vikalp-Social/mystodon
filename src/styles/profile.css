@@ -116,3 +116,14 @@
 	background-color: hsl(var(--body_background));
 	color: var(--text_color);
 }
+
+.loading {
+    background-color: hsl(var(--status_background));
+    color: var(--text_color);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 100%;
+}

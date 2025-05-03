@@ -8,6 +8,8 @@ import { UserContext } from '../context/UserContext';
 import { useErrors } from '../context/ErrorContext';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
+import '../index.css';
+import '../styles/status.css';
 
 // StatusPage component is the main component that is rendered when the user visits a status/post.
 function StatusPage() {
@@ -51,7 +53,6 @@ function StatusPage() {
                 const response = await APIClient.get(`/statuses/${id}`, {
                     params: {
                         instance: currentUser.instance,
-                        token: currentUser.token,
                     }
                 });
                 setStatus({...response.data.status});

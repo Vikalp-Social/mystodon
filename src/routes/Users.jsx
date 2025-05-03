@@ -2,9 +2,12 @@ import React, { useState, useContext } from 'react'
 import Navbar from '../components/Navbar'
 import ThemePicker from '../theme/ThemePicker'
 import Headbar from '../components/Headbar'
+import UsernameEmoji from '../components/UsernameEmoji'
 import { UserContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import "../styles/users.css"
+import "../index.css"
+
 function Users() {
     const {users, userId, setUserId} = useContext(UserContext);
     let navigate = useNavigate();
@@ -14,6 +17,7 @@ function Users() {
         //reload page
         window.location.reload(false);
     }
+
     return (
         <>
             <div className="main">
@@ -51,4 +55,5 @@ function Users() {
         </>
     )
 }
+
 export default Users

@@ -9,6 +9,7 @@ import Headbar from "../components/Headbar";
 import ThemePicker from "../theme/ThemePicker";
 import SearchAccount from "../components/SearchAccount";
 import SearchTag from '../components/SearchTag';
+import "../index.css";
 
 function FollowPage() {
 	const {currentUser, isLoggedIn} = useContext(UserContext);
@@ -28,32 +29,36 @@ function FollowPage() {
 			navigate("/");
 		}
 		fetchFollowList();
+		console.log(id, follow);
 	}, [id, follow]);
 
 	async function fetchFollowList(){
 		try {
+			console.log("fetching");
 			setLoading(true);
 			const response = await APIClient.get(`accounts/${id}/${follow}`, {
 				params: {
 					instance: currentUser.instance,
-					token: currentUser.token
 				}
 			});
+			console.log(response.data);
 			setList(response.data.accounts);
 
 			const tags = await APIClient.get("tags/following", {
 				params: {
 					instance: currentUser.instance,
-					token: currentUser.token
 				}
 			});
+			console.log(tags.data);
 			setTags(tags.data);
 
 			setLoading(false);
+			console.log("done fetching");
 		} catch (error) {
 			setError(error.response.data);
 		}
 	}
+
 
 	return (
 		<div className="main">
@@ -84,10 +89,10 @@ function FollowPage() {
 
 					{!viewAccount && (tags.length > 0 ? tags.map((tag) => {
 						return <SearchTag 
-								key={tag.name}
-								name={tag.name}
-								talking={tag.history[0].accounts}
-							/>}	
+                                key={tag.name}
+                                name={tag.name}
+                                talking={tag.history[0].accounts}
+                            />}	
 					) : <div className="no-results">No results found</div>)}
                 {loading && <div className="loader"></div>}
             </div>

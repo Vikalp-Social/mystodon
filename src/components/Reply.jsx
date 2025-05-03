@@ -9,36 +9,40 @@ import "../styles/reply.css";
 
 // Reply component is the modal which appears when the user wants to reply to a post
 function Reply(props){
-    const {currentUser, paths} = useContext(UserContext);
+    const userContext = useContext(UserContext);
     const {setError} = useErrors();
+    const navigate = useNavigate();
+    
     //to initialize the reply text with the username of all the users to whom the reply is being made
     const [replyText, setReplyText] = useState(() => {
         let str = "";
         if(props.post){
             str = `@${props.post.account.acct} `;
             props.mentions && props.mentions.map((mention) => {
-                if(mention.acct !== currentUser.username){
+                if(mention.acct !== userContext?.currentUser?.username){
                     str += `@${mention.acct} `;
                 }
             })
         }
         return str;
     });
-    let navigate = useNavigate();
 
     //function to post the reply
     async function handleReply(event){
         event.preventDefault();
         event.stopPropagation();
         try {
-            const response = await APIClient.post("/statuses", {
+            const response = await APIClient.post("statuses", {
                 message: replyText,
-                instance: currentUser.instance,
-                token: currentUser.token,
-                reply_id: props.post ? props.post.id : '',
+                instance: userContext?.currentUser?.instance,
+                reply_id: props.post ? props.post.id : "",
             });
             props.close();
-            if(props.post) navigate(`${paths.status}/${props.post.id}`);
+            
+            if(props.post){
+                navigate(`${userContext?.paths?.status}/${props.post.id}`);
+            }
+            
         } catch (error) {
             setError(error.response.data);
         }
@@ -65,7 +69,9 @@ function Reply(props){
                     />
                     <div className='reply-bottom'>
                         <span>Remaining: {500 - replyText.length}</span>
-                        <button className='my-button' onClick={handleReply} style={{margin:"5px 0 0 10px"}}>POST</button>
+                        <button className='my-button' onClick={handleReply} style={{margin:"5px 0 0 10px"}}>
+                            POST
+                        </button>
                     </div>
                 </div>
             </Modal.Body>

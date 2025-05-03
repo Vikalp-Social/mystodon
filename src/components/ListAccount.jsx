@@ -6,8 +6,8 @@ import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import UsernameEmoji from "./UsernameEmoji";
 
-// Component to display the search results of accounts
-function SearchAccount(props) {
+// Component to display the accounts in a list
+function ListAccount(props) {
     const userContext = useContext(UserContext);
     const { setError } = useErrors();
     const [isFollowing, setFollowing] = useState(false);
@@ -21,7 +21,7 @@ function SearchAccount(props) {
         checkRelation();
     }, []);
 
-    //function to check if the user is following the searched account
+    //function to check if the user is following the account
     async function checkRelation(){
         try {
             const response = await axios.get(`https://${userContext?.currentUser?.instance}/api/v1/accounts/relationships`, {
@@ -75,7 +75,7 @@ function SearchAccount(props) {
                 </div>
                 <div>
                     {isFollowing ?
-                        <button type="button" className="my-button"  onClick={(e) => handleUnfollow(e)}>Unfollow</button>
+                        <button type="button" className="my-button" onClick={(e) => handleUnfollow(e)}>Unfollow</button>
                     :
                         <button type="button" className="my-button" onClick={(e) => handleFollow(e)}>Follow</button>
                     }
@@ -85,4 +85,4 @@ function SearchAccount(props) {
     );
 }
 
-export default SearchAccount;
+export default ListAccount;

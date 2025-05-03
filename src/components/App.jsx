@@ -15,6 +15,9 @@ import Vikalp from "../routes/Vikalp";
 import About from "../routes/About";
 import FollowPage from "../routes/FollowPage";
 import Users from "../routes/Users";
+import Lists from "../routes/Lists";
+import EditList from "../routes/EditList";
+import ListPage from "../routes/ListPage";
 
 // App component contains all the routes of the application
 function App() {
@@ -43,7 +46,7 @@ function App() {
 						<Routes>
 							<Route exact path="/" Component={Login} />
 							<Route exact path="/auth" Component={Login} />
-							<Route exact path="/home/" Component={Home} />
+							<Route exact path="/home" Component={Home} />
 							<Route exact path="/status/:id" Component={StatusPage} />
 							<Route exact path="/profile/:id" Component={Profile} />
 							<Route exact path="/profile/:id/:follow" Component={FollowPage} />
@@ -53,6 +56,9 @@ function App() {
 							<Route exact path="/vikalp" Component={Vikalp} />
 							<Route exact path="/about" Component={About} />
 							<Route exact path="/users" Component={Users} />
+							<Route exact path="/lists" Component={Lists} />
+							<Route exact path="/lists/:fullid/edit" Component={EditList} />
+							<Route exact path="/lists/:type/:id" Component={ListPage} />
 							<Route path="*" element={<div>404</div>} />
 						</Routes>
 					</Router>

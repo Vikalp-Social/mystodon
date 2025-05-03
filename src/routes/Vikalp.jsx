@@ -5,6 +5,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import Navbar from '../components/Navbar'
 import ThemePicker from '../theme/ThemePicker'
 import '../styles/vikalp.css'
+import '../index.css'
 
 function Vikalp() {
     const {isLoggedIn} = useContext(UserContext)
@@ -12,7 +13,7 @@ function Vikalp() {
     const [experience, setExperience] = useLocalStorage("experience", 1)
     const servers = {
         1: "Hot Ranking",
-        2: "Positive Recommender",
+        2: "Sentiment Analysis",
     }
     const experiences = {
         1: "Classic"

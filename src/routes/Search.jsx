@@ -10,6 +10,7 @@ import Headbar from "../components/Headbar";
 import { UserContext } from "../context/UserContext";
 import { useErrors } from "../context/ErrorContext";
 import "../styles/search.css";
+import "../index.css";
 import ThemePicker from "../theme/ThemePicker";
 
 // Search component is the main component that is rendered when the user searches for something.
@@ -41,7 +42,6 @@ function Search(){
                 const response = await APIClient.get(`/search`, {
                     params: {
                         q: q,
-                        token: currentUser.token,
                         instance: currentUser.instance,
                     }
                 });

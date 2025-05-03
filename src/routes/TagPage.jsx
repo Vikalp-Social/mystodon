@@ -10,6 +10,7 @@ import { useErrors } from '../context/ErrorContext';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import Headbar from '../components/Headbar';
 import ThemePicker from '../theme/ThemePicker';
+import '../index.css';
 
 // TagPage component is the main component that is rendered when the user wnats to view the timeline of a tag.
 function TagPage() {
@@ -38,7 +39,6 @@ function TagPage() {
             setLoading(true);
             const response = await APIClient.get(`/timelines/tag/${name}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                     max_id: maxId,
                 }
@@ -47,7 +47,6 @@ function TagPage() {
             setLoading(false);
             const res2 = await APIClient.get(`/timelines/tag/${name}`, {
                 params: {
-                    token: currentUser.token,
                     instance: currentUser.instance,
                     max_id: response.data.max_id,
                 }
@@ -70,8 +69,7 @@ function TagPage() {
                 setStatuses([...statuses, ...buffer]);
                 setLoading(false);
                 const res2 = await APIClient.get("/timelines/home", {
-                    params: {
-                        token: currentUser.token, 
+                    params: { 
                         instance: currentUser.instance, 
                         max_id: maxId
                     }

@@ -6,7 +6,7 @@ import { useErrors } from '../context/ErrorContext';
 
 //Component to display the share modal
 function ShareModal(props) {
-    const {setToast} = useErrors();
+    // const {setToast} = useErrors();
     const size = 50;
 
     return (

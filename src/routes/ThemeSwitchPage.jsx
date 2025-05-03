@@ -4,6 +4,7 @@ import { ColorPicker } from 'react-iro'
 import { UserContext } from '../context/UserContext'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/theme-switcher.css'
+import '../index.css'
 import Navbar from '../components/Navbar'
 import ThemePicker, { setDarkMode, setLightMode, hexToRGB, rgbToHSL, hslToRgb, rgbToHex } from '../theme/ThemePicker'
 
